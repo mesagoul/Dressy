@@ -20,7 +20,7 @@ import com.lmesa.dressy.animation.ZoomOutPageTransformer;
 import java.util.ArrayList;
 
 /**
- * Created by mac13 on 03/04/2017.
+ * Created by Lucas on 03/04/2017.
  */
 
 public class FragmentPagerView extends Fragment {

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Dressy</string>
+    <string name="sign_username">Identifiant</string>
+    <string name="sign_password">Mot de passe</string>
+    <string name="sign_forgot_password">Mot de passe oublié</string>
+    <string name="sign_connexion">Se connecter</string>
 </resources>
