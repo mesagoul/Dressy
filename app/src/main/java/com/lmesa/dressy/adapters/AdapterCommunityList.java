@@ -52,7 +52,7 @@ public class AdapterCommunityList extends RecyclerView.Adapter<AdapterCommunityL
 
         Glide
                 .with(context)
-                .load(aPost.getUrlImage())
+                .load(aPost.getClothes().getUrlImage())
                 .centerCrop()
                 .crossFade()
                 .into(holder.image);
