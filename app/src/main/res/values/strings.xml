@@ -1,7 +1,18 @@
 <resources>
     <string name="app_name">Dressy</string>
+
+    <!-- SIGN PAGES  -->
     <string name="sign_username">Identifiant</string>
     <string name="sign_password">Mot de passe</string>
     <string name="sign_forgot_password">Mot de passe oublié</string>
-    <string name="sign_connexion">Se connecter</string>
+    <string name="to_sign_in">Se connecter</string>
+    <string name="to_sign_up">S\'inscrire</string>
+    <string name="sign_in">Connexion</string>
+    <string name="sign_up">Inscription</string>
+    <string name="sign_mail">Email</string>
+    <string name="sign_user_first_name">Prénom</string>
+
+    <!-- COMMUNITY PAGES -->
+    <string name="comm_news_title">Nouveautées</string>
+    <string name="comm_leader_title">Tops</string>
 </resources>

@@ -16,6 +16,7 @@
             android:hint="@string/sign_username"/>
         <EditText
             android:id="@+id/sign_password"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sign_password"/>
@@ -27,7 +28,7 @@
         android:layout_height="100dp">
         <Button
             android:gravity="center"
-            android:text="@string/sign_connexion"
+            android:text="@string/to_sign_in"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -40,9 +41,11 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
+            android:textColorHint="@color/colorLight"
             android:layout_gravity="center"
             android:textColor="@color/colorDark"
-            android:text="@string/sign_forgot_password"/>
+            android:text="@string/sign_forgot_password"
+            android:id="@+id/sign_forgot_password"/>
 
     </LinearLayout>
 

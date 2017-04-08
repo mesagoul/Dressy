@@ -1,4 +1,4 @@
-package com.lmesa.dressy.fragment;
+package com.lmesa.dressy.fragments;
 
 
 import android.os.Bundle;
@@ -12,10 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
+import com.lmesa.dressy.interfaces.PagerViewListener;
 import com.lmesa.dressy.R;
-import com.lmesa.dressy.animation.ZoomOutPageTransformer;
+import com.lmesa.dressy.activities.SignInUpActivity;
+import com.lmesa.dressy.animations.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 
@@ -25,10 +26,12 @@ import java.util.ArrayList;
 
 public class FragmentPagerView extends Fragment {
     private ArrayList<Fragment> listFragments;
+    private String[] tabTitles;
     // VIEW PAGER
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
     private TabLayout tabLayout;
+    private PagerViewListener listener;
 
     @Nullable
     @Override
@@ -44,18 +47,16 @@ public class FragmentPagerView extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initFragmentsForPagerView();
+        listFragments = listener.initFragmentsForPagerView(listFragments);
+        tabTitles = listener.initTitlesForPagerView();
         mPager.setPageTransformer(true,new ZoomOutPageTransformer());
-        mPagerAdapter = new ScreenSlidePagerAdapter(getActivity().getSupportFragmentManager(), listFragments);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getActivity().getSupportFragmentManager(), listFragments,tabTitles);
         mPager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(mPager);
     }
 
-    public void initFragmentsForPagerView(){
-        FragmentSignIn fragmentSignIn = new FragmentSignIn();
-        FragmentSignIn fragmentSignIn1 = new FragmentSignIn();
-        listFragments.add(fragmentSignIn1);
-        listFragments.add(fragmentSignIn);
+    public void setListener(PagerViewListener listener) {
+        this.listener = listener;
     }
 
 
@@ -65,11 +66,12 @@ public class FragmentPagerView extends Fragment {
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         private ArrayList<Fragment> listFragments;
-        private String tabTitles[] = new String[] { "Sign In", "Sign Up" };
+        private String tabTitles[];
 
-        public ScreenSlidePagerAdapter(FragmentManager fm, ArrayList<Fragment> listFragments) {
+        public ScreenSlidePagerAdapter(FragmentManager fm, ArrayList<Fragment> listFragments, String[] tabTitles) {
             super(fm);
             this.listFragments = listFragments;
+            this.tabTitles = tabTitles;
         }
 
         @Override
@@ -84,7 +86,12 @@ public class FragmentPagerView extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return tabTitles[position];
+            // IF there id no title for this tab, no crash and set it with application name
+            if(position < tabTitles.length){
+                return tabTitles[position];
+            }else{
+                return getResources().getString(R.string.app_name);
+            }
         }
     }
 }

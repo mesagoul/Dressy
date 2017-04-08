@@ -1,4 +1,4 @@
-package com.lmesa.dressy.animation;
+package com.lmesa.dressy.animations;
 
 
 import android.support.v4.view.ViewPager;
