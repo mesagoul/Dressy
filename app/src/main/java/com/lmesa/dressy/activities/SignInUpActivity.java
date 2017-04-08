@@ -1,7 +1,6 @@
 package com.lmesa.dressy.activities;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -11,8 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import com.lmesa.dressy.interfaces.PagerViewListener;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.fragments.FragmentPagerView;
-import com.lmesa.dressy.fragments.FragmentSignIn;
-import com.lmesa.dressy.fragments.FragmentSignUp;
+import com.lmesa.dressy.fragments.Sign.FragmentSignIn;
+import com.lmesa.dressy.fragments.Sign.FragmentSignUp;
 
 import java.util.ArrayList;
 
@@ -35,7 +34,7 @@ public class SignInUpActivity extends FragmentActivity implements PagerViewListe
         fragment.setListener(this);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragment_pager_view, fragment);
+        ft.replace(R.id.frame_layout, fragment);
         ft.commit();
     }
 

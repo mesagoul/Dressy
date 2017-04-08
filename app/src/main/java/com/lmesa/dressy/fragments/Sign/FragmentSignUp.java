@@ -1,4 +1,4 @@
-package com.lmesa.dressy.fragments;
+package com.lmesa.dressy.fragments.Sign;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
