@@ -4,7 +4,7 @@ package com.lmesa.dressy.models;
  * Created by Lucas on 08/04/2017.
  */
 
-public class Clothe extends Object {
+public class Clothe{
     private String cloth_name;
     private String cloth_color;
     private String cloth_reference;

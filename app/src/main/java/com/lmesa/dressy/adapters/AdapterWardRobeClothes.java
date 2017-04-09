@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.fragments.WardRobe.FragmentWardRobeClothe;
+import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 public class AdapterWardRobeClothes extends BaseAdapter {
     private Context context;
     private ArrayList<?> listClothes;
+    private WardRobeListener listener;
 
     public AdapterWardRobeClothes(Context context, ArrayList<?> listClothes) {
         this.context = context;
@@ -44,7 +46,7 @@ public class AdapterWardRobeClothes extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView imageView;
 
 
@@ -77,14 +79,12 @@ public class AdapterWardRobeClothes extends BaseAdapter {
 
 
 
-       /* imageView.setOnClickListener(new View.OnClickListener() {
+       imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, ActivityImageFullScreen.class);
-                i.putExtra("image",aClothe.getCloth_urlImage());
-                context.startActivity(i);
+                listener.loadDetail(position);
             }
-        });*/
+        });
 
 
 
@@ -93,4 +93,7 @@ public class AdapterWardRobeClothes extends BaseAdapter {
     }
 
 
+    public void setListener(WardRobeListener listener) {
+        this.listener = listener;
+    }
 }

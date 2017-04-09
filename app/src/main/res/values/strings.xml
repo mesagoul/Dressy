@@ -30,4 +30,11 @@
     <string name="ward_clothe_title">Mes habits</string>
     <string name="ward_robe_clothes_add">Ajouter une tenue</string>
     <string name="ward_robe_clothe_add">Ajouter un habit</string>
+    <string name="name">Nom</string>
+    <string name="color">Couleur</string>
+    <string name="reference">Reference</string>
+    <string name="type">Type</string>
+    <string name="brand">Marque</string>
+    <string name="material">Matière</string>
+    <string name="partner">Partenaire</string>
 </resources>

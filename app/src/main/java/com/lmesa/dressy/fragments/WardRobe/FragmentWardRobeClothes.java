@@ -4,6 +4,7 @@ package com.lmesa.dressy.fragments.WardRobe;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.GridView;
 
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
+import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
 
@@ -20,7 +22,7 @@ import java.util.ArrayList;
  * Created by Lucas on 09/04/2017.
  */
 
-public class FragmentWardRobeClothes extends Fragment {
+public class FragmentWardRobeClothes extends Fragment implements WardRobeListener {
     private GridView gridView;
     private ArrayList<Clothes> listClothes;
     @Nullable
@@ -67,9 +69,16 @@ public class FragmentWardRobeClothes extends Fragment {
         }
         // end banana
 
+        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getContext(),listClothes);
+        adapterWardRobeClothes.setListener(this);
+        gridView.setAdapter(adapterWardRobeClothes);
 
-        gridView.setAdapter(new AdapterWardRobeClothes(getContext(),listClothes));
 
+    }
 
+    @Override
+    public void loadDetail(int position) {
+        Clothes aClothe = listClothes.get(position);
+        Log.d("TATA","LOAD TENUES");
     }
 }
