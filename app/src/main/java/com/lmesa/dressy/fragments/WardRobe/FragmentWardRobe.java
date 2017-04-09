@@ -34,7 +34,8 @@ public class FragmentWardRobe extends Fragment implements PagerViewListener {
     }
 
     @Override
-    public ArrayList<Fragment> initFragmentsForPagerView(ArrayList<Fragment> listFragments) {
+    public ArrayList<Fragment> initFragmentsForPagerView() {
+        ArrayList<Fragment>  listFragments = new ArrayList<Fragment>();
         FragmentWardRobeClothes fragmentWardRobeClothes = new FragmentWardRobeClothes();
         FragmentWardRobeClothe fragmentWardRobeClothe = new FragmentWardRobeClothe();
         listFragments.add(fragmentWardRobeClothes);

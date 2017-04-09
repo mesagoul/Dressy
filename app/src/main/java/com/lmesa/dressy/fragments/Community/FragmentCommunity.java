@@ -34,7 +34,8 @@ public class FragmentCommunity extends Fragment implements PagerViewListener {
     }
 
     @Override
-    public ArrayList<Fragment> initFragmentsForPagerView(ArrayList<Fragment> listFragments) {
+    public ArrayList<Fragment> initFragmentsForPagerView() {
+        ArrayList<Fragment> listFragments = new ArrayList<Fragment>();
         FragmentCommunityNews fragmentCommunityNews = new FragmentCommunityNews();
         FragmentCommunityTop fragmentCommunityTop = new FragmentCommunityTop();
         listFragments.add(fragmentCommunityNews);

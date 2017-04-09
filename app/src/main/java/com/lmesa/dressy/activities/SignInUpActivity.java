@@ -39,7 +39,8 @@ public class SignInUpActivity extends FragmentActivity implements PagerViewListe
     }
 
     @Override
-    public ArrayList<Fragment> initFragmentsForPagerView(ArrayList<Fragment> listFragments) {
+    public ArrayList<Fragment> initFragmentsForPagerView() {
+        ArrayList<Fragment>  listFragments = new ArrayList<Fragment>();
         FragmentSignIn fragmentSignIn = new FragmentSignIn();
         FragmentSignUp fragmentSignUp = new FragmentSignUp();
         listFragments.add(fragmentSignIn);

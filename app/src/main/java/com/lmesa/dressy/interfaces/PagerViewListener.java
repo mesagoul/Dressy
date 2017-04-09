@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public interface PagerViewListener {
-    ArrayList<Fragment> initFragmentsForPagerView(ArrayList<Fragment> listFragments);
+    ArrayList<Fragment> initFragmentsForPagerView();
     void loadFragmentViewPager();
     String[] initTitlesForPagerView();
 }

@@ -47,7 +47,7 @@ public class FragmentPagerView extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listFragments = listener.initFragmentsForPagerView(listFragments);
+        listFragments = listener.initFragmentsForPagerView();
         tabTitles = listener.initTitlesForPagerView();
         mPager.setPageTransformer(true,new ZoomOutPageTransformer());
         mPagerAdapter = new ScreenSlidePagerAdapter(getActivity().getSupportFragmentManager(), listFragments,tabTitles);
