@@ -24,4 +24,10 @@
     <string name="from">Par</string>
     <string name="comm_detail_description">Description</string>
     <string name="comm_detail_cloth_in_clothes">Les habits de la tenue</string>
+    <string name="comm_title">Communauté</string>
+    <string name="armory_title">Mon armoire</string>
+    <string name="ward_clothes_title">Mes Tenues</string>
+    <string name="ward_clothe_title">Mes habits</string>
+    <string name="ward_robe_clothes_add">Ajouter une tenue</string>
+    <string name="ward_robe_clothe_add">Ajouter un habit</string>
 </resources>

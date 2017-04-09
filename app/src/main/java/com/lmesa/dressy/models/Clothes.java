@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Lucas on 08/04/2017.
  */
 
-public class Clothes {
+public class Clothes extends Object {
 
     private String urlImage;
     private ArrayList<Clothe> listClothe;

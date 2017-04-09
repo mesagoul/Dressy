@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.fragments.Community.FragmentCommunity;
+import com.lmesa.dressy.helpers.Drawer;
 
 /**
  * Created by mac13 on 03/04/2017.
@@ -16,6 +17,7 @@ import com.lmesa.dressy.fragments.Community.FragmentCommunity;
 
 public class MainActivity extends FragmentActivity{
     private Toolbar toolbar;
+    private Drawer drawer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +25,19 @@ public class MainActivity extends FragmentActivity{
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setToolbarName(getResources().getString(R.string.app_name));
         loadNewFragment(new FragmentCommunity(), false, true);
+        drawer = new Drawer(this,toolbar);
+        drawer.loadDrawer();
 
     }
     public void setToolbarName(String name){
         this.toolbar.setTitle(name);
     }
 
-    public void onBackPressed() {}
+    public void onBackPressed() {
+        if(drawer != null && drawer.isOpen()){
+            drawer.closeDrawer();
+        }
+    }
 
 
 
