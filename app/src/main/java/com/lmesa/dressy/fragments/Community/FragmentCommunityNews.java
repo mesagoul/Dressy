@@ -44,9 +44,47 @@ public class FragmentCommunityNews extends Fragment implements CommunityListener
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // WIthout APi for the moment, like a banana
+        ArrayList<Clothe> listClothe = new ArrayList<Clothe>();
+        Clothe clothe = new Clothe(
+                "Name",
+                "blue",
+                "noReference",
+                "http://blzjeans.com/8831-29091-thickbox/tee-shirt-vert-homme-tendance-et-fashion-lenny-and-loyd.jpg",
+                "category",
+                "brand",
+                "material"
+        );
+
+        Clothe clothe2 = new Clothe(
+                "Name",
+                "Jaune",
+                "noReference",
+                "http://i2.cdscdn.com/pdt2/1/4/1/1/300x300/mp02972141/rw/pantalon-elastique-zip-couleur-pure-femme-jaune.jpg",
+                "category",
+                "brand",
+                "material"
+        );
+        listClothe.add(clothe);
+        listClothe.add(clothe2);
+        listClothe.add(clothe);
+        listClothe.add(clothe2);
+
         for(Integer i = 0 ; i<= 50 ; i++){
-            listPosts.add(new Post("Lucas"+i.toString(),"Ma super tenue","Ma super description",10, new Clothes("https://images.asos-media.com/products/asos-chemise-ultra-ajustee-a-carreaux-style-bucheron/7307603-1-burgundy?$XL$", new ArrayList<Clothe>())));
+            listPosts.add(
+                    new Post(
+                            "Lucas"+i.toString(),
+                            "Ma super tenue",
+                            "Ma super description",
+                            10,
+                            new Clothes(
+                                    "https://images.asos-media.com/products/asos-chemise-ultra-ajustee-a-carreaux-style-bucheron/7307603-1-burgundy?$XL$",
+                                    listClothe
+                            )
+                    )
+            );
         }
+        // end banana
         communityNewsList.setLayoutManager(new LinearLayoutManager(getContext()));
         AdapterCommunityList adapter = new AdapterCommunityList(getContext(), listPosts, R.layout.adapter_community_list);
         adapter.setListener(this);

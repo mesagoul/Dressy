@@ -62,6 +62,7 @@
         android:padding="10dp">
         <TextView
             android:padding="5dp"
+            style="@style/title"
             android:text="@string/comm_detail_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -70,11 +71,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/community_detail_desc"/>
-
-
-        <GridView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/title"
+            android:text="@string/comm_detail_cloth_in_clothes"
+            />
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
             android:id="@+id/community_detail_clothe_list"
             android:columnWidth="90dp"
             android:numColumns="auto_fit"
@@ -84,8 +89,6 @@
             android:gravity="center">
 
         </GridView>
-
     </LinearLayout>
-
 </LinearLayout>
 </ScrollView>

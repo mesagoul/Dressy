@@ -8,18 +8,28 @@ public class Clothe {
     private String cloth_name;
     private String cloth_color;
     private String cloth_reference;
+    private String cloth_urlImage;
     private String cloth_category;
     private String cloth_brand;
     private String cloth_material;
     private String cloth_partner;
 
-    public Clothe(String cloth_name, String cloth_color, String cloth_reference, String cloth_category, String cloth_brand, String cloth_material) {
+    public Clothe(String cloth_name, String cloth_color, String cloth_reference, String cloth_urlImage, String cloth_category, String cloth_brand, String cloth_material) {
         this.cloth_name = cloth_name;
         this.cloth_color = cloth_color;
         this.cloth_reference = cloth_reference;
+        this.cloth_urlImage = cloth_urlImage;
         this.cloth_category = cloth_category;
         this.cloth_brand = cloth_brand;
         this.cloth_material = cloth_material;
+    }
+
+    public String getCloth_urlImage() {
+        return cloth_urlImage;
+    }
+
+    public void setCloth_urlImage(String cloth_urlImage) {
+        this.cloth_urlImage = cloth_urlImage;
     }
 
     public String getCloth_name() {

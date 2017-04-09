@@ -2,6 +2,7 @@ package com.lmesa.dressy.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
+import com.lmesa.dressy.adapters.ImageAdapter;
 import com.lmesa.dressy.models.Post;
 
 /**
@@ -45,18 +47,18 @@ public class ActivityCommunityDetail extends AppCompatActivity {
         score = (TextView) findViewById(R.id.community_detail_score);
 
         gridview = (GridView) findViewById(R.id.community_detail_clothe_list);
-        //TODO create adapter Image -> https://developer.android.com/guide/topics/ui/layout/gridview.html
-        //gridview.setAdapter(new ImageAdapter(this));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         gson = new Gson();
-        Post aPost = gson.fromJson(getIntent().getStringExtra("post"), Post.class);
+        final Post aPost = gson.fromJson(getIntent().getStringExtra("post"), Post.class);
         title.setText(aPost.getTitle());
         username.setText(aPost.getUsername());
         desc.setText(aPost.getDesc());
         score.setText(aPost.getScore().toString());
+
+        gridview.setAdapter(new ImageAdapter(this, aPost.getClothes().getListClothe()));
 
         Glide
                 .with(getApplicationContext())
@@ -64,6 +66,15 @@ public class ActivityCommunityDetail extends AppCompatActivity {
                 .centerCrop()
                 .crossFade()
                 .into(image);
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ActivityImageFullScreen.class);
+                i.putExtra("image",aPost.getClothes().getUrlImage());
+                startActivity(i);
+            }
+        });
     }
 
     @Override
