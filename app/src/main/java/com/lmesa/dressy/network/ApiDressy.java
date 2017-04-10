@@ -64,4 +64,26 @@ public class ApiDressy{
             }
         });
     }
+
+
+    /**
+     * Connect user account
+     * @param user
+     */
+    public void connectUser(User user){
+        Call<String> request = service.connectUserAccount(user);
+        request.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(activity.getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

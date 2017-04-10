@@ -3,7 +3,6 @@ package com.lmesa.dressy.fragments.Sign;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.lmesa.dressy.R;
+import com.lmesa.dressy.helpers.FormValidator;
 import com.lmesa.dressy.models.User;
 import com.lmesa.dressy.network.ApiDressy;
 
@@ -29,6 +29,7 @@ public class FragmentSignUp extends Fragment {
     private TextView country;
 
     private ApiDressy apiDressy;
+    private FormValidator formValidator;
 
     @Nullable
     @Override
@@ -42,6 +43,10 @@ public class FragmentSignUp extends Fragment {
         password = (TextView) v.findViewById(R.id.sign_up_password);
         country = (TextView) v.findViewById(R.id.sign_up_country);
 
+        formValidator = new FormValidator();
+
+        mail.setError(null);
+
         apiDressy = new ApiDressy(getActivity());
         return v;
     }
@@ -52,9 +57,33 @@ public class FragmentSignUp extends Fragment {
         btn_inscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = new User(first_name.getText().toString(),last_name.getText().toString(),mail.getText().toString(),pseudo.getText().toString(),country.getText().toString(),password.getText().toString());
-                apiDressy.createUser(user);
+                if(isValidUser()){
+                    User user = new User(first_name.getText().toString(),last_name.getText().toString(),mail.getText().toString(),pseudo.getText().toString(),country.getText().toString(),password.getText().toString());
+                    apiDressy.createUser(user);
+                }
             }
         });
+    }
+
+    private boolean isValidUser() {
+        View focusView = null;
+        boolean cancel = false;
+        // Check for a valid email address.
+        if ( mail.getText().toString().trim().length() == 0) {
+            mail.setError(getString(R.string.error_field_required));
+            focusView = mail;
+            cancel = true;
+        } else if (!formValidator.isEmailValid(mail.getText().toString())) {
+            mail.setError(getString(R.string.error_invalid_email));
+            focusView = mail;
+            cancel = true;
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.lmesa.dressy.models;
 
+import android.widget.EditText;
+
 /**
  * Created by Lucas on 08/04/2017.
  */
@@ -22,6 +24,12 @@ public class User {
         this.user_pseudo = user_pseudo;
         this.user_country = user_country;
     }
+
+    public User(String mail, String password) {
+        this.user_mail = mail;
+        this.user_password = password;
+    }
+
 
     public String getUser_fisrtName() {
         return user_fisrtName;
