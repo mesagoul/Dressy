@@ -5,38 +5,38 @@ package com.lmesa.dressy.models;
  */
 
 public class User {
-    private String user_name;
-    private String user_firstname;
-    private String user_mail;
+    private String user_pseudo;
     private String user_password;
-    private String user_login;
-    private String user_created_at;
+    private String user_fisrtName;
+    private String user_lastName;
+    private String user_mail;
     private String user_country;
+    private String user_created_at;
+    private String user_type;
 
-    public User(String user_name, String user_firstname, String user_mail, String user_password, String user_login, String user_created_at, String user_country) {
-        this.user_name = user_name;
-        this.user_firstname = user_firstname;
+    public User(String user_fisrtName, String user_lastName, String user_mail, String user_pseudo, String user_country, String user_password) {
+        this.user_fisrtName = user_fisrtName;
+        this.user_lastName = user_lastName;
         this.user_mail = user_mail;
         this.user_password = user_password;
-        this.user_login = user_login;
-        this.user_created_at = user_created_at;
+        this.user_pseudo = user_pseudo;
         this.user_country = user_country;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUser_fisrtName() {
+        return user_fisrtName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUser_fisrtName(String user_fisrtName) {
+        this.user_fisrtName = user_fisrtName;
     }
 
-    public String getUser_firstname() {
-        return user_firstname;
+    public String getUser_lastName() {
+        return user_lastName;
     }
 
-    public void setUser_firstname(String user_firstname) {
-        this.user_firstname = user_firstname;
+    public void setUser_lastName(String user_lastName) {
+        this.user_lastName = user_lastName;
     }
 
     public String getUser_mail() {
@@ -55,12 +55,12 @@ public class User {
         this.user_password = user_password;
     }
 
-    public String getUser_login() {
-        return user_login;
+    public String getUser_pseudo() {
+        return user_pseudo;
     }
 
-    public void setUser_login(String user_login) {
-        this.user_login = user_login;
+    public void setUser_pseudo(String user_pseudo) {
+        this.user_pseudo = user_pseudo;
     }
 
     public String getUser_created_at() {

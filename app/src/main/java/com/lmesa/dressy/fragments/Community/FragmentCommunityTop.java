@@ -47,7 +47,7 @@ public class FragmentCommunityTop extends Fragment implements CommunityListener 
         super.onViewCreated(view, savedInstanceState);
         // for the moment, just create Post like a banana
         for(Integer i = 0 ; i <= 10 ; i++){
-            listPosts.add(new Post("Lucas"+i.toString(),"Ma super tenue","Ma super description",i*2,new Clothes("http://blzjeans.com/15110-51030-thickbox/t-shirt-bleu-royal-uni-sixth-june.jpg", new ArrayList<Clothe>())));
+            listPosts.add(new Post("Lucas"+i.toString(),"Ma super tenue","Ma super description",new Clothes("http://blzjeans.com/15110-51030-thickbox/t-shirt-bleu-royal-uni-sixth-june.jpg", new ArrayList<Clothe>(),i*2)));
         }
         Collections.reverse(listPosts);
         // END

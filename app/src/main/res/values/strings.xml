@@ -37,4 +37,8 @@
     <string name="brand">Marque</string>
     <string name="material">Matière</string>
     <string name="partner">Partenaire</string>
+    <string name="sign_last_name">Nom</string>
+    <string name="sign_pseudo">Pseudo</string>
+    <string name="sign_country">Pays</string>
+    <string name="error_sign_up">Erreur lors de la creation de votre compte, SVP, réessayer plus tard</string>
 </resources>

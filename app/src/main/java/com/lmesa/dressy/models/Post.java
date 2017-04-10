@@ -8,14 +8,12 @@ public class Post {
     private String username;
     private String title;
     private String desc;
-    private Integer score;
     private Clothes clothes;
 
-    public Post(String username, String title, String desc, Integer score, Clothes clothes) {
+    public Post(String username, String title, String desc, Clothes clothes) {
         this.username = username;
         this.title = title;
         this.desc = desc;
-        this.score = score;
         this.clothes = clothes;
     }
 
@@ -40,10 +38,6 @@ public class Post {
     }
 
 
-    public Integer getScore() {
-        return score;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -56,7 +50,4 @@ public class Post {
         this.desc = desc;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
-    }
 }

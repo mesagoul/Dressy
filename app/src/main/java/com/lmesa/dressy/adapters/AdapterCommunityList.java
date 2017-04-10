@@ -46,7 +46,7 @@ public class AdapterCommunityList extends RecyclerView.Adapter<AdapterCommunityL
     public void onBindViewHolder(AdapterCommunityList.CommunityViewHolder holder, int position) {
         final Post aPost = listPosts.get(position);
         holder.username.setText(aPost.getUsername());
-        holder.points.setText(aPost.getScore().toString());
+        holder.points.setText(aPost.getClothes().getScore().toString());
         holder.title.setText(aPost.getTitle());
         holder.desc.setText(aPost.getDesc());
 

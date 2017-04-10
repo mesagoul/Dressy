@@ -28,6 +28,11 @@
         </activity>
         <activity
             android:configChanges="orientation|screenSize"
+            android:name=".activities.ActivityWardRobeClothesDetail"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:configChanges="orientation|screenSize"
             android:name=".activities.ActivityWardRobeClotheDetail"
             android:label="@string/app_name">
         </activity>

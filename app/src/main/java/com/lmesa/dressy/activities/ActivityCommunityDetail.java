@@ -51,7 +51,8 @@ public class ActivityCommunityDetail extends AppCompatActivity {
         title.setText(aPost.getTitle());
         username.setText(aPost.getUsername());
         desc.setText(aPost.getDesc());
-        score.setText(aPost.getScore().toString());
+        score.setText(aPost.getClothes().getScore().toString());
+
 
         gridview.setAdapter(new ImageAdapter(this, aPost.getClothes().getListClothe()));
 

@@ -76,10 +76,11 @@ public class FragmentCommunityNews extends Fragment implements CommunityListener
                             "Lucas"+i.toString(),
                             "Ma super tenue",
                             "Ma super description",
-                            10,
+
                             new Clothes(
                                     "https://images.asos-media.com/products/asos-chemise-ultra-ajustee-a-carreaux-style-bucheron/7307603-1-burgundy?$XL$",
-                                    listClothe
+                                    listClothe,
+                                    10
                             )
                     )
             );

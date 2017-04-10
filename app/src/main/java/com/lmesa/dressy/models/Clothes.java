@@ -10,10 +10,12 @@ public class Clothes{
 
     private String urlImage;
     private ArrayList<Clothe> listClothe;
+    private Integer score;
 
-    public Clothes(String urlImage, ArrayList<Clothe> listClothe) {
+    public Clothes(String urlImage, ArrayList<Clothe> listClothe, Integer score) {
         this.urlImage = urlImage;
         this.listClothe = listClothe;
+        this.score = score;
     }
 
     public String getUrlImage() {
@@ -30,5 +32,13 @@ public class Clothes{
 
     public void setListClothe(ArrayList<Clothe> listClothe) {
         this.listClothe = listClothe;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getScore() {
+        return score;
     }
 }

@@ -39,8 +39,6 @@ public class MainActivity extends FragmentActivity{
         }
     }
 
-
-
     // load new fragment to show in activity
     public void loadNewFragment(Fragment newFragment , boolean isCloseFragment, boolean isFirstFragment){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
