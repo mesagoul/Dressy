@@ -74,19 +74,21 @@ public class FragmentSignIn extends Fragment {
     private boolean isValidUser() {
         View focusView = null;
         boolean cancel = false;
-        // Check for a valid email address.
+        // Check for if mail is empty
         if ( email.getText().toString().trim().length() == 0) {
             email.setError(getString(R.string.error_field_required));
             focusView = email;
             cancel = true;
+            // Check for a valid email address.
         } else if (!formValidator.isEmailValid(email.getText().toString())) {
             email.setError(getString(R.string.error_invalid_email));
             focusView = email;
             cancel = true;
-        } else if (!formValidator.isEmailValid(password.getText().toString())) {
+        }else if ( password.getText().toString().trim().length() == 0) {
             password.setError(getString(R.string.error_field_required));
             focusView = password;
             cancel = true;
+            // Check for a valid email address.
         }
 
         if (cancel) {
