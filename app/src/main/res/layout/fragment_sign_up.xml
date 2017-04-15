@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical" android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:padding="10dp">
-<android.support.design.widget.TextInputLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
-<EditText
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:id="@+id/sign_up_last_name"
-android:hint="@string/sign_last_name"/>
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_up_last_name"
+            android:hint="@string/sign_last_name"/>
 
-</android.support.design.widget.TextInputLayout>
-<android.support.design.widget.TextInputLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
-<EditText
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:id="@+id/sign_up_first_name"
-android:hint="@string/sign_user_first_name"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_up_first_name"
+            android:hint="@string/sign_user_first_name"/>
 
-</android.support.design.widget.TextInputLayout>
-<android.support.design.widget.TextInputLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
-<EditText
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:inputType="textEmailAddress"
-android:id="@+id/sign_up_mail"
-android:hint="@string/sign_mail"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:id="@+id/sign_up_mail"
+            android:hint="@string/sign_mail"/>
 
-</android.support.design.widget.TextInputLayout>
-<android.support.design.widget.TextInputLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
-<EditText
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:id="@+id/sign_up_country"
-android:hint="@string/sign_country"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_up_country"
+            android:hint="@string/sign_country"/>
 
-</android.support.design.widget.TextInputLayout>
-<android.support.design.widget.TextInputLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<EditText
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:id="@+id/sign_up_pseudo"
-android:hint="@string/sign_pseudo"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_up_pseudo"
+            android:hint="@string/sign_pseudo"/>
 
-</android.support.design.widget.TextInputLayout>
+    </android.support.design.widget.TextInputLayout>
 
-<android.support.design.widget.TextInputLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
-<EditText
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:id="@+id/sign_up_password"
-android:inputType="textPassword"
-android:hint="@string/sign_password"/>
-</android.support.design.widget.TextInputLayout>
-<Button
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:id="@+id/btn_sign_up"
-android:background="@color/colorPrimary"
-android:textColor="@color/colorLight"
-android:text="@string/to_sign_up"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_up_password"
+            android:inputType="textPassword"
+            android:hint="@string/sign_password"/>
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_sign_up"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorLight"
+        android:text="@string/to_sign_up"/>
 
 
 </LinearLayout>

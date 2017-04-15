@@ -18,7 +18,6 @@ import retrofit2.http.Path;
 
 public interface Service {
 
-    String baseUrl = "";
 
     // USERS
     @POST("v1/register")
@@ -43,7 +42,8 @@ public interface Service {
     // Add CLOTHE
     @POST("v1/addClothe")
     Call<Clothe> addClothe(
-            @Body User user
+            @Header("x-access-token") String token,
+            @Body Clothe clothe
     );
 
 

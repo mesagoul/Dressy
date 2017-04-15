@@ -8,12 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.fragments.Community.FragmentCommunity;
-import com.lmesa.dressy.helpers.CustomDialog;
+import com.lmesa.dressy.helpers.MatchDialog;
 import com.lmesa.dressy.helpers.Drawer;
 
 /**
@@ -39,9 +38,8 @@ public class MainActivity extends FragmentActivity{
             @Override
             public void onClick(View v) {
                 //TODO
-                Log.d("eee","Click button Floattant");
-                CustomDialog customDialog = new CustomDialog(activity);
-                customDialog.loadDialog();
+                MatchDialog matchDialog = new MatchDialog(activity);
+                matchDialog.loadDialog();
             }
         });
 

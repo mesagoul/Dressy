@@ -114,16 +114,18 @@ public class ApiDressy{
     }
     /**
      * Add clothe for user
-     * @param user
+     * @param clothe
      */
-    public void addClothe(User user){
-        Call<Clothe> request = service.addClothe(user);
+    public void addClothe(Clothe clothe){
+        Call<Clothe> request = service.addClothe(getAccesToken(),clothe);
         request.enqueue(new Callback<Clothe>() {
             @Override
             public void onResponse(Call<Clothe> call, Response<Clothe> response) {
                 if(response.isSuccessful()){
                     //TODO
+                    //listener.onCreateClothe();
                 }
+                listener.onCreateClothe();
             }
 
             @Override

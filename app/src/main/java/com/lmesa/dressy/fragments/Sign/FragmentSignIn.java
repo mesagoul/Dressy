@@ -55,7 +55,7 @@ public class FragmentSignIn extends Fragment {
             public void onClick(View v) {
                 if (isValidUser()){
                     User user = new User(email.getText().toString(),password.getText().toString());
-                    apiDressy.connectUser(user);
+                    //apiDressy.connectUser(user);
                     Intent toMainActivity = new Intent(getActivity(), MainActivity.class);
                     startActivity(toMainActivity);
                 }

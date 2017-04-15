@@ -1,5 +1,7 @@
 package com.lmesa.dressy.models;
 
+import android.widget.ImageView;
+
 /**
  * Created by Lucas on 08/04/2017.
  */
@@ -23,6 +25,8 @@ public class Clothe{
         this.cloth_brand = cloth_brand;
         this.cloth_material = cloth_material;
     }
+
+
 
     public String getCloth_urlImage() {
         return cloth_urlImage;

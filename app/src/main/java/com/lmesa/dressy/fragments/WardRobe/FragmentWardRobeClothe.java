@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.activities.ActivityCommunityDetail;
+import com.lmesa.dressy.activities.ActivityCreateClothe;
 import com.lmesa.dressy.activities.ActivityWardRobeClotheDetail;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
 import com.lmesa.dressy.interfaces.WardRobeListener;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 public class FragmentWardRobeClothe extends Fragment implements WardRobeListener {
     private GridView gridView;
     private ArrayList<Clothe> listClothe;
+    private Button btn_add;
     private Gson gson;
     @Nullable
     @Override
@@ -36,6 +39,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_wardrobe_clothe,container,false);
         gridView = (GridView) v.findViewById(R.id.wardrobe_clothes_list);
         listClothe = new ArrayList<Clothe>();
+        btn_add = (Button) v.findViewById(R.id.btn_add);
         gson = new Gson();
         return v;
     }
@@ -43,6 +47,14 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toAddClothe = new Intent(getContext(), ActivityCreateClothe.class);
+                startActivity(toAddClothe);
+            }
+        });
 
         // banana
         Clothe clothe = new Clothe(

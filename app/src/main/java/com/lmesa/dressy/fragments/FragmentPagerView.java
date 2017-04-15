@@ -40,7 +40,6 @@ public class FragmentPagerView extends Fragment {
         mPager = (ViewPager) v.findViewById(R.id.pager_view_pager);
         tabLayout = (TabLayout) v.findViewById(R.id.pager_view_tabs);
         listFragments = new ArrayList<Fragment>();
-
         return v;
     }
 

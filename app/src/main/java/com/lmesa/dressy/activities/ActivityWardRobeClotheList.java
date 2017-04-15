@@ -136,7 +136,7 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     @Override
     public void onGetSimilarity() {
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(getApplicationContext(),"Test effectué",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
         finish(); // for the moment
         // TODO
     }

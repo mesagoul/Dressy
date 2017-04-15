@@ -13,15 +13,16 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.lmesa.dressy.R;
+import com.lmesa.dressy.activities.ActivityCreateClothe;
 import com.lmesa.dressy.activities.ActivityWardRobeClotheList;
 
 /**
  * Created by Lucas on 15/04/2017.
  */
 
-public class CustomDialog{
+public class MatchDialog {
     private Activity activity;
-    public CustomDialog(Activity activity){
+    public MatchDialog(Activity activity){
         this.activity = activity;
     }
 
@@ -65,7 +66,9 @@ public class CustomDialog{
                             Intent toClotheListActivity = new Intent(activity, ActivityWardRobeClotheList.class);
                             activity.startActivity(toClotheListActivity);
                         }else if (which == 1){
-                            Log.d("DEBUG", "SELECT PHONE");
+                            Intent toCreateActivity = new Intent(activity, ActivityCreateClothe.class);
+                            toCreateActivity.putExtra("match","true");
+                            activity.startActivity(toCreateActivity);
                         }
                     }
                 });

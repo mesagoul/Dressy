@@ -17,6 +17,7 @@
         android:gravity="center">
     </GridView>
     <Button
+        android:id="@+id/btn_add"
         android:textColor="@color/colorLight"
         android:text="@string/ward_robe_clothe_add"
         android:layout_width="match_parent"
