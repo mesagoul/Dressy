@@ -1,24 +1,27 @@
-package com.lmesa.dressy.fragments.WardRobe;
-
+package com.lmesa.dressy.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
-import com.lmesa.dressy.activities.ActivityCommunityDetail;
-import com.lmesa.dressy.activities.ActivityWardRobeClotheDetail;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
+import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
-import com.lmesa.dressy.models.Clothes;
+import com.lmesa.dressy.models.User;
+import com.lmesa.dressy.network.ApiDressy;
+import com.lmesa.dressy.network.Service;
 
 import java.util.ArrayList;
 
@@ -26,23 +29,24 @@ import java.util.ArrayList;
  * Created by Lucas on 09/04/2017.
  */
 
-public class FragmentWardRobeClothe extends Fragment implements WardRobeListener {
+public class ActivityWardRobeClotheList extends AppCompatActivity implements WardRobeListener, ServiceListener {
     private GridView gridView;
     private ArrayList<Clothe> listClothe;
+    private ProgressBar progressBar;
     private Gson gson;
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_wardrobe_clothe,container,false);
-        gridView = (GridView) v.findViewById(R.id.wardrobe_clothes_list);
-        listClothe = new ArrayList<Clothe>();
-        gson = new Gson();
-        return v;
-    }
+    private ApiDressy apiDressy;
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_wardrobe_clothe);
+        gridView = (GridView) findViewById(R.id.wardrobe_clothes_list);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        listClothe = new ArrayList<Clothe>();
+        apiDressy = new ApiDressy(this);
+        apiDressy.setListener(this);
+        gson = new Gson();
+
 
         // banana
         Clothe clothe = new Clothe(
@@ -83,16 +87,57 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
             listClothe.add(clothe);
         }
         // banana
-        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getContext(),listClothe);
+
+
+        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getApplicationContext(),listClothe);
         adapterWardRobeClothes.setListener(this);
         gridView.setAdapter(adapterWardRobeClothes);
+
+
     }
 
     @Override
     public void loadDetail(int position) {
-        Clothe aClothe = listClothe.get(position);
-        Intent i = new Intent(getActivity(), ActivityWardRobeClotheDetail.class);
-        i.putExtra("clothe", gson.toJson(aClothe));
-        startActivity(i);
+        gridView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        apiDressy.getSimilarity(listClothe.get(position));
+    }
+
+    @Override
+    public void onGetUser() {
+
+    }
+
+    @Override
+    public void onCreateUser() {
+
+    }
+
+    @Override
+    public void onGetClothe() {
+
+    }
+
+    @Override
+    public void onCreateClothe() {
+
+    }
+
+    @Override
+    public void onGetClothes() {
+
+    }
+
+    @Override
+    public void onCreateClothes() {
+
+    }
+
+    @Override
+    public void onGetSimilarity() {
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getApplicationContext(),"Test effectué",Toast.LENGTH_SHORT).show();
+        finish(); // for the moment
+        // TODO
     }
 }

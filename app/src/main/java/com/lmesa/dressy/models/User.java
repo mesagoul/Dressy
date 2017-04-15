@@ -1,7 +1,5 @@
 package com.lmesa.dressy.models;
 
-import android.widget.EditText;
-
 /**
  * Created by Lucas on 08/04/2017.
  */
@@ -15,6 +13,7 @@ public class User {
     private String user_country;
     private String user_created_at;
     private String user_type;
+    private String api_key;
 
     public User(String user_fisrtName, String user_lastName, String user_mail, String user_pseudo, String user_country, String user_password) {
         this.user_fisrtName = user_fisrtName;
@@ -30,6 +29,14 @@ public class User {
         this.user_password = password;
     }
 
+
+    public String getApi_key() {
+        return api_key;
+    }
+
+    public void setApi_key(String api_key) {
+        this.api_key = api_key;
+    }
 
     public String getUser_fisrtName() {
         return user_fisrtName;

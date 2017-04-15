@@ -2,10 +2,14 @@ package com.lmesa.dressy.network;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.util.StringBuilderPrinter;
 import android.widget.Toast;
 
 import com.lmesa.dressy.R;
+import com.lmesa.dressy.activities.ActivityWardRobeClotheList;
+import com.lmesa.dressy.interfaces.ServiceListener;
+import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothes;
+import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.User;
 
 import retrofit2.Call;
@@ -20,9 +24,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiDressy{
     private Activity activity;
-    private String token;
     private Retrofit retrofit;
     private Service service;
+    private ServiceListener listener;
 
     public ApiDressy(Activity activity){
         this.activity = activity;
@@ -35,8 +39,7 @@ public class ApiDressy{
 
     public String getAccesToken(){
         SharedPreferences settings = this.activity.getSharedPreferences("token", 0);
-        token = settings.getString("token", new String());
-        return token;
+        return settings.getString("token", new String());
     }
 
 
@@ -45,21 +48,21 @@ public class ApiDressy{
      * @param user
      */
     public void createUser(User user){
-        Call<String> request = service.createUserAccount(user);
-        request.enqueue(new Callback<String>() {
+        Call<User> request = service.createUserAccount(user);
+        request.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     SharedPreferences settings = activity.getSharedPreferences("token", 0);
                     SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("token", response.body());
+                    editor.putString("token", response.body().getApi_key());
                     editor.commit();
-                    Toast.makeText(activity.getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
             }
         });
@@ -71,19 +74,133 @@ public class ApiDressy{
      * @param user
      */
     public void connectUser(User user){
-        Call<String> request = service.connectUserAccount(user);
-        request.enqueue(new Callback<String>() {
+        Call<User> request = service.connectUserAccount(user);
+        request.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(activity.getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    /**
+     * Get clothe from user
+     * @param user
+     */
+    public void getClothe(User user){
+        Call<Clothes> request = service.getClothe(user);
+        request.enqueue(new Callback<Clothes>() {
+            @Override
+            public void onResponse(Call<Clothes> call, Response<Clothes> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                    // response.body().getListClothe();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Clothes> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    /**
+     * Add clothe for user
+     * @param user
+     */
+    public void addClothe(User user){
+        Call<Clothe> request = service.addClothe(user);
+        request.enqueue(new Callback<Clothe>() {
+            @Override
+            public void onResponse(Call<Clothe> call, Response<Clothe> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Clothe> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    /**
+     * Get clothes from user
+     * @param user
+     */
+    public void getClothes(User user){
+        Call<ListClothes> request = service.getClothes(user);
+        request.enqueue(new Callback<ListClothes>() {
+            @Override
+            public void onResponse(Call<ListClothes> call, Response<ListClothes> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListClothes> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    /**
+     * Add clothes for user
+     * @param user
+     */
+    public void addClothes(User user){
+        Call<Clothes> request = service.addClothes(user);
+        request.enqueue(new Callback<Clothes>() {
+            @Override
+            public void onResponse(Call<Clothes> call, Response<Clothes> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Clothes> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    /**
+     * Get similarity between clothe user and this armory clothe
+     * @param @clothe
+     */
+    public void getSimilarity(Clothe clothe){
+        Call<Clothe> request = service.getSimilarityClothe(getAccesToken(),clothe);
+        request.enqueue(new Callback<Clothe>() {
+            @Override
+            public void onResponse(Call<Clothe> call, Response<Clothe> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                    //listener.onGetSimilarity();
+                }
+                listener.onGetSimilarity();
+            }
+
+            @Override
+            public void onFailure(Call<Clothe> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onGetSimilarity();
+            }
+        });
+    }
+
+    public void setListener(ServiceListener listener) {
+        this.listener = listener;
     }
 }
