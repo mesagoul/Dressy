@@ -58,7 +58,7 @@ public class ActivityWardRobeClothesDetail  extends AppCompatActivity implements
             }
         });
 
-        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getApplicationContext(),clothes.getListClothe());
+        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(this,clothes.getListClothe());
         adapterWardRobeClothes.setListener(this);
         gridView.setAdapter(adapterWardRobeClothes);
     }
@@ -75,5 +75,10 @@ public class ActivityWardRobeClothesDetail  extends AppCompatActivity implements
         Intent i = new Intent(getApplicationContext(), ActivityWardRobeClotheDetail.class);
         i.putExtra("clothe", gson.toJson(clothes.getListClothe().get(position)));
         startActivity(i);
+    }
+
+    @Override
+    public boolean onLongClick(int position) {
+        return false;
     }
 }

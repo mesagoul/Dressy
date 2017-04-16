@@ -7,9 +7,17 @@ package com.lmesa.dressy.interfaces;
 public interface ServiceListener {
     void onGetUser();
     void onCreateUser();
+
     void onGetClothe();
     void onCreateClothe();
+    void onDeleteClothe();
+    void onManageClothes();
+
     void onGetClothes();
     void onCreateClothes();
+    void onDeleteClothes();
+    void onManageClothe();
+
     void onGetSimilarity();
+
 }

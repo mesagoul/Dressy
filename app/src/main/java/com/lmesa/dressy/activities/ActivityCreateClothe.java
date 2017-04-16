@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe;
@@ -39,6 +41,8 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
     private ScrollView scrollView;
     private ProgressBar progressBar;
     private Bitmap imageBitmap;
+    private Clothe editClothe;
+    private Gson gson;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 
@@ -46,6 +50,7 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_clothe);
+        gson = new Gson();
         apiDressy = new ApiDressy(this);
         apiDressy.setListener(this);
         scrollView = (ScrollView) findViewById(R.id.view_create_clothe);
@@ -60,6 +65,24 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
         btn_save = (Button) findViewById(R.id.btn_save);
         if(isMatch()){
             btn_save.setText(getResources().getString(R.string.find_match));
+        }else if(isManage()){
+            btn_save.setText(getResources().getString(R.string.edit));
+        }
+
+        if(isManage()){
+            editClothe = gson.fromJson(getIntent().getStringExtra("editClothe"), Clothe.class);
+            nom.setText(editClothe.getCloth_name());
+            color.setText(editClothe.getCloth_color());
+            reference.setText(editClothe.getCloth_reference());
+            category.setText(editClothe.getCloth_category());
+            brand.setText(editClothe.getCloth_brand());
+            material.setText(editClothe.getCloth_material());
+            Glide
+                    .with(getApplicationContext())
+                    .load(editClothe.getCloth_urlImage())
+                    .centerCrop()
+                    .crossFade()
+                    .into(image);
         }
 
         if(isMatch()){
@@ -78,6 +101,12 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
                     progressBar.setVisibility(View.VISIBLE);
                     Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(),"",category.getText().toString(),brand.getText().toString(),material.getText().toString());
                     apiDressy.getSimilarity(clothe);
+
+                }else if(isManage()){
+                    scrollView.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(),"",category.getText().toString(),brand.getText().toString(),material.getText().toString());
+                    apiDressy.manageClothe(clothe);
 
                 }else{
                     scrollView.setVisibility(View.GONE);
@@ -103,6 +132,7 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
     public boolean isMatch(){
         return getIntent().getStringExtra("match") != null;
     }
+    public boolean isManage(){ return getIntent().getStringExtra("manage") != null; }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -137,6 +167,16 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
     }
 
     @Override
+    public void onDeleteClothe() {
+
+    }
+
+    @Override
+    public void onManageClothes() {
+
+    }
+
+    @Override
     public void onGetClothes() {
 
     }
@@ -144,6 +184,19 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
     @Override
     public void onCreateClothes() {
 
+    }
+
+    @Override
+    public void onDeleteClothes() {
+
+    }
+
+    @Override
+    public void onManageClothe() {
+        scrollView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getApplicationContext(),"Test Edit Clothe",Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override

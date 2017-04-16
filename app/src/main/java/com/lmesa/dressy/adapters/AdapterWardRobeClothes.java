@@ -1,15 +1,18 @@
 package com.lmesa.dressy.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.fragments.WardRobe.FragmentWardRobeClothe;
+import com.lmesa.dressy.helpers.MatchDialog;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
@@ -21,12 +24,14 @@ import java.util.ArrayList;
  */
 
 public class AdapterWardRobeClothes extends BaseAdapter {
+    private Activity activity;
     private Context context;
     private ArrayList<?> listClothes;
     private WardRobeListener listener;
 
-    public AdapterWardRobeClothes(Context context, ArrayList<?> listClothes) {
-        this.context = context;
+    public AdapterWardRobeClothes(Activity activity, ArrayList<?> listClothes) {
+        this.activity = activity;
+        this.context = activity.getApplicationContext();
         this.listClothes = listClothes;
     }
 
@@ -48,7 +53,6 @@ public class AdapterWardRobeClothes extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView imageView;
-
 
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
@@ -77,6 +81,14 @@ public class AdapterWardRobeClothes extends BaseAdapter {
                     .into(imageView);
         }
 
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(context,"Long click", Toast.LENGTH_SHORT).show();
+                return listener.onLongClick(position);
+            }
+        });
+
 
 
        imageView.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +97,8 @@ public class AdapterWardRobeClothes extends BaseAdapter {
                 listener.loadDetail(position);
             }
         });
+
+
 
 
 

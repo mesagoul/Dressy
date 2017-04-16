@@ -43,6 +43,11 @@ public class ApiDressy{
     }
 
 
+
+    // --------------------------------------------------------------------------------------------------
+    // ------------------------------------- USER -------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
+
     /**
      * Create user account
      * @param user
@@ -81,6 +86,7 @@ public class ApiDressy{
                 if(response.isSuccessful()){
                     Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
                 }
+                listener.onGetUser();
             }
 
             @Override
@@ -89,6 +95,11 @@ public class ApiDressy{
             }
         });
     }
+
+
+    // --------------------------------------------------------------------------------------------------
+    // ------------------------------------- CLOHTE -----------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
 
 
     /**
@@ -104,6 +115,7 @@ public class ApiDressy{
                     //TODO
                     // response.body().getListClothe();
                 }
+                listener.onGetClothe();
             }
 
             @Override
@@ -134,6 +146,54 @@ public class ApiDressy{
             }
         });
     }
+    /**
+     * Add clothe for user
+     * @param clothe
+     */
+    public void deleteClothe(Clothe clothe){
+        Call<Clothe> request = service.deleteClothe(getAccesToken(),clothe);
+        request.enqueue(new Callback<Clothe>() {
+            @Override
+            public void onResponse(Call<Clothe> call, Response<Clothe> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                }
+                listener.onDeleteClothe();
+            }
+
+            @Override
+            public void onFailure(Call<Clothe> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    /**
+     * Add clothe for user
+     * @param clothe
+     */
+    public void manageClothe(Clothe clothe){
+        Call<Clothe> request = service.manageClothe(getAccesToken(),clothe);
+        request.enqueue(new Callback<Clothe>() {
+            @Override
+            public void onResponse(Call<Clothe> call, Response<Clothe> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                }
+                listener.onManageClothe();
+            }
+
+            @Override
+            public void onFailure(Call<Clothe> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
+    // --------------------------------------------------------------------------------------------------
+    // ------------------------------------- CLOHTES ----------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
 
 
     /**
@@ -148,6 +208,7 @@ public class ApiDressy{
                 if(response.isSuccessful()){
                     //TODO
                 }
+                listener.onGetClothes();
             }
 
             @Override
@@ -158,16 +219,17 @@ public class ApiDressy{
     }
     /**
      * Add clothes for user
-     * @param user
+     * @param clothes
      */
-    public void addClothes(User user){
-        Call<Clothes> request = service.addClothes(user);
+    public void addClothes(Clothes clothes){
+        Call<Clothes> request = service.addClothes(getAccesToken(),clothes);
         request.enqueue(new Callback<Clothes>() {
             @Override
             public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                 if(response.isSuccessful()){
                     //TODO
                 }
+                listener.onCreateClothes();
             }
 
             @Override
@@ -176,6 +238,54 @@ public class ApiDressy{
             }
         });
     }
+
+
+    /**
+     * Add clothes for user
+     * @param clothes
+     */
+    public void deleteClothes(Clothes clothes){
+        Call<Clothes> request = service.deleteClothes(getAccesToken(),clothes);
+        request.enqueue(new Callback<Clothes>() {
+            @Override
+            public void onResponse(Call<Clothes> call, Response<Clothes> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                }
+                listener.onDeleteClothes();
+            }
+
+            @Override
+            public void onFailure(Call<Clothes> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    /**
+     * Add clothes for user
+     * @param clothes
+     */
+    public void manageClothes(Clothes clothes){
+        Call<Clothes> request = service.manageClothes(getAccesToken(),clothes);
+        request.enqueue(new Callback<Clothes>() {
+            @Override
+            public void onResponse(Call<Clothes> call, Response<Clothes> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                }
+                listener.onManageClothes();
+            }
+
+            @Override
+            public void onFailure(Call<Clothes> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
 
     /**

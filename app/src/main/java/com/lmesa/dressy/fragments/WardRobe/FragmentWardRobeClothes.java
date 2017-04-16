@@ -107,7 +107,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
         }
         // end banana
 
-        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getContext(),listClothes);
+        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getActivity(),listClothes);
         adapterWardRobeClothes.setListener(this);
         gridView.setAdapter(adapterWardRobeClothes);
     }
@@ -118,5 +118,11 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
         Intent i = new Intent(getActivity(), ActivityWardRobeClothesDetail.class);
         i.putExtra("clothes", gson.toJson(clothes));
         startActivity(i);
+    }
+
+    @Override
+    public boolean onLongClick(int position) {
+        return false;
+
     }
 }

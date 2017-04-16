@@ -20,4 +20,5 @@
     <color name="material_drawer_secondary_text">@color/colorDark</color>
     <color name="material_drawer_hint_text">@color/colorDark</color>
     <color name="material_drawer_divider">@color/colorDark</color>
+    <color name="delete">#CC2836</color>
 </resources>

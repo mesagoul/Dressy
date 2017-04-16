@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
@@ -18,9 +19,13 @@ import com.lmesa.dressy.activities.ActivityCommunityDetail;
 import com.lmesa.dressy.activities.ActivityCreateClothe;
 import com.lmesa.dressy.activities.ActivityWardRobeClotheDetail;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
+import com.lmesa.dressy.helpers.ManageDialog;
+import com.lmesa.dressy.interfaces.DialogListener;
+import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
+import com.lmesa.dressy.network.ApiDressy;
 
 import java.util.ArrayList;
 
@@ -28,11 +33,14 @@ import java.util.ArrayList;
  * Created by Lucas on 09/04/2017.
  */
 
-public class FragmentWardRobeClothe extends Fragment implements WardRobeListener {
+public class FragmentWardRobeClothe extends Fragment implements WardRobeListener, DialogListener, ServiceListener{
     private GridView gridView;
     private ArrayList<Clothe> listClothe;
     private Button btn_add;
     private Gson gson;
+    private ApiDressy apiDressy;
+    private Clothe currentClothe;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +48,8 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         gridView = (GridView) v.findViewById(R.id.wardrobe_clothes_list);
         listClothe = new ArrayList<Clothe>();
         btn_add = (Button) v.findViewById(R.id.btn_add);
+        apiDressy = new ApiDressy(getActivity());
+        apiDressy.setListener(this);
         gson = new Gson();
         return v;
     }
@@ -95,7 +105,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
             listClothe.add(clothe);
         }
         // banana
-        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getContext(),listClothe);
+        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getActivity(),listClothe);
         adapterWardRobeClothes.setListener(this);
         gridView.setAdapter(adapterWardRobeClothes);
     }
@@ -106,5 +116,82 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         Intent i = new Intent(getActivity(), ActivityWardRobeClotheDetail.class);
         i.putExtra("clothe", gson.toJson(aClothe));
         startActivity(i);
+    }
+
+    @Override
+    public boolean onLongClick(int position) {
+        this.currentClothe = listClothe.get(position);
+        ManageDialog dialog = new ManageDialog(getActivity());
+        dialog.setListener(this);
+        dialog.loadDialog();
+        return true;
+    }
+
+    @Override
+    public void onManageDialog() {
+        Intent toManageActivity = new Intent(getActivity(), ActivityCreateClothe.class);
+        toManageActivity.putExtra("manage","true");
+        toManageActivity.putExtra("editClothe",gson.toJson(currentClothe,Clothe.class));
+        getActivity().startActivity(toManageActivity);
+    }
+
+    @Override
+    public void onDeleteDialog() {
+        apiDressy.deleteClothe(this.currentClothe);
+    }
+
+    @Override
+    public void onGetUser() {
+
+    }
+
+    @Override
+    public void onCreateUser() {
+
+    }
+
+    @Override
+    public void onGetClothe() {
+
+    }
+
+    @Override
+    public void onCreateClothe() {
+
+    }
+
+    @Override
+    public void onDeleteClothe() {
+        Toast.makeText(getContext(),"Test Delete Clothe",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onManageClothes() {
+
+    }
+
+    @Override
+    public void onGetClothes() {
+
+    }
+
+    @Override
+    public void onCreateClothes() {
+
+    }
+
+    @Override
+    public void onDeleteClothes() {
+
+    }
+
+    @Override
+    public void onManageClothe() {
+
+    }
+
+    @Override
+    public void onGetSimilarity() {
+
     }
 }

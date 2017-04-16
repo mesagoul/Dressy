@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,22 +14,26 @@ import android.widget.TextView;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.activities.ActivityCreateClothe;
 import com.lmesa.dressy.activities.ActivityWardRobeClotheList;
+import com.lmesa.dressy.fragments.WardRobe.FragmentWardRobeClothe;
+import com.lmesa.dressy.interfaces.DialogListener;
 
 /**
- * Created by Lucas on 15/04/2017.
+ * Created by Lucas on 16/04/2017.
  */
 
-public class MatchDialog {
+public class ManageDialog {
     private Activity activity;
-    public MatchDialog(Activity activity){
+    private DialogListener listener;
+
+    public ManageDialog(Activity activity){
         this.activity = activity;
     }
 
     public void loadDialog(){
 
         final Item[] items = {
-                new Item("Mon armoire", R.drawable.ic_armory),
-                new Item("Mon appareil photo", R.drawable.ic_photo),
+                new Item(activity.getResources().getString(R.string.edit), R.drawable.ic_manage,ContextCompat.getColor(activity, R.color.colorAccent)),
+                new Item(activity.getResources().getString(R.string.delete), R.drawable.ic_delete,ContextCompat.getColor(activity, R.color.delete)),
         };
 
         ListAdapter adapter = new ArrayAdapter<Item>(
@@ -42,9 +45,11 @@ public class MatchDialog {
                 View v = super.getView(position, convertView, parent);
                 TextView tv = (TextView)v.findViewById(android.R.id.text1);
                 tv.setTextColor(ContextCompat.getColor(activity, R.color.colorDark));
+                tv.setBackgroundColor(items[position].getColor());
 
                 //Put the image on the TextView
                 tv.setCompoundDrawablesWithIntrinsicBounds(items[position].icon, 0, 0, 0);
+                tv.setTextColor(ContextCompat.getColor(activity,R.color.colorLight));
 
                 //Add margin between image and text (support various screen densities)
                 int dp5 = (int) (5 * activity.getResources().getDisplayMetrics().density + 0.5f);
@@ -59,16 +64,13 @@ public class MatchDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.activity);
 
         // 2. Chain together various setter methods to set the dialog characteristics
-        builder.setTitle(R.string.match_title)
+        builder.setTitle(R.string.edit_title)
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if(which == 0){
-                            Intent toClotheListActivity = new Intent(activity, ActivityWardRobeClotheList.class);
-                            activity.startActivity(toClotheListActivity);
+                            listener.onManageDialog();
                         }else if (which == 1){
-                            Intent toCreateActivity = new Intent(activity, ActivityCreateClothe.class);
-                            toCreateActivity.putExtra("match","true");
-                            activity.startActivity(toCreateActivity);
+                            listener.onDeleteDialog();
                         }
                     }
                 });
@@ -78,16 +80,27 @@ public class MatchDialog {
         dialog.show();
     }
 
+    public void setListener(DialogListener listener) {
+        this.listener = listener;
+    }
+
     private static class Item{
         public final String text;
         public final int icon;
-        private Item(String text, Integer icon) {
+        private int color;
+        private Item(String text, Integer icon, int color) {
             this.text = text;
             this.icon = icon;
+            this.color = color;
+
         }
         @Override
         public String toString() {
             return text;
+        }
+
+        public int getColor() {
+            return color;
         }
     }
 }

@@ -89,7 +89,7 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
         // banana
 
 
-        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getApplicationContext(),listClothe);
+        AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(this,listClothe);
         adapterWardRobeClothes.setListener(this);
         gridView.setAdapter(adapterWardRobeClothes);
 
@@ -101,6 +101,12 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
         gridView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         apiDressy.getSimilarity(listClothe.get(position));
+    }
+
+    @Override
+    public boolean onLongClick(int position) {
+        return false;
+
     }
 
     @Override
@@ -124,12 +130,32 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     }
 
     @Override
+    public void onDeleteClothe() {
+
+    }
+
+    @Override
+    public void onManageClothes() {
+
+    }
+
+    @Override
     public void onGetClothes() {
 
     }
 
     @Override
     public void onCreateClothes() {
+
+    }
+
+    @Override
+    public void onDeleteClothes() {
+
+    }
+
+    @Override
+    public void onManageClothe() {
 
     }
 

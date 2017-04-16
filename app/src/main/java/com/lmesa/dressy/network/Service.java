@@ -46,6 +46,20 @@ public interface Service {
             @Body Clothe clothe
     );
 
+    // delete CLOTHE
+    @POST("v1/deleteClothe")
+    Call<Clothe> deleteClothe(
+            @Header("x-access-token") String token,
+            @Body Clothe clothe
+    );
+
+    // manage CLOTHE
+    @POST("v1/manageClothe")
+    Call<Clothe> manageClothe(
+            @Header("x-access-token") String token,
+            @Body Clothe clothe
+    );
+
 
     // ---- CLOTHES ----
 
@@ -58,7 +72,22 @@ public interface Service {
     // Add CLOTHES
     @POST("v1/addClothes")
     Call<Clothes> addClothes(
-            @Body User user
+            @Header("x-access-token") String token,
+            @Body Clothes clothes
+    );
+
+    // delete CLOTHES
+    @POST("v1/deleteClothes")
+    Call<Clothes> deleteClothes(
+            @Header("x-access-token") String token,
+            @Body Clothes clothes
+    );
+
+    // manage CLOTHES
+    @POST("v1/manageClothes")
+    Call<Clothes> manageClothes(
+            @Header("x-access-token") String token,
+            @Body Clothes clothes
     );
 
 

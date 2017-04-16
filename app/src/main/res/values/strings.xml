@@ -55,10 +55,13 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="match_title">Je choisit un habit depuis : </string>
-    <string name="choose_dress_from">Je choisit un habit depuis :</string>
+    <string name="match_title">Je choisis un habit depuis : </string>
+    <string name="choose_dress_from">Je choisis un habit depuis :</string>
     <string name="save">Enregistrer</string>
     <string name="image">image</string>
     <string name="category">Categorie</string>
     <string name="find_match">Lancer la recherche</string>
+    <string name="edit">Modifier</string>
+    <string name="delete">Supprimer</string>
+    <string name="edit_title">Que souhaitez-vous faire ?</string>
 </resources>

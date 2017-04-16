@@ -6,4 +6,5 @@ package com.lmesa.dressy.interfaces;
 
 public interface WardRobeListener {
     void loadDetail(int position);
+    boolean onLongClick(int position);
 }
