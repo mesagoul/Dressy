@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.activities.MainActivity;
 import com.lmesa.dressy.helpers.FormValidator;
+import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.User;
 import com.lmesa.dressy.network.ApiDressy;
 
@@ -23,12 +26,16 @@ import com.lmesa.dressy.network.ApiDressy;
  * Created by Lucas on 03/04/2017.
  */
 
-public class FragmentSignIn extends Fragment {
+public class FragmentSignIn extends Fragment implements ServiceListener{
     private Button btn_connexion;
     private TextView btn_forgot_password;
     private ApiDressy apiDressy;
     private EditText password;
     private EditText email;
+
+    private ScrollView content;
+    private ProgressBar progressBar;
+
 
     private FormValidator formValidator;
 
@@ -41,9 +48,13 @@ public class FragmentSignIn extends Fragment {
         email = (EditText) v.findViewById(R.id.sign_mail);
         password = (EditText) v.findViewById(R.id.sign_password);
 
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        content = (ScrollView) v.findViewById(R.id.view_content);
+
         formValidator = new FormValidator();
 
         apiDressy = new ApiDressy(getActivity());
+        apiDressy.setListener(this);
         return v;
     }
 
@@ -55,9 +66,12 @@ public class FragmentSignIn extends Fragment {
             public void onClick(View v) {
                 if (isValidUser()){
                     User user = new User(email.getText().toString(),password.getText().toString());
-                    //apiDressy.connectUser(user);
-                    Intent toMainActivity = new Intent(getActivity(), MainActivity.class);
-                    startActivity(toMainActivity);
+
+                    content.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    apiDressy.connectUser(user);
+
                 }
             }
         });
@@ -97,5 +111,64 @@ public class FragmentSignIn extends Fragment {
         } else {
             return true;
         }
+    }
+
+    @Override
+    public void onGetUser() {
+        content.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+
+        Intent toMainActivity = new Intent(getActivity(), MainActivity.class);
+        startActivity(toMainActivity);
+    }
+
+    @Override
+    public void onCreateUser() {
+
+    }
+
+    @Override
+    public void onGetClothe() {
+
+    }
+
+    @Override
+    public void onCreateClothe() {
+
+    }
+
+    @Override
+    public void onDeleteClothe() {
+
+    }
+
+    @Override
+    public void onManageClothes() {
+
+    }
+
+    @Override
+    public void onGetClothes() {
+
+    }
+
+    @Override
+    public void onCreateClothes() {
+
+    }
+
+    @Override
+    public void onDeleteClothes() {
+
+    }
+
+    @Override
+    public void onManageClothe() {
+
+    }
+
+    @Override
+    public void onGetSimilarity() {
+
     }
 }

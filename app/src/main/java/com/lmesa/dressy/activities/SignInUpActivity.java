@@ -1,5 +1,6 @@
 package com.lmesa.dressy.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import com.lmesa.dressy.R;
 import com.lmesa.dressy.fragments.FragmentPagerView;
 import com.lmesa.dressy.fragments.Sign.FragmentSignIn;
 import com.lmesa.dressy.fragments.Sign.FragmentSignUp;
+import com.lmesa.dressy.network.ApiDressy;
 
 import java.util.ArrayList;
 
@@ -25,7 +27,12 @@ public class SignInUpActivity extends FragmentActivity implements PagerViewListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_sign_in_up);
-        loadFragmentViewPager();
+        if(!getAccessToken().equals("")){
+            Intent toMainActivity = new Intent(this, MainActivity.class);
+            startActivity(toMainActivity);
+        }else{
+            loadFragmentViewPager();
+        }
     }
 
     @Override
@@ -51,5 +58,9 @@ public class SignInUpActivity extends FragmentActivity implements PagerViewListe
     @Override
     public String[] initTitlesForPagerView() {
         return new String[] {getResources().getString(R.string.sign_in),getResources().getString(R.string.sign_up)};
+    }
+
+    public String getAccessToken() {
+        return new ApiDressy(this).getAccesToken();
     }
 }

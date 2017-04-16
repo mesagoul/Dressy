@@ -62,8 +62,11 @@ public class ApiDressy{
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("token", response.body().getApi_key());
                     editor.commit();
-                    Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
                 }
+                listener.onCreateUser();
             }
 
             @Override
@@ -85,6 +88,7 @@ public class ApiDressy{
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
+                    listener.onGetUser();
                 }
                 listener.onGetUser();
             }
