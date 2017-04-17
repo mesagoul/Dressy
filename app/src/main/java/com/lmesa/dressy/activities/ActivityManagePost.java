@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
+import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
@@ -80,66 +81,71 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
     }
 
     @Override
-    public void onGetUser() {
+    public void onGetUser(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateUser() {
+    public void onCreateUser(boolean isSucces) {
 
     }
 
     @Override
-    public void onGetClothe() {
+    public void onGetClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateClothe() {
+    public void onCreateClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onDeleteClothe() {
+    public void onDeleteClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onManageClothes() {
+    public void onManageClothes(boolean isSucces) {
 
     }
 
     @Override
-    public void onGetClothes() {
+    public void onGetClothes(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateClothes() {
+    public void onCreateClothes(boolean isSucces) {
 
     }
 
     @Override
-    public void onDeleteClothes() {
+    public void onDeleteClothes(boolean isSucces) {
 
     }
 
     @Override
-    public void onManageClothe() {
+    public void onManageClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onGetSimilarity() {
+    public void onGetSimilarity(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreatePost() {
+    public void onCreatePost(boolean isSucces) {
         progressBar.setVisibility(View.VISIBLE);
         content.setVisibility(View.GONE);
-        Toast.makeText(getApplicationContext(), "TEST ADD POST",Toast.LENGTH_SHORT).show();
-        finish();
+        if (isSucces){
+            Toast.makeText(getApplicationContext(), "TEST ADD POST",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorCreatePost();
+            finish();
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.activities.MainActivity;
 import com.lmesa.dressy.helpers.FormValidator;
+import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.User;
 import com.lmesa.dressy.network.ApiDressy;
@@ -103,65 +104,70 @@ public class FragmentSignUp extends Fragment implements ServiceListener {
     }
 
     @Override
-    public void onGetUser() {
+    public void onGetUser(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreateUser() {
+    public void onCreateUser(boolean isSuccess) {
         progressBar.setVisibility(View.GONE);
         content.setVisibility(View.VISIBLE);
-        Intent toMainActivity = new Intent(getActivity(), MainActivity.class);
-        startActivity(toMainActivity);
-    }
-
-    @Override
-    public void onGetClothe() {
-
-    }
-
-    @Override
-    public void onCreateClothe() {
+        if(isSuccess){
+            Intent toMainActivity = new Intent(getActivity(), MainActivity.class);
+            startActivity(toMainActivity);
+        }else{
+            new ResponseHttp(getContext()).onErrorCreateUser();
+        }
 
     }
 
     @Override
-    public void onDeleteClothe() {
+    public void onGetClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onManageClothes() {
+    public void onCreateClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onGetClothes() {
+    public void onDeleteClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreateClothes() {
+    public void onManageClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onDeleteClothes() {
+    public void onGetClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onManageClothe() {
+    public void onCreateClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onGetSimilarity() {
+    public void onDeleteClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreatePost() {
+    public void onManageClothe(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onGetSimilarity(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onCreatePost(boolean isSuccess) {
 
     }
 }

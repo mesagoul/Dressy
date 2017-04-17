@@ -5,20 +5,20 @@ package com.lmesa.dressy.interfaces;
  */
 
 public interface ServiceListener {
-    void onGetUser();
-    void onCreateUser();
+    void onGetUser(boolean isSucces);
+    void onCreateUser(boolean isSucces);
 
-    void onGetClothe();
-    void onCreateClothe();
-    void onDeleteClothe();
-    void onManageClothes();
+    void onGetClothe(boolean isSucces);
+    void onCreateClothe(boolean isSucces);
+    void onDeleteClothe(boolean isSucces);
+    void onManageClothes(boolean isSucces);
 
-    void onGetClothes();
-    void onCreateClothes();
-    void onDeleteClothes();
-    void onManageClothe();
+    void onGetClothes(boolean isSucces);
+    void onCreateClothes(boolean isSucces);
+    void onDeleteClothes(boolean isSucces);
+    void onManageClothe(boolean isSucces);
 
-    void onGetSimilarity();
+    void onGetSimilarity(boolean isSucces);
 
-    void onCreatePost();
+    void onCreatePost(boolean isSucces);
 }

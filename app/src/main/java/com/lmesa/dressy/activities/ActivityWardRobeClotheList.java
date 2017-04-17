@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
+import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
@@ -119,67 +120,69 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     }
 
     @Override
-    public void onGetUser() {
+    public void onGetUser(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateUser() {
+    public void onCreateUser(boolean isSucces) {
 
     }
 
     @Override
-    public void onGetClothe() {
+    public void onGetClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateClothe() {
+    public void onCreateClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onDeleteClothe() {
+    public void onDeleteClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onManageClothes() {
+    public void onManageClothes(boolean isSucces) {
+    }
+
+    @Override
+    public void onGetClothes(boolean isSucces) {
+
+    }
+
+    @Override
+    public void onCreateClothes(boolean isSucces) {
+
+    }
+
+    @Override
+    public void onDeleteClothes(boolean isSucces) {
+
+    }
+
+    @Override
+    public void onManageClothe(boolean isSucces) {
+
+    }
+
+    @Override
+    public void onGetSimilarity(boolean isSucces) {
+        gridView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(getApplicationContext(),"Test Modify Clothe",Toast.LENGTH_SHORT).show();
-        finish(); // for the moment
+        if(isSucces){
+            Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorGetSimilarity();
+            finish();
+        }
     }
 
     @Override
-    public void onGetClothes() {
-
-    }
-
-    @Override
-    public void onCreateClothes() {
-
-    }
-
-    @Override
-    public void onDeleteClothes() {
-
-    }
-
-    @Override
-    public void onManageClothe() {
-
-    }
-
-    @Override
-    public void onGetSimilarity() {
-        progressBar.setVisibility(View.GONE);
-        Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
-        finish(); // for the moment
-        // TODO
-    }
-
-    @Override
-    public void onCreatePost() {
+    public void onCreatePost(boolean isSucces) {
 
     }
 }

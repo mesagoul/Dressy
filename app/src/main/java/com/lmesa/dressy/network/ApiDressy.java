@@ -63,16 +63,15 @@ public class ApiDressy{
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("token", response.body().getApi_key());
                     editor.commit();
-
+                    listener.onCreateUser(true);
                 }else{
-                    Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                    listener.onCreateUser(false);
                 }
-                listener.onCreateUser();
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onCreateUser(false);
             }
         });
     }
@@ -89,15 +88,15 @@ public class ApiDressy{
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
-                    //listener.onGetUser();
+                    listener.onGetUser(true);
+                }else{
+                    listener.onGetUser(false);
                 }
-                listener.onGetUser();
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
-                listener.onGetUser();
+                listener.onGetUser(false);
             }
         });
     }
@@ -118,15 +117,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                 if(response.isSuccessful()){
-                    //TODO
-                    // response.body().getListClothe();
+                    listener.onGetClothe(true);
+                }else{
+                    listener.onGetClothe(false);
                 }
-                listener.onGetClothe();
             }
 
             @Override
             public void onFailure(Call<Clothes> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onGetClothe(false);
             }
         });
     }
@@ -140,15 +139,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothe> call, Response<Clothe> response) {
                 if(response.isSuccessful()){
-                    //TODO
-                    //listener.onCreateClothe();
+                    listener.onCreateClothe(true);
+                }else{
+                    listener.onCreateClothe(false);
                 }
-                listener.onCreateClothe();
             }
 
             @Override
             public void onFailure(Call<Clothe> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onCreateClothe(false);
             }
         });
     }
@@ -162,14 +161,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothe> call, Response<Clothe> response) {
                 if(response.isSuccessful()){
-                    //TODO
+                    listener.onDeleteClothe(true);
+                }else{
+                    listener.onDeleteClothe(false);
                 }
-                listener.onDeleteClothe();
             }
 
             @Override
             public void onFailure(Call<Clothe> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onDeleteClothe(false);
             }
         });
     }
@@ -183,14 +183,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothe> call, Response<Clothe> response) {
                 if(response.isSuccessful()){
-                    //TODO
+                    listener.onManageClothe(true);
+                }else{
+                    listener.onManageClothe(false);
                 }
-                listener.onManageClothe();
             }
 
             @Override
             public void onFailure(Call<Clothe> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onManageClothe(false);
             }
         });
     }
@@ -212,14 +213,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<ListClothes> call, Response<ListClothes> response) {
                 if(response.isSuccessful()){
-                    //TODO
+                    listener.onGetClothes(true);
+                }else{
+                    listener.onGetClothes(false);
                 }
-                listener.onGetClothes();
             }
 
             @Override
             public void onFailure(Call<ListClothes> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onGetClothes(false);
             }
         });
     }
@@ -233,14 +235,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                 if(response.isSuccessful()){
-                    //TODO
+                    listener.onCreateClothes(true);
+                }else{
+                    listener.onCreateClothes(false);
                 }
-                listener.onCreateClothes();
             }
 
             @Override
             public void onFailure(Call<Clothes> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onCreateClothes(false);
             }
         });
     }
@@ -256,14 +259,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                 if(response.isSuccessful()){
-                    //TODO
+                    listener.onDeleteClothes(true);
+                }else{
+                    listener.onDeleteClothes(false);
                 }
-                listener.onDeleteClothes();
             }
 
             @Override
             public void onFailure(Call<Clothes> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onDeleteClothes(false);
             }
         });
     }
@@ -279,14 +283,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                 if(response.isSuccessful()){
-                    //TODO
+                    listener.onManageClothes(true);
+                }else{
+                    listener.onManageClothes(false);
                 }
-                listener.onManageClothes();
             }
 
             @Override
             public void onFailure(Call<Clothes> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onManageClothes(false);
             }
         });
     }
@@ -304,16 +309,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothe> call, Response<Clothe> response) {
                 if(response.isSuccessful()){
-                    //TODO
-                    //listener.onGetSimilarity();
+                    listener.onGetSimilarity(true);
+                }else{
+                    listener.onGetSimilarity(false);
                 }
-                listener.onGetSimilarity();
             }
 
             @Override
             public void onFailure(Call<Clothe> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
-                listener.onGetSimilarity();
+                listener.onGetSimilarity(false);
             }
         });
     }
@@ -328,14 +332,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 if(response.isSuccessful()){
-                    //TODO
+                    listener.onCreatePost(true);
+                }else{
+                    listener.onCreatePost(false);
                 }
-                listener.onCreatePost();
             }
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
-                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onCreatePost(false);
             }
         });
     }

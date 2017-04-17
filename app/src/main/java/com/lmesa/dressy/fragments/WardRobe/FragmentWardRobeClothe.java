@@ -5,26 +5,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
-import com.lmesa.dressy.activities.ActivityCommunityDetail;
-import com.lmesa.dressy.activities.ActivityCreateClothe;
+import com.lmesa.dressy.activities.ActivityManageClothe;
 import com.lmesa.dressy.activities.ActivityWardRobeClotheDetail;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
 import com.lmesa.dressy.helpers.ManageDialog;
+import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.DialogListener;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
-import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.network.ApiDressy;
 
 import java.util.ArrayList;
@@ -40,6 +40,8 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     private Gson gson;
     private ApiDressy apiDressy;
     private Clothe currentClothe;
+    private LinearLayout content;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -48,6 +50,8 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         gridView = (GridView) v.findViewById(R.id.wardrobe_clothes_list);
         listClothe = new ArrayList<Clothe>();
         btn_add = (Button) v.findViewById(R.id.btn_add);
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        content = (LinearLayout) v.findViewById(R.id.view_content);
         apiDressy = new ApiDressy(getActivity());
         apiDressy.setListener(this);
         gson = new Gson();
@@ -61,7 +65,8 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toAddClothe = new Intent(getContext(), ActivityCreateClothe.class);
+                Intent toAddClothe = new Intent(getContext(), ActivityManageClothe.class);
+                toAddClothe.putExtra("create","true");
                 startActivity(toAddClothe);
             }
         });
@@ -129,7 +134,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
 
     @Override
     public void onManageDialog() {
-        Intent toManageActivity = new Intent(getActivity(), ActivityCreateClothe.class);
+        Intent toManageActivity = new Intent(getActivity(), ActivityManageClothe.class);
         toManageActivity.putExtra("manage","true");
         toManageActivity.putExtra("editClothe",gson.toJson(currentClothe,Clothe.class));
         getActivity().startActivity(toManageActivity);
@@ -137,6 +142,8 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
 
     @Override
     public void onDeleteDialog() {
+        progressBar.setVisibility(View.VISIBLE);
+        content.setVisibility(View.GONE);
         apiDressy.deleteClothe(this.currentClothe);
     }
 
@@ -146,62 +153,69 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     }
 
     @Override
-    public void onGetUser() {
+    public void onGetUser(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreateUser() {
+    public void onCreateUser(boolean isSuccess) {
 
     }
 
     @Override
-    public void onGetClothe() {
+    public void onGetClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreateClothe() {
+    public void onCreateClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onDeleteClothe() {
-        Toast.makeText(getContext(),"Test Delete Clothe",Toast.LENGTH_SHORT).show();
+    public void onDeleteClothe(boolean isSuccess) {
+        progressBar.setVisibility(View.GONE);
+        content.setVisibility(View.VISIBLE);
+        if(isSuccess){
+            Toast.makeText(getContext(),"Test Delete Clothe",Toast.LENGTH_SHORT).show();
+        }else{
+            new ResponseHttp(getContext()).onErrorDeleteClothe();
+
+        }
     }
 
     @Override
-    public void onManageClothes() {
-
-    }
-
-    @Override
-    public void onGetClothes() {
-
-    }
-
-    @Override
-    public void onCreateClothes() {
-
-    }
-
-    @Override
-    public void onDeleteClothes() {
+    public void onManageClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onManageClothe() {
+    public void onGetClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onGetSimilarity() {
+    public void onCreateClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreatePost() {
+    public void onDeleteClothes(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onManageClothe(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onGetSimilarity(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onCreatePost(boolean isSuccess) {
 
     }
 }

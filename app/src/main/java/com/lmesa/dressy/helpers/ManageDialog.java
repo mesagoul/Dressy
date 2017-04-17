@@ -2,7 +2,6 @@ package com.lmesa.dressy.helpers;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -12,9 +11,6 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.lmesa.dressy.R;
-import com.lmesa.dressy.activities.ActivityCreateClothe;
-import com.lmesa.dressy.activities.ActivityWardRobeClotheList;
-import com.lmesa.dressy.fragments.WardRobe.FragmentWardRobeClothe;
 import com.lmesa.dressy.interfaces.DialogListener;
 
 /**

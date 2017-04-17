@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -20,15 +19,18 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
+import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.network.ApiDressy;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Lucas on 15/04/2017.
  */
 
-public class ActivityCreateClothe extends AppCompatActivity implements ServiceListener{
+public class ActivityManageClothe extends AppCompatActivity implements ServiceListener{
     private ImageView image;
     private EditText nom;
     private EditText color;
@@ -66,13 +68,10 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
         brand = (EditText) findViewById(R.id.clothe_create_brand);
         material = (EditText) findViewById(R.id.clothe_create_material);
         btn_save = (Button) findViewById(R.id.btn_save);
-        if(isMatch()){
-            btn_save.setText(getResources().getString(R.string.find_match));
-        }else if(isManage()){
-            btn_save.setText(getResources().getString(R.string.edit));
-        }
+
 
         if(isManage()){
+            btn_save.setText(getResources().getString(R.string.edit));
             editClothe = gson.fromJson(getIntent().getStringExtra("editClothe"), Clothe.class);
             nom.setText(editClothe.getCloth_name());
             color.setText(editClothe.getCloth_color());
@@ -86,9 +85,8 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
                     .centerCrop()
                     .crossFade()
                     .into(image);
-        }
-
-        if(isMatch()){
+        }else{
+            btn_save.setText(getResources().getString(R.string.find_match));
             Intent toCameraActivity = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(toCameraActivity,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
@@ -99,27 +97,29 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                scrollView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+                Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(), imageToString(image),category.getText().toString(),brand.getText().toString(),material.getText().toString());
                 if(isMatch()){
-                    scrollView.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.VISIBLE);
-                    Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(),"",category.getText().toString(),brand.getText().toString(),material.getText().toString());
                     apiDressy.getSimilarity(clothe);
-
                 }else if(isManage()){
-                    scrollView.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.VISIBLE);
-                    Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(),"",category.getText().toString(),brand.getText().toString(),material.getText().toString());
                     apiDressy.manageClothe(clothe);
-
                 }else{
-                    scrollView.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.VISIBLE);
-                    Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(),"",category.getText().toString(),brand.getText().toString(),material.getText().toString());
                     apiDressy.addClothe(clothe);
                 }
 
             }
         });
+    }
+
+    public String imageToString(ImageView image){
+        image.buildDrawingCache();
+        Bitmap bmap = image.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        return  Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
     @Override
@@ -146,73 +146,89 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
     }
 
     @Override
-    public void onGetUser() {
+    public void onGetUser(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateUser() {
+    public void onCreateUser(boolean isSucces) {
 
     }
 
     @Override
-    public void onGetClothe() {
+    public void onGetClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateClothe() {
-        // DO SOMETHING
+    public void onCreateClothe(boolean isSucces) {
         scrollView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(getApplicationContext(),"Test Add Clothe",Toast.LENGTH_SHORT).show();
-        finish();
+        if(isSucces){
+            Toast.makeText(getApplicationContext(),"Test Add Clothe",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorCreateClothe();
+            finish();
+
+        }
     }
 
     @Override
-    public void onDeleteClothe() {
-
-    }
-
-    @Override
-    public void onManageClothes() {
-
-    }
-
-    @Override
-    public void onGetClothes() {
+    public void onDeleteClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateClothes() {
+    public void onManageClothes(boolean isSucces) {
 
     }
 
     @Override
-    public void onDeleteClothes() {
+    public void onGetClothes(boolean isSucces) {
 
     }
 
     @Override
-    public void onManageClothe() {
+    public void onCreateClothes(boolean isSucces) {
+
+    }
+
+    @Override
+    public void onDeleteClothes(boolean isSucces) {
+
+    }
+
+    @Override
+    public void onManageClothe(boolean isSucces) {
         scrollView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(getApplicationContext(),"Test Edit Clothe",Toast.LENGTH_SHORT).show();
-        finish();
+        if(isSucces){
+            Toast.makeText(getApplicationContext(),"Test Edit Clothe",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorManageClothe();
+            finish();
+
+        }
+
     }
 
     @Override
-    public void onGetSimilarity() {
+    public void onGetSimilarity(boolean isSucces) {
         scrollView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
-        finish();
-
+        if(isSucces){
+            Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorGetSimilarity();
+            finish();
+        }
     }
 
     @Override
-    public void onCreatePost() {
+    public void onCreatePost(boolean isSucces) {
 
     }
 }

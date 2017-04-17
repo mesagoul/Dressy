@@ -69,4 +69,19 @@
     <string name="share">Partager</string>
     <string name="add_clothe">Ajouter des habits</string>
     <string name="manage">Modifier</string>
+    <string name="errorGetUser">Erreur lors de la récuperation de votre compte, veuillez reessayer</string>
+    <string name="errorCreateUser">Erreur lors de la création de votre compte, veuillez reessayer</string>
+
+    <string name="errorGetClothe">Erreur lors de la récupération de votre habits</string>
+    <string name="errorCreateClothe">Erreur lors de la création de votre habit</string>
+    <string name="errorDeleteClothe">Erreur lors de la suppression de votre habit</string>
+    <string name="errorManageClothe">Erreur lors de la modification de votre habit</string>
+
+    <string name="errorGetClothes">Erreur lors de la récupération de votre tenue</string>
+    <string name="errorCreateClothes">Erreur lors de la création de votre tenue</string>
+    <string name="errorDeleteClothes">Erreur lors de la suppression de votre tenue</string>
+    <string name="errorManageClothes">Erreur lors de la modification de votre tenue</string>
+
+    <string name="errorGetSimilarity">Erreur lors de la récupération de vos habits compatibles</string>
+    <string name="errorCreatePost">Erreur lors de la création de votre Post</string>
 </resources>

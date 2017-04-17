@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,7 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.lmesa.dressy.R;
-import com.lmesa.dressy.activities.ActivityCreateClothe;
+import com.lmesa.dressy.activities.ActivityManageClothe;
 import com.lmesa.dressy.activities.ActivityWardRobeClotheList;
 
 /**
@@ -66,7 +65,7 @@ public class MatchDialog {
                             Intent toClotheListActivity = new Intent(activity, ActivityWardRobeClotheList.class);
                             activity.startActivity(toClotheListActivity);
                         }else if (which == 1){
-                            Intent toCreateActivity = new Intent(activity, ActivityCreateClothe.class);
+                            Intent toCreateActivity = new Intent(activity, ActivityManageClothe.class);
                             toCreateActivity.putExtra("match","true");
                             activity.startActivity(toCreateActivity);
                         }

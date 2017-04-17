@@ -15,6 +15,7 @@ public class Clothe{
     private String cloth_brand;
     private String cloth_material;
     private String cloth_partner;
+    private String cloth_bitmap;
 
     public Clothe(String cloth_name, String cloth_color, String cloth_reference, String cloth_urlImage, String cloth_category, String cloth_brand, String cloth_material) {
         this.cloth_name = cloth_name;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,12 +20,14 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
+import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.network.ApiDressy;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -86,7 +89,7 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 content.setVisibility(View.GONE);
-                Clothes clothes = new Clothes("",listClothe);
+                Clothes clothes = new Clothes(imageToString(image),listClothe);
                 if(isCreate()){
                     apiDressy.addClothes(clothes);
                 }else if(isManage()){
@@ -112,6 +115,15 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
 
             loadGridView();
         }
+    }
+
+    public String imageToString(ImageView image){
+        image.buildDrawingCache();
+        Bitmap bmap = image.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        return  Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
     public void loadGridView(){
@@ -144,78 +156,83 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     }
 
     @Override
-    public void onGetUser() {
+    public void onGetUser(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateUser() {
+    public void onCreateUser(boolean isSucces) {
 
     }
 
     @Override
-    public void onGetClothe() {
+    public void onGetClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateClothe() {
+    public void onCreateClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onDeleteClothe() {
+    public void onDeleteClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onManageClothes() {
+    public void onManageClothes(boolean isSucces) {
         progressBar.setVisibility(View.GONE);
         content.setVisibility(View.VISIBLE);
-        Toast.makeText(getApplicationContext(), "Test MANAGE CLOTHES",Toast.LENGTH_SHORT).show();
-        finish();
+        if(isSucces){
+            Toast.makeText(getApplicationContext(), "Test MANAGE CLOTHES",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorManageClothes();
+            finish();
+
+        }
     }
 
     @Override
-    public void onGetClothes() {
+    public void onGetClothes(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreateClothes() {
+    public void onCreateClothes(boolean isSucces) {
         progressBar.setVisibility(View.GONE);
         content.setVisibility(View.VISIBLE);
-        Toast.makeText(getApplicationContext(), "Test ADD CLOTHES",Toast.LENGTH_SHORT).show();
-        finish();
+        if(isSucces){
+            Toast.makeText(getApplicationContext(), "Test ADD CLOTHES",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorCreateClothes();
+            finish();
+        }
     }
 
     @Override
-    public void onDeleteClothes() {
-        progressBar.setVisibility(View.GONE);
-        content.setVisibility(View.VISIBLE);
-        Toast.makeText(getApplicationContext(), "Test MANAGE CLOTHES",Toast.LENGTH_SHORT).show();
-        finish();
+    public void onDeleteClothes(boolean isSucces) {
     }
 
     @Override
-    public void onManageClothe() {
-
-    }
-
-    @Override
-    public void onGetSimilarity() {
+    public void onManageClothe(boolean isSucces) {
 
     }
 
     @Override
-    public void onCreatePost() {
+    public void onGetSimilarity(boolean isSucces) {
+
+    }
+
+    @Override
+    public void onCreatePost(boolean isSucces) {
 
     }
 
     @Override
     public void loadDetail(int position) {
-        Toast.makeText(getApplicationContext(),"TODO get this in a new listeClothes ?", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override

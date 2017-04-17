@@ -14,12 +14,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
-import com.lmesa.dressy.activities.ActivityCreateClothe;
 import com.lmesa.dressy.activities.ActivityManageClothes;
 import com.lmesa.dressy.activities.ActivityManagePost;
 import com.lmesa.dressy.activities.ActivityWardRobeClothesDetail;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
 import com.lmesa.dressy.helpers.ManageDialog;
+import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.DialogListener;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
@@ -177,62 +177,67 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     }
 
     @Override
-    public void onGetUser() {
+    public void onGetUser(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreateUser() {
+    public void onCreateUser(boolean isSuccess) {
 
     }
 
     @Override
-    public void onGetClothe() {
+    public void onGetClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreateClothe() {
+    public void onCreateClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onDeleteClothe() {
+    public void onDeleteClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onManageClothes() {
+    public void onManageClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onGetClothes() {
+    public void onGetClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreateClothes() {
+    public void onCreateClothes(boolean isSuccess) {
 
     }
 
     @Override
-    public void onDeleteClothes() {
-        Toast.makeText(getContext(),"Test delete Clothes",Toast.LENGTH_SHORT).show();
+    public void onDeleteClothes(boolean isSuccess) {
+        if (isSuccess){
+            Toast.makeText(getContext(),"Test delete Clothes",Toast.LENGTH_SHORT).show();
+        }else{
+            new ResponseHttp(getContext()).onErrorDeleteClothes();
+
+        }
     }
 
     @Override
-    public void onManageClothe() {
+    public void onManageClothe(boolean isSuccess) {
 
     }
 
     @Override
-    public void onGetSimilarity() {
+    public void onGetSimilarity(boolean isSuccess) {
 
     }
 
     @Override
-    public void onCreatePost() {
+    public void onCreatePost(boolean isSuccess) {
 
     }
 }
