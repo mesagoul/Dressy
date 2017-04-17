@@ -7,4 +7,5 @@ package com.lmesa.dressy.interfaces;
 public interface DialogListener {
     void onManageDialog();
     void onDeleteDialog();
+    void onShareDialog();
 }

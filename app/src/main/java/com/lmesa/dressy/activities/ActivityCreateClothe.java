@@ -55,7 +55,10 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
         apiDressy.setListener(this);
         scrollView = (ScrollView) findViewById(R.id.view_create_clothe);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
         image = (ImageView) findViewById(R.id.clothe_create_image);
+        image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
         nom = (EditText) findViewById(R.id.clothe_create_name);
         color = (EditText) findViewById(R.id.clothe_create_color);
         reference = (EditText) findViewById(R.id.clothe_create_reference);
@@ -205,6 +208,11 @@ public class ActivityCreateClothe extends AppCompatActivity implements ServiceLi
         progressBar.setVisibility(View.GONE);
         Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
         finish();
+
+    }
+
+    @Override
+    public void onCreatePost() {
 
     }
 }

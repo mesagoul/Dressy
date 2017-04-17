@@ -159,4 +159,9 @@ public class FragmentSignUp extends Fragment implements ServiceListener {
     public void onGetSimilarity() {
 
     }
+
+    @Override
+    public void onCreatePost() {
+
+    }
 }

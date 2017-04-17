@@ -10,6 +10,7 @@ import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
+import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.models.User;
 
 import retrofit2.Call;
@@ -88,7 +89,7 @@ public class ApiDressy{
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
-                    listener.onGetUser();
+                    //listener.onGetUser();
                 }
                 listener.onGetUser();
             }
@@ -96,6 +97,7 @@ public class ApiDressy{
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                listener.onGetUser();
             }
         });
     }
@@ -318,5 +320,23 @@ public class ApiDressy{
 
     public void setListener(ServiceListener listener) {
         this.listener = listener;
+    }
+
+    public void createPost(Post post) {
+        Call<Post> request = service.createPost(getAccesToken(),post);
+        request.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if(response.isSuccessful()){
+                    //TODO
+                }
+                listener.onCreatePost();
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

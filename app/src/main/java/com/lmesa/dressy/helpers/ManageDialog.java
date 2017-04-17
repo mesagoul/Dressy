@@ -24,24 +24,39 @@ import com.lmesa.dressy.interfaces.DialogListener;
 public class ManageDialog {
     private Activity activity;
     private DialogListener listener;
+    private boolean share;
 
-    public ManageDialog(Activity activity){
+    public ManageDialog(Activity activity, boolean share){
         this.activity = activity;
+        this.share = share;
     }
 
     public void loadDialog(){
+        int cptTab;
 
-        final Item[] items = {
-                new Item(activity.getResources().getString(R.string.edit), R.drawable.ic_manage,ContextCompat.getColor(activity, R.color.colorAccent)),
-                new Item(activity.getResources().getString(R.string.delete), R.drawable.ic_delete,ContextCompat.getColor(activity, R.color.delete)),
-        };
+        if(share){
+            cptTab = 3;
+        }else{
+            cptTab = 2;
+        }
 
-        ListAdapter adapter = new ArrayAdapter<Item>(
+        final Item[] items = new Item[cptTab];
+        items[0] =  new Item(activity.getResources().getString(R.string.edit), R.drawable.ic_manage,ContextCompat.getColor(activity, R.color.colorAccent));
+        items[1] =  new Item(activity.getResources().getString(R.string.delete), R.drawable.ic_delete,ContextCompat.getColor(activity, R.color.delete));
+        if(share){
+            items[2] =  new Item(activity.getResources().getString(R.string.share_on_socialwall), R.drawable.ic_share,ContextCompat.getColor(activity, R.color.primary));
+        }
+
+
+
+
+                ListAdapter adapter = new ArrayAdapter<Item>(
                 activity.getApplicationContext(),
                 android.R.layout.select_dialog_item,
                 android.R.id.text1,
                 items){
             public View getView(int position, View convertView, ViewGroup parent) {
+
                 View v = super.getView(position, convertView, parent);
                 TextView tv = (TextView)v.findViewById(android.R.id.text1);
                 tv.setTextColor(ContextCompat.getColor(activity, R.color.colorDark));
@@ -54,6 +69,7 @@ public class ManageDialog {
                 //Add margin between image and text (support various screen densities)
                 int dp5 = (int) (5 * activity.getResources().getDisplayMetrics().density + 0.5f);
                 tv.setCompoundDrawablePadding(dp5);
+
 
                 return v;
             }
@@ -71,6 +87,8 @@ public class ManageDialog {
                             listener.onManageDialog();
                         }else if (which == 1){
                             listener.onDeleteDialog();
+                        }else if(which == 2){
+                            listener.onShareDialog();
                         }
                     }
                 });

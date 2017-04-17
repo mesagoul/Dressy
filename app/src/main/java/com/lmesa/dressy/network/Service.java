@@ -3,6 +3,7 @@ package com.lmesa.dressy.network;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
+import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.models.User;
 
 import retrofit2.Call;
@@ -100,12 +101,10 @@ public interface Service {
             @Header("x-access-token") String token,
             @Body Clothe clothe);
 
-
-
-
-
-
-
-
-
+    // POST
+    // ADD POST
+    @POST("v1/addPost")
+    Call<Post> createPost(
+            @Header("x-access-token") String token,
+            @Body Post post);
 }

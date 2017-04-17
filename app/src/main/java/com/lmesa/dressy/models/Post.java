@@ -17,6 +17,12 @@ public class Post {
         this.clothes = clothes;
     }
 
+    public Post(String title, String desc, Clothes clothes) {
+        this.title = title;
+        this.desc = desc;
+        this.clothes = clothes;
+    }
+
     public Clothes getClothes() {
         return clothes;
     }

@@ -22,7 +22,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="from">Par</string>
-    <string name="comm_detail_description">Description</string>
+    <string name="description">Description</string>
     <string name="comm_detail_cloth_in_clothes">Les habits de la tenue</string>
     <string name="comm_title">Communauté</string>
     <string name="armory_title">Mon armoire</string>
@@ -64,4 +64,9 @@
     <string name="edit">Modifier</string>
     <string name="delete">Supprimer</string>
     <string name="edit_title">Que souhaitez-vous faire ?</string>
+    <string name="share_on_socialwall">Partager sur le mur social</string>
+    <string name="title">Titre</string>
+    <string name="share">Partager</string>
+    <string name="add_clothe">Ajouter des habits</string>
+    <string name="manage">Modifier</string>
 </resources>

@@ -37,7 +37,11 @@ public class AdapterWardRobeClothes extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return this.listClothes.size();
+        if(this.listClothes != null){
+            return this.listClothes.size();
+        }else{
+            return 0;
+        }
     }
 
     @Override
@@ -84,14 +88,13 @@ public class AdapterWardRobeClothes extends BaseAdapter {
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(context,"Long click", Toast.LENGTH_SHORT).show();
-                return listener.onLongClick(position);
+               return listener.onLongClick(position);
             }
         });
 
 
 
-       imageView.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.loadDetail(position);

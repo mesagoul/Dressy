@@ -20,4 +20,5 @@ public interface ServiceListener {
 
     void onGetSimilarity();
 
+    void onCreatePost();
 }

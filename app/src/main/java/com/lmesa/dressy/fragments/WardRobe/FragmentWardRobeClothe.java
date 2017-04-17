@@ -121,7 +121,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     @Override
     public boolean onLongClick(int position) {
         this.currentClothe = listClothe.get(position);
-        ManageDialog dialog = new ManageDialog(getActivity());
+        ManageDialog dialog = new ManageDialog(getActivity(), false);
         dialog.setListener(this);
         dialog.loadDialog();
         return true;
@@ -138,6 +138,11 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     @Override
     public void onDeleteDialog() {
         apiDressy.deleteClothe(this.currentClothe);
+    }
+
+    @Override
+    public void onShareDialog() {
+
     }
 
     @Override
@@ -192,6 +197,11 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
 
     @Override
     public void onGetSimilarity() {
+
+    }
+
+    @Override
+    public void onCreatePost() {
 
     }
 }

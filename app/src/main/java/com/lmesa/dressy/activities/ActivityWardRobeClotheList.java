@@ -1,5 +1,6 @@
 package com.lmesa.dressy.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -78,7 +79,6 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
                 "material"
         );
 
-
         for(int i = 0; i <= 15 ; i++){
             listClothe.add(clothe);
             listClothe.add(clothe2);
@@ -95,18 +95,27 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
 
 
     }
+    public boolean isManageClothes(){
+        return getIntent().getStringExtra("listClothe") != null;
+    }
 
     @Override
     public void loadDetail(int position) {
-        gridView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        apiDressy.getSimilarity(listClothe.get(position));
+        if(isManageClothes()){
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("clothe",gson.toJson(listClothe.get(position),Clothe.class));
+            setResult(Activity.RESULT_OK,resultIntent);
+            finish();
+        }else {
+            gridView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            apiDressy.getSimilarity(listClothe.get(position));
+        }
     }
 
     @Override
     public boolean onLongClick(int position) {
         return false;
-
     }
 
     @Override
@@ -136,7 +145,9 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
 
     @Override
     public void onManageClothes() {
-
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getApplicationContext(),"Test Modify Clothe",Toast.LENGTH_SHORT).show();
+        finish(); // for the moment
     }
 
     @Override
@@ -165,5 +176,10 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
         Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
         finish(); // for the moment
         // TODO
+    }
+
+    @Override
+    public void onCreatePost() {
+
     }
 }
