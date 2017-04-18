@@ -4,6 +4,7 @@ import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
+import com.lmesa.dressy.models.Posts;
 import com.lmesa.dressy.models.User;
 
 import retrofit2.Call;
@@ -37,7 +38,7 @@ public interface Service {
     // GET CLOTHE
     @GET("v1/getClothe")
     Call<Clothes> getClothe(
-            @Body User user
+            @Header("x-access-token") String token
     );
 
     // Add CLOTHE
@@ -67,7 +68,7 @@ public interface Service {
     // GET CLOTHES
     @GET("v1/getClothes")
     Call<ListClothes> getClothes(
-            @Body User user
+            @Header("x-access-token") String token
     );
 
     // Add CLOTHES
@@ -96,7 +97,7 @@ public interface Service {
     // SIMILARITY
 
     // GET SIMILIRARITY
-    @POST("v1/getClothes")
+    @POST("v1/getSimilarity")
     Call<Clothe> getSimilarityClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe);
@@ -107,4 +108,9 @@ public interface Service {
     Call<Post> createPost(
             @Header("x-access-token") String token,
             @Body Post post);
+
+    // GET POST
+    @GET("v1/getPosts")
+    Call<Posts> getPost(
+            @Header("x-access-token") String token);
 }
