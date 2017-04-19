@@ -166,7 +166,7 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     }
 
     @Override
-    public void onGetClothe(boolean isSucces) {
+    public void onGetClothe(boolean isSucces, ArrayList<Clothe> listClothe) {
 
     }
 
@@ -195,7 +195,7 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     }
 
     @Override
-    public void onGetClothes(boolean isSucces) {
+    public void onGetClothes(boolean isSucces, ArrayList<Clothes> clothes) {
 
     }
 

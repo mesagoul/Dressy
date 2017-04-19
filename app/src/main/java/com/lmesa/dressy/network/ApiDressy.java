@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.lmesa.dressy.R;
-import com.lmesa.dressy.activities.ActivityWardRobeClotheList;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.models.User;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,6 +87,10 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
+                    SharedPreferences settings = activity.getSharedPreferences("token", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("token", response.body().getApi_key());
+                    editor.commit();
                     Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
                     listener.onGetUser(true);
                 }else{
@@ -109,23 +113,23 @@ public class ApiDressy{
 
     /**
      * Get clothe from user
-     * @param user
      */
-    public void getClothe(User user){
-        Call<Clothes> request = service.getClothe(user);
+    public void getClothe(){
+        Call<Clothes> request = service.getClothe(getAccesToken());
         request.enqueue(new Callback<Clothes>() {
             @Override
             public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                 if(response.isSuccessful()){
-                    listener.onGetClothe(true);
+                    listener.onGetClothe(true, response.body().getListClothe());
+
                 }else{
-                    listener.onGetClothe(false);
+                    listener.onGetClothe(false, new ArrayList<Clothe>());
                 }
             }
 
             @Override
             public void onFailure(Call<Clothes> call, Throwable t) {
-                listener.onGetClothe(false);
+                listener.onGetClothe(false, new ArrayList<Clothe>());
             }
         });
     }
@@ -205,23 +209,22 @@ public class ApiDressy{
 
     /**
      * Get clothes from user
-     * @param user
      */
-    public void getClothes(User user){
-        Call<ListClothes> request = service.getClothes(user);
+    public void getClothes(){
+        Call<ListClothes> request = service.getClothes(getAccesToken());
         request.enqueue(new Callback<ListClothes>() {
             @Override
             public void onResponse(Call<ListClothes> call, Response<ListClothes> response) {
                 if(response.isSuccessful()){
-                    listener.onGetClothes(true);
+                    listener.onGetClothes(true, response.body().getClothes());
                 }else{
-                    listener.onGetClothes(false);
+                    listener.onGetClothes(false,new ArrayList<Clothes>());
                 }
             }
 
             @Override
             public void onFailure(Call<ListClothes> call, Throwable t) {
-                listener.onGetClothes(false);
+                listener.onGetClothes(false,new ArrayList<Clothes>());
             }
         });
     }

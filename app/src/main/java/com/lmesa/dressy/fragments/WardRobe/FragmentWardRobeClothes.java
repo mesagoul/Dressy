@@ -57,70 +57,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Again and again like a banana
-        Clothe clothe = new Clothe(
-                "Name",
-                "vert",
-                "noReference",
-                "http://blzjeans.com/8831-29091-thickbox/tee-shirt-vert-homme-tendance-et-fashion-lenny-and-loyd.jpg",
-                "category",
-                "brand",
-                "material"
-        );
-        Clothe clothe2 = new Clothe(
-                "Name",
-                "Jaune",
-                "noReference",
-                "http://i2.cdscdn.com/pdt2/1/4/1/1/300x300/mp02972141/rw/pantalon-elastique-zip-couleur-pure-femme-jaune.jpg",
-                "category",
-                "brand",
-                "material"
-        );
-        Clothes clothes1 =  new Clothes(
-                "http://p7.storage.canalblog.com/75/10/1014555/83786375_o.jpg",
-                new ArrayList<Clothe>(),
-                0
-        );
-        Clothes clothes2 = new Clothes(
-                "https://s-media-cache-ak0.pinimg.com/736x/3c/bc/4a/3cbc4a89555170d8564767ba31236745.jpg",
-                new ArrayList<Clothe>(),
-                0
-        );
-        Clothes clothes3 = new Clothes(
-                "https://s-media-cache-ak0.pinimg.com/736x/cd/2f/6d/cd2f6d0eeca5a24c12fc8515b49a1746.jpg",
-                new ArrayList<Clothe>(),
-                0
-        );
-        Clothes clothes4 = new Clothes(
-                "https://s-media-cache-ak0.pinimg.com/736x/80/b3/26/80b3267ccdf994b79717c9e31b5d5067.jpg",
-                new ArrayList<Clothe>(),
-                0
-        );
-        Clothes clothes5 = new Clothes(
-                "https://tribune.menlook.com/wp-content/uploads/2013/04/marc-3-ok.jpg",
-                new ArrayList<Clothe>(),
-                0
-        );
-
-
-        for(int i = 0; i <= 15 ; i++){
-            clothes1.getListClothe().add(clothe);
-            clothes2.getListClothe().add(clothe);
-            clothes3.getListClothe().add(clothe);
-            clothes4.getListClothe().add(clothe);
-            clothes5.getListClothe().add(clothe);
-            clothes1.getListClothe().add(clothe2);
-            clothes2.getListClothe().add(clothe2);
-            clothes3.getListClothe().add(clothe2);
-            clothes4.getListClothe().add(clothe2);
-            clothes5.getListClothe().add(clothe2);
-            listClothes.add(clothes1);
-            listClothes.add(clothes2);
-            listClothes.add(clothes3);
-            listClothes.add(clothes4);
-            listClothes.add(clothes5);
-        }
-        // end banana
+        apiDressy.getClothes();
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +67,9 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
                 startActivity(toCreateClothe);
             }
         });
+    }
 
+    public void loadAdapter(){
         AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getActivity(),listClothes);
         adapterWardRobeClothes.setListener(this);
         gridView.setAdapter(adapterWardRobeClothes);
@@ -187,7 +126,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     }
 
     @Override
-    public void onGetClothe(boolean isSuccess) {
+    public void onGetClothe(boolean isSuccess, ArrayList<Clothe> listClothe) {
 
     }
 
@@ -207,7 +146,13 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     }
 
     @Override
-    public void onGetClothes(boolean isSuccess) {
+    public void onGetClothes(boolean isSuccess, ArrayList<Clothes> clothes) {
+        if(isSuccess){
+            this.listClothes = listClothes;
+            this.loadAdapter();
+        }else{
+            new ResponseHttp(getContext()).onErrorGetClothes();
+        }
 
     }
 

@@ -5,15 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
@@ -21,9 +17,8 @@ import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
-import com.lmesa.dressy.models.User;
+import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.network.ApiDressy;
-import com.lmesa.dressy.network.Service;
 
 import java.util.ArrayList;
 
@@ -49,52 +44,13 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
         apiDressy.setListener(this);
         gson = new Gson();
 
+        apiDressy.getClothe();
+    }
 
-        // banana
-        Clothe clothe = new Clothe(
-                "Name",
-                "vert",
-                "noReference",
-                "http://blzjeans.com/8831-29091-thickbox/tee-shirt-vert-homme-tendance-et-fashion-lenny-and-loyd.jpg",
-                "category",
-                "brand",
-                "material"
-        );
-
-        Clothe clothe2 = new Clothe(
-                "Name",
-                "Jaune",
-                "noReference",
-                "http://i2.cdscdn.com/pdt2/1/4/1/1/300x300/mp02972141/rw/pantalon-elastique-zip-couleur-pure-femme-jaune.jpg",
-                "category",
-                "brand",
-                "material"
-        );
-        Clothe clothe3 = new Clothe(
-                "Name",
-                "Jaune",
-                "noReference",
-                "http://media.meltystyle.fr/article-1645763-ajust_930-f1374762253/asos-bermuda-chino-29-16-eur.jpg",
-                "category",
-                "brand",
-                "material"
-        );
-
-        for(int i = 0; i <= 15 ; i++){
-            listClothe.add(clothe);
-            listClothe.add(clothe2);
-            listClothe.add(clothe3);
-            listClothe.add(clothe2);
-            listClothe.add(clothe);
-        }
-        // banana
-
-
+    public void loadAdapter(){
         AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(this,listClothe);
         adapterWardRobeClothes.setListener(this);
         gridView.setAdapter(adapterWardRobeClothes);
-
-
     }
     public boolean isManageClothes(){
         return getIntent().getStringExtra("listClothe") != null;
@@ -130,7 +86,14 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     }
 
     @Override
-    public void onGetClothe(boolean isSucces) {
+    public void onGetClothe(boolean isSucces, ArrayList<Clothe> listClothe) {
+        if(isSucces){
+            this.listClothe = listClothe;
+            loadAdapter();
+
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorGetClothe();
+        }
 
     }
 
@@ -149,7 +112,7 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     }
 
     @Override
-    public void onGetClothes(boolean isSucces) {
+    public void onGetClothes(boolean isSucces, ArrayList<Clothes> clothes) {
 
     }
 

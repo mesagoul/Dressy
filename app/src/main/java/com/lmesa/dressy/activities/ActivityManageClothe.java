@@ -22,9 +22,11 @@ import com.lmesa.dressy.R;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.network.ApiDressy;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by Lucas on 15/04/2017.
@@ -156,7 +158,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     }
 
     @Override
-    public void onGetClothe(boolean isSucces) {
+    public void onGetClothe(boolean isSucces, ArrayList<Clothe> listClothe) {
 
     }
 
@@ -185,7 +187,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     }
 
     @Override
-    public void onGetClothes(boolean isSucces) {
+    public void onGetClothes(boolean isSucces, ArrayList<Clothes> clothes) {
 
     }
 

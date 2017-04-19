@@ -25,6 +25,7 @@ import com.lmesa.dressy.interfaces.DialogListener;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.network.ApiDressy;
 
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        apiDressy.getClothe();
+
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,46 +73,9 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
                 startActivity(toAddClothe);
             }
         });
+    }
 
-        // banana
-        Clothe clothe = new Clothe(
-                "Name",
-                "vert",
-                "noReference",
-                "http://blzjeans.com/8831-29091-thickbox/tee-shirt-vert-homme-tendance-et-fashion-lenny-and-loyd.jpg",
-                "category",
-                "brand",
-                "material"
-        );
-
-        Clothe clothe2 = new Clothe(
-                "Name",
-                "Jaune",
-                "noReference",
-                "http://i2.cdscdn.com/pdt2/1/4/1/1/300x300/mp02972141/rw/pantalon-elastique-zip-couleur-pure-femme-jaune.jpg",
-                "category",
-                "brand",
-                "material"
-        );
-        Clothe clothe3 = new Clothe(
-                "Name",
-                "Jaune",
-                "noReference",
-                "http://media.meltystyle.fr/article-1645763-ajust_930-f1374762253/asos-bermuda-chino-29-16-eur.jpg",
-                "category",
-                "brand",
-                "material"
-        );
-
-
-        for(int i = 0; i <= 15 ; i++){
-            listClothe.add(clothe);
-            listClothe.add(clothe2);
-            listClothe.add(clothe3);
-            listClothe.add(clothe2);
-            listClothe.add(clothe);
-        }
-        // banana
+    public void loadAdapter(){
         AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getActivity(),listClothe);
         adapterWardRobeClothes.setListener(this);
         gridView.setAdapter(adapterWardRobeClothes);
@@ -163,7 +129,13 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     }
 
     @Override
-    public void onGetClothe(boolean isSuccess) {
+    public void onGetClothe(boolean isSuccess, ArrayList<Clothe> listClothe) {
+        if(isSuccess){
+            this.listClothe = listClothe;
+            this.loadAdapter();
+        }else{
+            new ResponseHttp(getContext()).onErrorGetClothe();
+        }
 
     }
 
@@ -190,7 +162,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     }
 
     @Override
-    public void onGetClothes(boolean isSuccess) {
+    public void onGetClothes(boolean isSuccess, ArrayList<Clothes> clothes) {
 
     }
 

@@ -22,7 +22,7 @@ import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
-import static com.lmesa.dressy.R.id.manage_desc;
+import java.util.ArrayList;
 
 /**
  * Created by Lucas on 17/04/2017.
@@ -91,7 +91,7 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
     }
 
     @Override
-    public void onGetClothe(boolean isSucces) {
+    public void onGetClothe(boolean isSucces, ArrayList<Clothe> listClothe) {
 
     }
 
@@ -111,7 +111,7 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
     }
 
     @Override
-    public void onGetClothes(boolean isSucces) {
+    public void onGetClothes(boolean isSucces, ArrayList<Clothes> clothes) {
 
     }
 

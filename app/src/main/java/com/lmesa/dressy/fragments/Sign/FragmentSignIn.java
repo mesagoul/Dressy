@@ -20,8 +20,12 @@ import com.lmesa.dressy.activities.MainActivity;
 import com.lmesa.dressy.helpers.FormValidator;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
+import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.User;
 import com.lmesa.dressy.network.ApiDressy;
+
+import java.util.ArrayList;
 
 /**
  * Created by Lucas on 03/04/2017.
@@ -132,7 +136,7 @@ public class FragmentSignIn extends Fragment implements ServiceListener{
     }
 
     @Override
-    public void onGetClothe(boolean isSucces) {
+    public void onGetClothe(boolean isSucces, ArrayList<Clothe> listClothe) {
 
     }
 
@@ -152,7 +156,7 @@ public class FragmentSignIn extends Fragment implements ServiceListener{
     }
 
     @Override
-    public void onGetClothes(boolean isSucces) {
+    public void onGetClothes(boolean isSucces, ArrayList<Clothes> clothes) {
 
     }
 
