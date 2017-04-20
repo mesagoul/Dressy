@@ -1,6 +1,7 @@
 package com.lmesa.dressy.interfaces;
 
 import com.lmesa.dressy.models.Clothe.Clothe;
+import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
 
 import java.util.ArrayList;
@@ -26,4 +27,6 @@ public interface ServiceListener {
     void onGetSimilarity(boolean isSucces);
 
     void onCreatePost(boolean isSucces);
+
+    void onGetClotheProperties(boolean isSuccess, ClotheProperties clotheProperties);
 }

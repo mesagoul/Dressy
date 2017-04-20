@@ -18,8 +18,7 @@ public class Clothe{
     private Category cloth_category;
 
 
-    public Clothe(int cloth_id, String cloth_name, String cloth_color, String cloth_reference, String cloth_urlImage, Brand cloth_brand, Material cloth_material, Category cloth_category) {
-        this.cloth_id = cloth_id;
+    public Clothe(String cloth_name, String cloth_color, String cloth_reference, String cloth_urlImage, Brand cloth_brand, Material cloth_material, Category cloth_category) {
         this.cloth_name = cloth_name;
         this.cloth_color = cloth_color;
         this.cloth_reference = cloth_reference;

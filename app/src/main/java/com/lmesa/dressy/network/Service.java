@@ -1,6 +1,7 @@
 package com.lmesa.dressy.network;
 
 import com.lmesa.dressy.models.Clothe.Clothe;
+import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
@@ -108,8 +109,11 @@ public interface Service {
             @Header("x-access-token") String token,
             @Body Post post);
 
-    // GET POST
-    @GET("v1/getPosts")
-    Call<Posts> getPost(
-            @Header("x-access-token") String token);
+    // GET getClotheProperties
+    @GET("v1/getClotheProperties")
+    Call<ClotheProperties> getClotheProperties(
+            @Header("x-access-token") String token
+    );
 }
+
+

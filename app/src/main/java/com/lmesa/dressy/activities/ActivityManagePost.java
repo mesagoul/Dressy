@@ -18,6 +18,7 @@ import com.lmesa.dressy.R;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe.Clothe;
+import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
@@ -147,6 +148,12 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
             finish();
         }
     }
+
+    @Override
+    public void onGetClotheProperties(boolean isSuccess, ClotheProperties clotheProperties) {
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){

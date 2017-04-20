@@ -25,6 +25,7 @@ import com.lmesa.dressy.interfaces.DialogListener;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe.Clothe;
+import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.network.ApiDressy;
 
@@ -188,6 +189,11 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
 
     @Override
     public void onCreatePost(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onGetClotheProperties(boolean isSuccess, ClotheProperties clotheProperties) {
 
     }
 }

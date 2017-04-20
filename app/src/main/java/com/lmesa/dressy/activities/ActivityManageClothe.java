@@ -7,9 +7,10 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,9 +22,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
+import com.lmesa.dressy.adapters.AdapterClotheProperties;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
+import com.lmesa.dressy.models.Clothe.Brand;
+import com.lmesa.dressy.models.Clothe.Category;
 import com.lmesa.dressy.models.Clothe.Clothe;
+import com.lmesa.dressy.models.Clothe.ClotheProperties;
+import com.lmesa.dressy.models.Clothe.Material;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.network.ApiDressy;
 
@@ -49,7 +55,10 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     private Bitmap imageBitmap;
     private Clothe editClothe;
     private Gson gson;
-    private Spinner categories;
+    private Spinner spinnerCategories;
+    private ArrayList<Brand> listBrands;
+    private ArrayList<Material> listMaterials;
+    private ArrayList<Category> listCategories;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 
@@ -62,7 +71,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         apiDressy.setListener(this);
         scrollView = (ScrollView) findViewById(R.id.view_create_clothe);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        categories = (Spinner) findViewById(R.id.clothe_create_categories);
+        spinnerCategories = (Spinner) findViewById(R.id.clothe_create_categories);
 
         image = (ImageView) findViewById(R.id.clothe_create_image);
         image.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -74,6 +83,8 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         brand = (EditText) findViewById(R.id.clothe_create_brand);
         material = (EditText) findViewById(R.id.clothe_create_material);
         btn_save = (Button) findViewById(R.id.btn_save);
+
+        apiDressy.getClotheProperties();
 
 
         if(isManage()){
@@ -93,7 +104,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
                     .crossFade()
                     .into(image);
         }else{
-            loadSpinner();
             Intent toCameraActivity = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(toCameraActivity,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
@@ -124,15 +134,30 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         });
     }
 
-    public void loadSpinner(){
-        ArrayList<String> list = new ArrayList<>();
-        list.add("Ello");
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,list);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        categories.setAdapter(adapter);
+    public void loadSpinners(){
+        AdapterClotheProperties adapter = new AdapterClotheProperties(getApplicationContext(),this.listCategories);
+        spinnerCategories.setAdapter(adapter);
+
+        this.loadListeners();
+    }
+
+    public void loadListeners(){
+
+        if(isManage()){
+            spinnerCategories.setSelection(editClothe.getCloth_category().getId());
+        }
+        spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Categorie : ",listCategories.get(position).getLibelle());
+                Log.d("Categorie : ", String.valueOf(listCategories.get(position).getId()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public String imageToString(ImageView image){
@@ -252,6 +277,30 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
     @Override
     public void onCreatePost(boolean isSucces) {
+
+    }
+
+    @Override
+    public void onGetClotheProperties(boolean isSuccess, ClotheProperties clotheProperties) {
+        if(isSuccess){
+            this.listBrands = clotheProperties.getListBrands();
+            this.listCategories = clotheProperties.getListCategories();
+            this.listMaterials = clotheProperties.getListMaterials();
+
+            loadSpinners();
+
+        }else{
+
+            // FOR THE MOMENT
+
+            this.listCategories = new ArrayList<Category>();
+            this.listCategories.add(new Category(0,"Tee shirt"));
+            this.listCategories.add(new Category(1,"Pantalon"));
+            loadSpinners();
+
+            //
+            new ResponseHttp(getApplicationContext()).onErrorGetPropertiesClothe();
+        }
 
     }
 }

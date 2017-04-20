@@ -18,6 +18,7 @@ import com.lmesa.dressy.helpers.FormValidator;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe.Clothe;
+import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.User;
 import com.lmesa.dressy.network.ApiDressy;
@@ -172,6 +173,11 @@ public class FragmentSignUp extends Fragment implements ServiceListener {
 
     @Override
     public void onCreatePost(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onGetClotheProperties(boolean isSuccess, ClotheProperties clotheProperties) {
 
     }
 }

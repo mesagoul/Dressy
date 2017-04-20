@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe.Clothe;
+import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
@@ -342,6 +343,31 @@ public class ApiDressy{
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
                 listener.onCreatePost(false);
+            }
+        });
+    }
+
+
+
+    /**
+     * Get list of Properties of a Clothe
+     * @param @clothe
+     */
+    public void getClotheProperties(){
+        Call<ClotheProperties> request = service.getClotheProperties(getAccesToken());
+        request.enqueue(new Callback<ClotheProperties>() {
+            @Override
+            public void onResponse(Call<ClotheProperties> call, Response<ClotheProperties> response) {
+                if(response.isSuccessful()){
+                    listener.onGetClotheProperties(true, response.body());
+                }else{
+                    listener.onGetClotheProperties(false, new ClotheProperties());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ClotheProperties> call, Throwable t) {
+                listener.onGetClotheProperties(false,  new ClotheProperties());
             }
         });
     }

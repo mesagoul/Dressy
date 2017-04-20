@@ -49,18 +49,16 @@ public class FragmentCommunityNews extends Fragment implements CommunityListener
         // WIthout APi for the moment, like a banana
         ArrayList<Clothe> listClothe = new ArrayList<Clothe>();
         Clothe clothe = new Clothe(
-                0,
                 "Name",
                 "blue",
                 "noReference",
                 "http://blzjeans.com/8831-29091-thickbox/tee-shirt-vert-homme-tendance-et-fashion-lenny-and-loyd.jpg",
                 new Brand(0,"ello"),
-                new Material(0,"ello"),
-                new Category(0,"ello")
+                new Material(1,"ello"),
+                new Category(1,"ello")
         );
 
         Clothe clothe2 = new Clothe(
-                1,
                 "Name",
                 "Jaune",
                 "noReference",
