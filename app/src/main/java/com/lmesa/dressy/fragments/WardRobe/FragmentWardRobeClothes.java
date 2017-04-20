@@ -23,7 +23,7 @@ import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.DialogListener;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
-import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.network.ApiDressy;
 
@@ -148,7 +148,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     @Override
     public void onGetClothes(boolean isSuccess, ArrayList<Clothes> clothes) {
         if(isSuccess){
-            this.listClothes = listClothes;
+            this.listClothes = clothes;
             this.loadAdapter();
         }else{
             new ResponseHttp(getContext()).onErrorGetClothes();

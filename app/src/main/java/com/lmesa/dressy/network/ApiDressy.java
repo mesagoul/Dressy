@@ -2,10 +2,9 @@ package com.lmesa.dressy.network;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.lmesa.dressy.interfaces.ServiceListener;
-import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
@@ -91,7 +90,6 @@ public class ApiDressy{
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("token", response.body().getApi_key());
                     editor.commit();
-                    Toast.makeText(activity.getApplicationContext(), response.body().getApi_key(), Toast.LENGTH_SHORT).show();
                     listener.onGetUser(true);
                 }else{
                     listener.onGetUser(false);

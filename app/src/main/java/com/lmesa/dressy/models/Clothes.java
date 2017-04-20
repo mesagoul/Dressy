@@ -1,5 +1,7 @@
 package com.lmesa.dressy.models;
 
+import com.lmesa.dressy.models.Clothe.Clothe;
+
 import java.util.ArrayList;
 
 /**
@@ -8,11 +10,13 @@ import java.util.ArrayList;
 
 public class Clothes{
 
+    private int id;
     private String urlImage;
     private ArrayList<Clothe> listClothe;
     private Integer score;
 
-    public Clothes(String urlImage, ArrayList<Clothe> listClothe, Integer score) {
+    public Clothes(int id, String urlImage, ArrayList<Clothe> listClothe, Integer score) {
+        this.id = id;
         this.urlImage = urlImage;
         this.listClothe = listClothe;
         this.score = score;
@@ -20,6 +24,14 @@ public class Clothes{
     public Clothes(String urlImage, ArrayList<Clothe> listClothe) {
         this.urlImage = urlImage;
         this.listClothe = listClothe;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUrlImage() {

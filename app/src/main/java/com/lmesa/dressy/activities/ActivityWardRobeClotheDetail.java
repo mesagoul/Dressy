@@ -1,6 +1,5 @@
 package com.lmesa.dressy.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
-import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothe.Clothe;
 
 /**
  * Created by Lucas on 09/04/2017.
@@ -49,9 +48,9 @@ public class ActivityWardRobeClotheDetail  extends AppCompatActivity{
         name.setText(clothe.getCloth_name());
         color.setText(clothe.getCloth_color());
         reference.setText(clothe.getCloth_reference());
-        category.setText(clothe.getCloth_category());
-        brand.setText(clothe.getCloth_brand());
-        material.setText(clothe.getCloth_material());
+        category.setText(clothe.getCloth_category().getLibelle());
+        brand.setText(clothe.getCloth_brand().getLibelle());
+        material.setText(clothe.getCloth_material().getLibelle());
         Glide
                 .with(getApplicationContext())
                 .load(clothe.getCloth_urlImage())

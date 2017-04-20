@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
-import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;

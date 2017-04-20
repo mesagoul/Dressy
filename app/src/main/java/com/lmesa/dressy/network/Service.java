@@ -1,6 +1,6 @@
 package com.lmesa.dressy.network;
 
-import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
@@ -12,7 +12,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
  * Created by mac13 on 10/04/2017.

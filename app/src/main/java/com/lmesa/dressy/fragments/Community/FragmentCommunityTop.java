@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.lmesa.dressy.R;
 import com.lmesa.dressy.activities.ActivityCommunityDetail;
 import com.lmesa.dressy.adapters.AdapterCommunityList;
 import com.lmesa.dressy.interfaces.CommunityListener;
-import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.Post;
 
@@ -47,7 +46,7 @@ public class FragmentCommunityTop extends Fragment implements CommunityListener 
         super.onViewCreated(view, savedInstanceState);
         // for the moment, just create Post like a banana
         for(Integer i = 0 ; i <= 10 ; i++){
-            listPosts.add(new Post("Lucas"+i.toString(),"Ma super tenue","Ma super description",new Clothes("http://blzjeans.com/15110-51030-thickbox/t-shirt-bleu-royal-uni-sixth-june.jpg", new ArrayList<Clothe>(),i*2)));
+            listPosts.add(new Post("Lucas"+i.toString(),"Ma super tenue","Ma super description",new Clothes(0,"http://blzjeans.com/15110-51030-thickbox/t-shirt-bleu-royal-uni-sixth-june.jpg", new ArrayList<Clothe>(),i*2)));
         }
         Collections.reverse(listPosts);
         // END

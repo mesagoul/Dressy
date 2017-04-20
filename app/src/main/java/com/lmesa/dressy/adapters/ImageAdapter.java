@@ -10,8 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.lmesa.dressy.activities.ActivityImageFullScreen;
-import com.lmesa.dressy.models.Clothe;
-import com.lmesa.dressy.models.Post;
+import com.lmesa.dressy.models.Clothe.Clothe;
 
 import java.util.ArrayList;
 

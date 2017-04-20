@@ -7,14 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.lmesa.dressy.R;
-import com.lmesa.dressy.fragments.WardRobe.FragmentWardRobeClothe;
-import com.lmesa.dressy.helpers.MatchDialog;
 import com.lmesa.dressy.interfaces.WardRobeListener;
-import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothes;
 
 import java.util.ArrayList;
@@ -84,6 +81,7 @@ public class AdapterWardRobeClothes extends BaseAdapter {
                     .crossFade()
                     .into(imageView);
         }
+
 
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

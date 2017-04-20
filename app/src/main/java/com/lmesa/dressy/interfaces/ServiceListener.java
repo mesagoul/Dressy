@@ -1,8 +1,6 @@
 package com.lmesa.dressy.interfaces;
 
-import android.support.annotation.Nullable;
-
-import com.lmesa.dressy.models.Clothe;
+import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothes;
 
 import java.util.ArrayList;
