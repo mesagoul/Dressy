@@ -85,4 +85,6 @@
     <string name="errorGetSimilarity">Erreur lors de la récupération de vos habits compatibles</string>
     <string name="errorCreatePost">Erreur lors de la création de votre Post</string>
     <string name="errorGetClotheProperties">Impossible de récupérer les propriétés des habits</string>
+    <string name="no_clothe">Vous n\'avez pas d\'habits</string>
+    <string name="no_clothes">Vous n\'avez pas de tenues</string>
 </resources>

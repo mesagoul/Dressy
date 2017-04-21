@@ -45,9 +45,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     private EditText nom;
     private EditText color;
     private EditText reference;
-    private EditText category;
-    private EditText brand;
-    private EditText material;
     private Button btn_save;
     private ApiDressy apiDressy;
     private ScrollView scrollView;
@@ -56,9 +53,14 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     private Clothe editClothe;
     private Gson gson;
     private Spinner spinnerCategories;
+    private Spinner spinnerBrands;
+    private Spinner spinnerMaterials;
     private ArrayList<Brand> listBrands;
     private ArrayList<Material> listMaterials;
     private ArrayList<Category> listCategories;
+    private Category currentCategory;
+    private Material currentMaterial;
+    private Brand currentBrand;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 
@@ -72,6 +74,8 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         scrollView = (ScrollView) findViewById(R.id.view_create_clothe);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         spinnerCategories = (Spinner) findViewById(R.id.clothe_create_categories);
+        spinnerBrands = (Spinner) findViewById(R.id.clothe_create_brands);
+        spinnerMaterials = (Spinner) findViewById(R.id.clothe_create_materials);
 
         image = (ImageView) findViewById(R.id.clothe_create_image);
         image.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -79,9 +83,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         nom = (EditText) findViewById(R.id.clothe_create_name);
         color = (EditText) findViewById(R.id.clothe_create_color);
         reference = (EditText) findViewById(R.id.clothe_create_reference);
-        category = (EditText) findViewById(R.id.clothe_create_category);
-        brand = (EditText) findViewById(R.id.clothe_create_brand);
-        material = (EditText) findViewById(R.id.clothe_create_material);
         btn_save = (Button) findViewById(R.id.btn_save);
 
         apiDressy.getClotheProperties();
@@ -93,9 +94,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
             nom.setText(editClothe.getCloth_name());
             color.setText(editClothe.getCloth_color());
             reference.setText(editClothe.getCloth_reference());
-            category.setText(editClothe.getCloth_category().getLibelle());
-            brand.setText(editClothe.getCloth_brand().getLibelle());
-            material.setText(editClothe.getCloth_material().getLibelle());
 
             Glide
                     .with(getApplicationContext())
@@ -121,13 +119,13 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
                 scrollView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                //Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(), imageToString(image),category.getText().toString(),brand.getText().toString(),material.getText().toString());
+                Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(), "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAiqAAAAJDNjNjliM2FmLTlkNmQtNDc1MS05Y2MyLWMxZWRhYTFhYWVmOA.jpg"/*imageToString(image)*/,currentBrand,currentMaterial,currentCategory);
                 if(isMatch()){
-                    //apiDressy.getSimilarity(clothe);
+                    apiDressy.getSimilarity(clothe);
                 }else if(isManage()){
-                   // apiDressy.manageClothe(clothe);
+                    apiDressy.manageClothe(clothe);
                 }else{
-                    //apiDressy.addClothe(clothe);
+                    apiDressy.addClothe(clothe);
                 }
 
             }
@@ -135,8 +133,14 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     }
 
     public void loadSpinners(){
-        AdapterClotheProperties adapter = new AdapterClotheProperties(getApplicationContext(),this.listCategories);
-        spinnerCategories.setAdapter(adapter);
+        AdapterClotheProperties adapterCategory = new AdapterClotheProperties(getApplicationContext(),this.listCategories);
+        spinnerCategories.setAdapter(adapterCategory);
+
+        AdapterClotheProperties adapterMaterials = new AdapterClotheProperties(getApplicationContext(),this.listMaterials);
+        spinnerMaterials.setAdapter(adapterMaterials);
+
+        AdapterClotheProperties adapterBrand = new AdapterClotheProperties(getApplicationContext(),this.listBrands);
+        spinnerBrands.setAdapter(adapterBrand);
 
         this.loadListeners();
     }
@@ -144,13 +148,39 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     public void loadListeners(){
 
         if(isManage()){
-            spinnerCategories.setSelection(editClothe.getCloth_category().getId());
+            //spinnerCategories.setSelection(editClothe.getCloth_category().getId());
+            //spinnerMaterials.setSelection(editClothe.getCloth_material().getId());
+            //spinnerBrands.setSelection(editClothe.getCloth_brand().getId());
         }
         spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Categorie : ",listCategories.get(position).getLibelle());
-                Log.d("Categorie : ", String.valueOf(listCategories.get(position).getId()));
+                currentCategory = listCategories.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerBrands.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                currentBrand = listBrands.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerMaterials.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                currentMaterial = listMaterials.get(position);
+                Log.d("MATERIAL",currentMaterial.getLibelle());
             }
 
             @Override
@@ -291,14 +321,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
         }else{
 
-            // FOR THE MOMENT
-
-            this.listCategories = new ArrayList<Category>();
-            this.listCategories.add(new Category(0,"Tee shirt"));
-            this.listCategories.add(new Category(1,"Pantalon"));
-            loadSpinners();
-
-            //
             new ResponseHttp(getApplicationContext()).onErrorGetPropertiesClothe();
         }
 

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -44,6 +45,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     private Clothe currentClothe;
     private LinearLayout content;
     private ProgressBar progressBar;
+    private TextView no_clothe;
 
     @Nullable
     @Override
@@ -54,6 +56,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         btn_add = (Button) v.findViewById(R.id.btn_add);
         progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         content = (LinearLayout) v.findViewById(R.id.view_content);
+        no_clothe = (TextView) v.findViewById(R.id.no_clothe);
         apiDressy = new ApiDressy(getActivity());
         apiDressy.setListener(this);
         gson = new Gson();
@@ -64,6 +67,8 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        progressBar.setVisibility(View.VISIBLE);
+        content.setVisibility(View.GONE);
         apiDressy.getClothe();
 
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -131,9 +136,16 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
 
     @Override
     public void onGetClothe(boolean isSuccess, ArrayList<Clothe> listClothe) {
+        progressBar.setVisibility(View.GONE);
         if(isSuccess){
-            this.listClothe = listClothe;
-            this.loadAdapter();
+            if(listClothe.size() == 0){
+                no_clothe.setVisibility(View.VISIBLE);
+            }else{
+                no_clothe.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+                this.listClothe = listClothe;
+                this.loadAdapter();
+            }
         }else{
             new ResponseHttp(getContext()).onErrorGetClothe();
         }
@@ -148,9 +160,15 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     @Override
     public void onDeleteClothe(boolean isSuccess) {
         progressBar.setVisibility(View.GONE);
-        content.setVisibility(View.VISIBLE);
         if(isSuccess){
-            Toast.makeText(getContext(),"Test Delete Clothe",Toast.LENGTH_SHORT).show();
+            listClothe.remove(this.currentClothe);
+            if(listClothe.size() == 0){
+                no_clothe.setVisibility(View.VISIBLE);
+            }else{
+                no_clothe.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+                loadAdapter();
+            }
         }else{
             new ResponseHttp(getContext()).onErrorDeleteClothe();
 

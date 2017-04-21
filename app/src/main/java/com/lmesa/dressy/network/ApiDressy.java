@@ -3,6 +3,7 @@ package com.lmesa.dressy.network;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
+import com.lmesa.dressy.helpers.NullOnEmptyConverterFactory;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothe.ClotheProperties;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -34,6 +36,7 @@ public class ApiDressy{
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://dressyapi.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(new NullOnEmptyConverterFactory())
                 .build();
         service = retrofit.create(Service.class);
     }
@@ -159,10 +162,10 @@ public class ApiDressy{
      * @param clothe
      */
     public void deleteClothe(Clothe clothe){
-        Call<Clothe> request = service.deleteClothe(getAccesToken(),clothe);
-        request.enqueue(new Callback<Clothe>() {
+        Call<Void> request = service.deleteClothe(getAccesToken(),clothe);
+        request.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Clothe> call, Response<Clothe> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
                     listener.onDeleteClothe(true);
                 }else{
@@ -171,7 +174,7 @@ public class ApiDressy{
             }
 
             @Override
-            public void onFailure(Call<Clothe> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 listener.onDeleteClothe(false);
             }
         });
@@ -256,10 +259,10 @@ public class ApiDressy{
      * @param clothes
      */
     public void deleteClothes(Clothes clothes){
-        Call<Clothes> request = service.deleteClothes(getAccesToken(),clothes);
-        request.enqueue(new Callback<Clothes>() {
+        Call<Void> request = service.deleteClothes(getAccesToken(),clothes);
+        request.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Clothes> call, Response<Clothes> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
                     listener.onDeleteClothes(true);
                 }else{
@@ -268,7 +271,7 @@ public class ApiDressy{
             }
 
             @Override
-            public void onFailure(Call<Clothes> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 listener.onDeleteClothes(false);
             }
         });

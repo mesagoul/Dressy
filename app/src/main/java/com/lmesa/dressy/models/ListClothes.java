@@ -7,20 +7,20 @@ import java.util.ArrayList;
  */
 
 public class ListClothes {
-    private ArrayList<Clothes> clothes;
+    private ArrayList<Clothes> listClothes;
     private int size;
 
     public ListClothes(ArrayList<Clothes> clothes, int size) {
-        this.clothes = clothes;
+        this.listClothes = clothes;
         this.size = size;
     }
 
     public ArrayList<Clothes> getClothes() {
-        return clothes;
+        return listClothes;
     }
 
     public void setClothes(ArrayList<Clothes> clothes) {
-        this.clothes = clothes;
+        this.listClothes = clothes;
     }
 
     public int getSize() {

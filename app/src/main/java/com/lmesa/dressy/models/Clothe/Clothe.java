@@ -28,6 +28,14 @@ public class Clothe{
         this.cloth_category = cloth_category;
     }
 
+    public int getCloth_id() {
+        return cloth_id;
+    }
+
+    public void setCloth_id(int cloth_id) {
+        this.cloth_id = cloth_id;
+    }
+
     public String getCloth_name() {
         return cloth_name;
     }

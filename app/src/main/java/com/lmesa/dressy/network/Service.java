@@ -50,7 +50,7 @@ public interface Service {
 
     // delete CLOTHE
     @POST("v1/deleteClothe")
-    Call<Clothe> deleteClothe(
+    Call<Void> deleteClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe
     );
@@ -80,7 +80,7 @@ public interface Service {
 
     // delete CLOTHES
     @POST("v1/deleteClothes")
-    Call<Clothes> deleteClothes(
+    Call<Void> deleteClothes(
             @Header("x-access-token") String token,
             @Body Clothes clothes
     );
