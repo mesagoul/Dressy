@@ -28,4 +28,16 @@ public class Category {
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Category){
+            if(((Category) obj).getId() == this.getId()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
 }

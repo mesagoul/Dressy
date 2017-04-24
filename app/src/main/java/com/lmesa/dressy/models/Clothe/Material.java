@@ -29,4 +29,16 @@ public class Material {
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Material){
+            if(((Material) obj).getId() == this.getId()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
 }

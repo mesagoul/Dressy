@@ -22,15 +22,16 @@
             android:scrollbarStyle="outsideOverlay"
             android:gravity="center">
         </GridView>
-        <Button
-            android:id="@+id/btn_add"
-            android:textColor="@color/colorLight"
-            android:text="@string/ward_robe_clothes_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@drawable/button_primary"/>
     </LinearLayout>
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_add"
+        android:textColor="@color/colorLight"
+        android:text="@string/ward_robe_clothes_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:background="@drawable/button_primary"/>
     <ProgressBar
         android:visibility="gone"
         android:layout_centerInParent="true"

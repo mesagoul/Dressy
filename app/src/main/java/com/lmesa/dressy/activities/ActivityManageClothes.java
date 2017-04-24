@@ -172,7 +172,7 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     }
 
     @Override
-    public void onCreateClothe(boolean isSucces) {
+    public void onCreateClothe(boolean isSucces, int cloth_id) {
 
     }
 

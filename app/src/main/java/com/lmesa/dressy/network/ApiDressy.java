@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -145,15 +144,15 @@ public class ApiDressy{
             @Override
             public void onResponse(Call<Clothe> call, Response<Clothe> response) {
                 if(response.isSuccessful()){
-                    listener.onCreateClothe(true);
+                    listener.onCreateClothe(true, response.body().getCloth_id());
                 }else{
-                    listener.onCreateClothe(false);
+                    listener.onCreateClothe(false, 0);
                 }
             }
 
             @Override
             public void onFailure(Call<Clothe> call, Throwable t) {
-                listener.onCreateClothe(false);
+                listener.onCreateClothe(false, 0);
             }
         });
     }

@@ -61,6 +61,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     private Category currentCategory;
     private Material currentMaterial;
     private Brand currentBrand;
+    private Clothe currentClothe;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 
@@ -119,17 +120,18 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
                 scrollView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                Clothe clothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(), "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAiqAAAAJDNjNjliM2FmLTlkNmQtNDc1MS05Y2MyLWMxZWRhYTFhYWVmOA.jpg"/*imageToString(image)*/,currentBrand,currentMaterial,currentCategory);
+                currentClothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(), "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAiqAAAAJDNjNjliM2FmLTlkNmQtNDc1MS05Y2MyLWMxZWRhYTFhYWVmOA.jpg"/*imageToString(image)*/,currentBrand,currentMaterial,currentCategory);
                 if(isMatch()){
-                    apiDressy.getSimilarity(clothe);
+                    apiDressy.getSimilarity(currentClothe);
                 }else if(isManage()){
-                    apiDressy.manageClothe(clothe);
+                    apiDressy.manageClothe(currentClothe);
                 }else{
-                    apiDressy.addClothe(clothe);
+                    apiDressy.addClothe(currentClothe);
                 }
             }
         });
     }
+
 
     public void loadSpinners(){
         AdapterClotheProperties adapterCategory = new AdapterClotheProperties(getApplicationContext(),this.listCategories);
@@ -148,12 +150,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     public void loadListeners(){
 
         if(isManage()){
-            //TODO
             spinnerCategories.setSelection(this.listCategories.indexOf(editClothe.getCloth_category()));
-            Log.d("Category position  ", String.valueOf(this.listCategories.indexOf(editClothe.getCloth_category())));
-            Log.d("Category   ", editClothe.getCloth_category().getLibelle());
-            Log.d("Category   ", listCategories.get(0).getLibelle());
-            Log.d("Category   ", String.valueOf(listCategories.contains(editClothe.getCloth_category())));
             spinnerMaterials.setSelection(this.listMaterials.indexOf(editClothe.getCloth_material()));
             spinnerBrands.setSelection(this.listBrands.indexOf(editClothe.getCloth_brand()));
         }
@@ -244,11 +241,14 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     }
 
     @Override
-    public void onCreateClothe(boolean isSucces) {
+    public void onCreateClothe(boolean isSucces, int cloth_id) {
         scrollView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         if(isSucces){
-            Toast.makeText(getApplicationContext(),"Test Add Clothe",Toast.LENGTH_SHORT).show();
+            this.currentClothe.setCloth_id(cloth_id);
+            Intent response = new Intent();
+            response.putExtra("clothe", gson.toJson(this.currentClothe));
+            setResult(RESULT_OK,response);
             finish();
         }else{
             new ResponseHttp(getApplicationContext()).onErrorCreateClothe();

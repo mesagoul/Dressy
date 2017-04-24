@@ -97,7 +97,7 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
     }
 
     @Override
-    public void onCreateClothe(boolean isSucces) {
+    public void onCreateClothe(boolean isSucces, int cloth_id) {
 
     }
 

@@ -15,7 +15,7 @@ public interface ServiceListener {
     void onCreateUser(boolean isSucces);
 
     void onGetClothe(boolean isSucces, ArrayList<Clothe> listClothe);
-    void onCreateClothe(boolean isSucces);
+    void onCreateClothe(boolean isSucces, int cloth_id);
     void onDeleteClothe(boolean isSucces);
     void onManageClothes(boolean isSucces);
 

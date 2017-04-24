@@ -28,4 +28,16 @@ public class Brand {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Brand){
+            if(((Brand) obj).getId() == this.getId()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
 }

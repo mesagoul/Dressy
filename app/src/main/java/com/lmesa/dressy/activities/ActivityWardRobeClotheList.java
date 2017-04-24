@@ -112,7 +112,7 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     }
 
     @Override
-    public void onCreateClothe(boolean isSucces) {
+    public void onCreateClothe(boolean isSucces, int cloth_id) {
 
     }
 

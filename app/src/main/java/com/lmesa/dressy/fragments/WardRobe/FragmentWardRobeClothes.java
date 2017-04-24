@@ -13,7 +13,6 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
@@ -69,6 +68,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
 
         progressBar.setVisibility(View.VISIBLE);
         content.setVisibility(View.GONE);
+        btn_add.setVisibility(View.GONE);
         apiDressy.getClothes();
 
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +118,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     public void onDeleteDialog() {
 
         progressBar.setVisibility(View.VISIBLE);
+        btn_add.setVisibility(View.GONE);
         content.setVisibility(View.GONE);
         apiDressy.deleteClothes(this.currentClothes);
     }
@@ -146,7 +147,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     }
 
     @Override
-    public void onCreateClothe(boolean isSuccess) {
+    public void onCreateClothe(boolean isSuccess, int cloth_id) {
 
     }
 
@@ -163,14 +164,19 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     @Override
     public void onGetClothes(boolean isSuccess, ArrayList<Clothes> clothes) {
         progressBar.setVisibility(View.GONE);
+        btn_add.setVisibility(View.VISIBLE);
         if(isSuccess){
-            if (clothes.size() == 0){
+            if (clothes == null){
                 no_clothes.setVisibility(View.VISIBLE);
             }else{
-                no_clothes.setVisibility(View.GONE);
-                content.setVisibility(View.VISIBLE);
-                this.listClothes = clothes;
-                this.loadAdapter();
+                if(listClothes.size() == 0){
+                    no_clothes.setVisibility(View.VISIBLE);
+                }else {
+                    no_clothes.setVisibility(View.GONE);
+                    content.setVisibility(View.VISIBLE);
+                    this.listClothes = clothes;
+                    this.loadAdapter();
+                }
             }
 
         }else{
@@ -187,14 +193,19 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     @Override
     public void onDeleteClothes(boolean isSuccess) {
         progressBar.setVisibility(View.GONE);
+        btn_add.setVisibility(View.VISIBLE);
         if (isSuccess){
             listClothes.remove(this.currentClothes);
-            if(listClothes.size()== 0){
+            if(listClothes == null){
                 no_clothes.setVisibility(View.VISIBLE);
-            }else{
-                no_clothes.setVisibility(View.GONE);
-                content.setVisibility(View.VISIBLE);
-                loadAdapter();
+            } else {
+                if(listClothes.size() == 0){
+                    no_clothes.setVisibility(View.VISIBLE);
+                }else {
+                    no_clothes.setVisibility(View.GONE);
+                    content.setVisibility(View.VISIBLE);
+                    loadAdapter();
+                }
 
             }
         }else{

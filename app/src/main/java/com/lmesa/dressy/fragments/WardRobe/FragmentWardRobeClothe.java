@@ -13,7 +13,6 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
@@ -32,11 +31,15 @@ import com.lmesa.dressy.network.ApiDressy;
 
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by Lucas on 09/04/2017.
  */
 
 public class FragmentWardRobeClothe extends Fragment implements WardRobeListener, DialogListener, ServiceListener{
+
+    private static final int CODE_CREATE_CLOTHE = 298;
     private GridView gridView;
     private ArrayList<Clothe> listClothe;
     private Button btn_add;
@@ -69,6 +72,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
 
         progressBar.setVisibility(View.VISIBLE);
         content.setVisibility(View.GONE);
+        btn_add.setVisibility(View.GONE);
         apiDressy.getClothe();
 
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -76,9 +80,19 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
             public void onClick(View v) {
                 Intent toAddClothe = new Intent(getContext(), ActivityManageClothe.class);
                 toAddClothe.putExtra("create","true");
-                startActivity(toAddClothe);
+                startActivityForResult(toAddClothe,CODE_CREATE_CLOTHE);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CODE_CREATE_CLOTHE && resultCode == RESULT_OK){
+            Clothe clothe = gson.fromJson(data.getStringExtra("clothe"), Clothe.class);
+            listClothe.add(clothe);
+            loadAdapter();
+        }
     }
 
     public void loadAdapter(){
@@ -116,6 +130,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     public void onDeleteDialog() {
         progressBar.setVisibility(View.VISIBLE);
         content.setVisibility(View.GONE);
+        btn_add.setVisibility(View.VISIBLE);
         apiDressy.deleteClothe(this.currentClothe);
     }
 
@@ -137,14 +152,19 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     @Override
     public void onGetClothe(boolean isSuccess, ArrayList<Clothe> listClothe) {
         progressBar.setVisibility(View.GONE);
+        btn_add.setVisibility(View.VISIBLE);
         if(isSuccess){
-            if(listClothe.size() == 0){
+            if(listClothe == null){
                 no_clothe.setVisibility(View.VISIBLE);
             }else{
-                no_clothe.setVisibility(View.GONE);
-                content.setVisibility(View.VISIBLE);
-                this.listClothe = listClothe;
-                this.loadAdapter();
+                if(listClothe.size() == 0){
+                    no_clothe.setVisibility(View.VISIBLE);
+                }else{
+                    no_clothe.setVisibility(View.GONE);
+                    content.setVisibility(View.VISIBLE);
+                    this.listClothe = listClothe;
+                    this.loadAdapter();
+                }
             }
         }else{
             new ResponseHttp(getContext()).onErrorGetClothe();
@@ -153,21 +173,26 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     }
 
     @Override
-    public void onCreateClothe(boolean isSuccess) {
+    public void onCreateClothe(boolean isSuccess, int cloth_id) {
 
     }
 
     @Override
     public void onDeleteClothe(boolean isSuccess) {
         progressBar.setVisibility(View.GONE);
+        btn_add.setVisibility(View.VISIBLE);
         if(isSuccess){
             listClothe.remove(this.currentClothe);
-            if(listClothe.size() == 0){
+            if(listClothe == null){
                 no_clothe.setVisibility(View.VISIBLE);
             }else{
-                no_clothe.setVisibility(View.GONE);
-                content.setVisibility(View.VISIBLE);
-                loadAdapter();
+                if(listClothe.size() == 0){
+                    no_clothe.setVisibility(View.VISIBLE);
+                }else {
+                    no_clothe.setVisibility(View.GONE);
+                    content.setVisibility(View.VISIBLE);
+                    loadAdapter();
+                }
             }
         }else{
             new ResponseHttp(getContext()).onErrorDeleteClothe();
