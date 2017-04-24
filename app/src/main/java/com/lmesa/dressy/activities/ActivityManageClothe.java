@@ -127,7 +127,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
                 }else{
                     apiDressy.addClothe(clothe);
                 }
-
             }
         });
     }
@@ -145,12 +144,18 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         this.loadListeners();
     }
 
+
     public void loadListeners(){
 
         if(isManage()){
-            //spinnerCategories.setSelection(editClothe.getCloth_category().getId());
-            //spinnerMaterials.setSelection(editClothe.getCloth_material().getId());
-            //spinnerBrands.setSelection(editClothe.getCloth_brand().getId());
+            //TODO
+            spinnerCategories.setSelection(this.listCategories.indexOf(editClothe.getCloth_category()));
+            Log.d("Category position  ", String.valueOf(this.listCategories.indexOf(editClothe.getCloth_category())));
+            Log.d("Category   ", editClothe.getCloth_category().getLibelle());
+            Log.d("Category   ", listCategories.get(0).getLibelle());
+            Log.d("Category   ", String.valueOf(listCategories.contains(editClothe.getCloth_category())));
+            spinnerMaterials.setSelection(this.listMaterials.indexOf(editClothe.getCloth_material()));
+            spinnerBrands.setSelection(this.listBrands.indexOf(editClothe.getCloth_brand()));
         }
         spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
