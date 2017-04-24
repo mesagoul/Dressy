@@ -169,12 +169,12 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
             if (clothes == null){
                 no_clothes.setVisibility(View.VISIBLE);
             }else{
+                this.listClothes = clothes;
                 if(listClothes.size() == 0){
                     no_clothes.setVisibility(View.VISIBLE);
                 }else {
                     no_clothes.setVisibility(View.GONE);
                     content.setVisibility(View.VISIBLE);
-                    this.listClothes = clothes;
                     this.loadAdapter();
                 }
             }
