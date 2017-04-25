@@ -90,7 +90,7 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 content.setVisibility(View.GONE);
-                Clothes clothes = new Clothes(/*imageToString(image)*/"https://www.rentiles.fr/client/plugins/tinymceplus/plugins/imagemanager/files/location-voiture.png",listClothe);
+                Clothes clothes = new Clothes("https://www.rentiles.fr/client/plugins/tinymceplus/plugins/imagemanager/files/location-voiture.png",listClothe);
                 if(isCreate()){
                     apiDressy.addClothes(clothes);
                 }else if(isManage()){

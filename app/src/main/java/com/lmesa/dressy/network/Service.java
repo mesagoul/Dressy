@@ -56,7 +56,7 @@ public interface Service {
     );
 
     // manage CLOTHE
-    @POST("v1/manageClothe")
+    @POST("v1/updateClothe")
     Call<Clothe> manageClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe
@@ -86,7 +86,7 @@ public interface Service {
     );
 
     // manage CLOTHES
-    @POST("v1/manageClothes")
+    @POST("v1/updateClothes")
     Call<Clothes> manageClothes(
             @Header("x-access-token") String token,
             @Body Clothes clothes

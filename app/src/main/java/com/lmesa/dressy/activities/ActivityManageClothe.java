@@ -124,6 +124,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
                 if(isMatch()){
                     apiDressy.getSimilarity(currentClothe);
                 }else if(isManage()){
+                    currentClothe.setCloth_id(editClothe.getCloth_id());
                     apiDressy.manageClothe(currentClothe);
                 }else{
                     apiDressy.addClothe(currentClothe);
@@ -287,12 +288,13 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         scrollView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         if(isSucces){
-            Toast.makeText(getApplicationContext(),"Test Edit Clothe",Toast.LENGTH_SHORT).show();
+            Intent response = new Intent();
+            response.putExtra("clothe", gson.toJson(currentClothe));
+            setResult(RESULT_OK,response);
             finish();
         }else{
             new ResponseHttp(getApplicationContext()).onErrorManageClothe();
             finish();
-
         }
 
     }

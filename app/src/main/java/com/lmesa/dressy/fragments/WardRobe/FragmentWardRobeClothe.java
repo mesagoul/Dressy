@@ -40,6 +40,7 @@ import static android.app.Activity.RESULT_OK;
 public class FragmentWardRobeClothe extends Fragment implements WardRobeListener, DialogListener, ServiceListener{
 
     private static final int CODE_CREATE_CLOTHE = 298;
+    private static final int CODE_MANAGE_CLOTHE = 472;
     private GridView gridView;
     private ArrayList<Clothe> listClothe;
     private Button btn_add;
@@ -85,16 +86,6 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CODE_CREATE_CLOTHE && resultCode == RESULT_OK){
-            Clothe clothe = gson.fromJson(data.getStringExtra("clothe"), Clothe.class);
-            listClothe.add(clothe);
-            loadAdapter();
-        }
-    }
-
     public void loadAdapter(){
         AdapterWardRobeClothes adapterWardRobeClothes = new AdapterWardRobeClothes(getActivity(),listClothe);
         adapterWardRobeClothes.setListener(this);
@@ -123,7 +114,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         Intent toManageActivity = new Intent(getActivity(), ActivityManageClothe.class);
         toManageActivity.putExtra("manage","true");
         toManageActivity.putExtra("editClothe",gson.toJson(currentClothe,Clothe.class));
-        getActivity().startActivity(toManageActivity);
+        startActivityForResult(toManageActivity,CODE_MANAGE_CLOTHE);
     }
 
     @Override
@@ -132,6 +123,21 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
         content.setVisibility(View.GONE);
         btn_add.setVisibility(View.VISIBLE);
         apiDressy.deleteClothe(this.currentClothe);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CODE_CREATE_CLOTHE && resultCode == RESULT_OK){
+            Clothe clothe = gson.fromJson(data.getStringExtra("clothe"), Clothe.class);
+            listClothe.add(clothe);
+            loadAdapter();
+        }else if (requestCode == CODE_MANAGE_CLOTHE && resultCode == RESULT_OK){
+            Clothe clothe = gson.fromJson(data.getStringExtra("clothe"), Clothe.class);
+            listClothe.remove(currentClothe);
+            listClothe.add(clothe);
+            loadAdapter();
+        }
     }
 
     @Override
