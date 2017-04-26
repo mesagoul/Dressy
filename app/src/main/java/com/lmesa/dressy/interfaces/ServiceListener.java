@@ -20,7 +20,7 @@ public interface ServiceListener {
     void onManageClothes(boolean isSucces);
 
     void onGetClothes(boolean isSucces, ArrayList<Clothes> clothes);
-    void onCreateClothes(boolean isSucces);
+    void onCreateClothes(boolean isSucces, int id);
     void onDeleteClothes(boolean isSucces);
     void onManageClothe(boolean isSucces);
 

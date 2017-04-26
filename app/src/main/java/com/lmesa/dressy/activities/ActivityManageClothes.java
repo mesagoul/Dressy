@@ -43,6 +43,8 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     private GridView gridView;
     private Button btn_save;
     private Button btn_add;
+    private Clothes currentClothes;
+    private Clothes editClothes;
 
     private Bitmap imageBitmap;
 
@@ -90,11 +92,12 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 content.setVisibility(View.GONE);
-                Clothes clothes = new Clothes("https://www.rentiles.fr/client/plugins/tinymceplus/plugins/imagemanager/files/location-voiture.png",listClothe);
                 if(isCreate()){
-                    apiDressy.addClothes(clothes);
+                    currentClothes = new Clothes("http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg",listClothe);
+                    apiDressy.addClothes(currentClothes);
                 }else if(isManage()){
-                    apiDressy.manageClothes(clothes);
+                    editClothes.setListClothe(listClothe);
+                    apiDressy.manageClothes(editClothes);
                 }
             }
         });
@@ -103,12 +106,12 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
             Intent toCameraActivity = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(toCameraActivity,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }else if(isManage()){
-            Clothes clothes = gson.fromJson(getIntent().getStringExtra("clothes"), Clothes.class);
-            listClothe = clothes.getListClothe();
+            editClothes = gson.fromJson(getIntent().getStringExtra("clothes"), Clothes.class);
+            listClothe = editClothes.getListClothe();
             btn_save.setText(getResources().getString(R.string.manage));
             Glide
                     .with(getApplicationContext())
-                    .load(clothes.getUrlImage())
+                    .load(editClothes.getUrlImage())
                     .centerCrop()
                     .crossFade()
                     .into(image);
@@ -186,7 +189,9 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
         progressBar.setVisibility(View.GONE);
         content.setVisibility(View.VISIBLE);
         if(isSucces){
-            Toast.makeText(getApplicationContext(), "Test MANAGE CLOTHES",Toast.LENGTH_SHORT).show();
+            Intent response = new Intent();
+            response.putExtra("clothes",gson.toJson(editClothes));
+            setResult(RESULT_OK,response);
             finish();
         }else{
             new ResponseHttp(getApplicationContext()).onErrorManageClothes();
@@ -201,11 +206,14 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     }
 
     @Override
-    public void onCreateClothes(boolean isSucces) {
+    public void onCreateClothes(boolean isSucces, int id) {
         progressBar.setVisibility(View.GONE);
         content.setVisibility(View.VISIBLE);
         if(isSucces){
-            Toast.makeText(getApplicationContext(), "Test ADD CLOTHES",Toast.LENGTH_SHORT).show();
+            currentClothes.setId(id);
+            Intent response = new Intent();
+            response.putExtra("clothes", gson.toJson(currentClothes));
+            setResult(RESULT_OK, response);
             finish();
         }else{
             new ResponseHttp(getApplicationContext()).onErrorCreateClothes();

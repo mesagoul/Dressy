@@ -233,21 +233,21 @@ public class ApiDressy{
      * Add clothes for user
      * @param clothes
      */
-    public void addClothes(Clothes clothes){
+    public void addClothes(final Clothes clothes){
         Call<Clothes> request = service.addClothes(getAccesToken(),clothes);
         request.enqueue(new Callback<Clothes>() {
             @Override
             public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                 if(response.isSuccessful()){
-                    listener.onCreateClothes(true);
+                    listener.onCreateClothes(true, response.body().getId());
                 }else{
-                    listener.onCreateClothes(false);
+                    listener.onCreateClothes(false, 0);
                 }
             }
 
             @Override
             public void onFailure(Call<Clothes> call, Throwable t) {
-                listener.onCreateClothes(false);
+                listener.onCreateClothes(false, 0);
             }
         });
     }

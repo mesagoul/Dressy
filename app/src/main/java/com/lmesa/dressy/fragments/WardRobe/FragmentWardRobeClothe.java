@@ -217,7 +217,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     }
 
     @Override
-    public void onCreateClothes(boolean isSuccess) {
+    public void onCreateClothes(boolean isSuccess, int id) {
 
     }
 

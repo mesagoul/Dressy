@@ -131,7 +131,7 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     }
 
     @Override
-    public void onCreateClothes(boolean isSucces) {
+    public void onCreateClothes(boolean isSucces, int id) {
 
     }
 

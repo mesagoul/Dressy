@@ -162,7 +162,7 @@ public class FragmentSignIn extends Fragment implements ServiceListener{
     }
 
     @Override
-    public void onCreateClothes(boolean isSucces) {
+    public void onCreateClothes(boolean isSucces, int id) {
 
     }
 

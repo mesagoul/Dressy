@@ -32,11 +32,15 @@ import com.lmesa.dressy.network.ApiDressy;
 
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by Lucas on 09/04/2017.
  */
 
 public class FragmentWardRobeClothes extends Fragment implements WardRobeListener, DialogListener, ServiceListener{
+    private static final int CODE_ADD_CLOTHES = 75;
+    private static final int CODE_MANAGE_CLOTHES = 934;
     private GridView gridView;
     private ArrayList<Clothes> listClothes;
     private Gson gson;
@@ -76,9 +80,24 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
             public void onClick(View v) {
                 Intent toCreateClothe = new Intent(getActivity(),ActivityManageClothes.class);
                 toCreateClothe.putExtra("create","true");
-                startActivity(toCreateClothe);
+                startActivityForResult(toCreateClothe,CODE_ADD_CLOTHES);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CODE_ADD_CLOTHES && resultCode == RESULT_OK){
+            Clothes newClothes = gson.fromJson(data.getStringExtra("clothes"),Clothes.class);
+            listClothes.add(newClothes);
+            loadAdapter();
+        }else if (requestCode == CODE_MANAGE_CLOTHES && resultCode == RESULT_OK){
+            Clothes newClothes = gson.fromJson(data.getStringExtra("clothes"),Clothes.class);
+            listClothes.remove(currentClothes);
+            listClothes.add(newClothes);
+            loadAdapter();
+        }
     }
 
     public void loadAdapter(){
@@ -111,7 +130,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
         Intent toManageClothes = new Intent(getActivity(), ActivityManageClothes.class);
         toManageClothes.putExtra("manage","true");
         toManageClothes.putExtra("clothes",gson.toJson(this.currentClothes,Clothes.class));
-        startActivity(toManageClothes);
+        startActivityForResult(toManageClothes,CODE_MANAGE_CLOTHES);
     }
 
     @Override
@@ -186,7 +205,7 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     }
 
     @Override
-    public void onCreateClothes(boolean isSuccess) {
+    public void onCreateClothes(boolean isSuccess, int id) {
 
     }
 

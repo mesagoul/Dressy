@@ -274,7 +274,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     }
 
     @Override
-    public void onCreateClothes(boolean isSucces) {
+    public void onCreateClothes(boolean isSucces, int id) {
 
     }
 
