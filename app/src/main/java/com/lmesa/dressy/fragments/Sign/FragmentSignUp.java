@@ -20,6 +20,7 @@ import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
+import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.models.User;
 import com.lmesa.dressy.network.ApiDressy;
 
@@ -178,6 +179,16 @@ public class FragmentSignUp extends Fragment implements ServiceListener {
 
     @Override
     public void onGetClotheProperties(boolean isSuccess, ClotheProperties clotheProperties) {
+
+    }
+
+    @Override
+    public void onGetTopPosts(boolean isSuccess, ArrayList<Post> listPost) {
+
+    }
+
+    @Override
+    public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
 
     }
 }

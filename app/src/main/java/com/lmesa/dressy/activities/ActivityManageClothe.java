@@ -29,8 +29,10 @@ import com.lmesa.dressy.models.Clothe.Brand;
 import com.lmesa.dressy.models.Clothe.Category;
 import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothe.ClotheProperties;
+import com.lmesa.dressy.models.Clothe.Color;
 import com.lmesa.dressy.models.Clothe.Material;
 import com.lmesa.dressy.models.Clothes;
+import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
 import java.io.ByteArrayOutputStream;
@@ -43,7 +45,6 @@ import java.util.ArrayList;
 public class ActivityManageClothe extends AppCompatActivity implements ServiceListener{
     private ImageView image;
     private EditText nom;
-    private EditText color;
     private EditText reference;
     private Button btn_save;
     private ApiDressy apiDressy;
@@ -53,16 +54,19 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     private Clothe editClothe;
     private Gson gson;
     private Spinner spinnerCategories;
+    private Spinner spinnerColor;
     private Spinner spinnerBrands;
     private Spinner spinnerMaterials;
     private ArrayList<Brand> listBrands;
     private ArrayList<Material> listMaterials;
     private ArrayList<Category> listCategories;
+    private ArrayList<Color> listColors;
     private Category currentCategory;
     private Material currentMaterial;
     private Brand currentBrand;
-    private Clothe currentClothe;
+    private Color currentColor;
 
+    private Clothe currentClothe;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 
     @Override
@@ -77,12 +81,12 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         spinnerCategories = (Spinner) findViewById(R.id.clothe_create_categories);
         spinnerBrands = (Spinner) findViewById(R.id.clothe_create_brands);
         spinnerMaterials = (Spinner) findViewById(R.id.clothe_create_materials);
+        spinnerColor = (Spinner) findViewById(R.id.clothe_create_color);
 
         image = (ImageView) findViewById(R.id.clothe_create_image);
         image.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         nom = (EditText) findViewById(R.id.clothe_create_name);
-        color = (EditText) findViewById(R.id.clothe_create_color);
         reference = (EditText) findViewById(R.id.clothe_create_reference);
         btn_save = (Button) findViewById(R.id.btn_save);
 
@@ -93,7 +97,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
             btn_save.setText(getResources().getString(R.string.edit));
             editClothe = gson.fromJson(getIntent().getStringExtra("editClothe"), Clothe.class);
             nom.setText(editClothe.getCloth_name());
-            color.setText(editClothe.getCloth_color());
             reference.setText(editClothe.getCloth_reference());
 
             Glide
@@ -120,7 +123,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
                 scrollView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                currentClothe = new Clothe(nom.getText().toString(), color.getText().toString(), reference.getText().toString(), "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAiqAAAAJDNjNjliM2FmLTlkNmQtNDc1MS05Y2MyLWMxZWRhYTFhYWVmOA.jpg"/*imageToString(image)*/,currentBrand,currentMaterial,currentCategory);
+                currentClothe = new Clothe(nom.getText().toString(),currentColor, reference.getText().toString(), "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAiqAAAAJDNjNjliM2FmLTlkNmQtNDc1MS05Y2MyLWMxZWRhYTFhYWVmOA.jpg"/*imageToString(image)*/,currentBrand,currentMaterial,currentCategory);
                 if(isMatch()){
                     apiDressy.getSimilarity(currentClothe);
                 }else if(isManage()){
@@ -144,6 +147,9 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         AdapterClotheProperties adapterBrand = new AdapterClotheProperties(getApplicationContext(),this.listBrands);
         spinnerBrands.setAdapter(adapterBrand);
 
+        AdapterClotheProperties adapterColors = new AdapterClotheProperties(getApplicationContext(),this.listColors);
+        spinnerColor.setAdapter(adapterColors);
+
         this.loadListeners();
     }
 
@@ -154,6 +160,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
             spinnerCategories.setSelection(this.listCategories.indexOf(editClothe.getCloth_category()));
             spinnerMaterials.setSelection(this.listMaterials.indexOf(editClothe.getCloth_material()));
             spinnerBrands.setSelection(this.listBrands.indexOf(editClothe.getCloth_brand()));
+            spinnerColor.setSelection(this.listColors.indexOf(editClothe.getCloth_color()));
         }
         spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -184,6 +191,18 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 currentMaterial = listMaterials.get(position);
                 Log.d("MATERIAL",currentMaterial.getLibelle());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                currentColor = listColors.get(position);
             }
 
             @Override
@@ -323,6 +342,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
             this.listBrands = clotheProperties.getListBrands();
             this.listCategories = clotheProperties.getListCategories();
             this.listMaterials = clotheProperties.getListMaterials();
+            this.listColors = clotheProperties.getListColors();
 
             loadSpinners();
 
@@ -330,6 +350,16 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
             new ResponseHttp(getApplicationContext()).onErrorGetPropertiesClothe();
         }
+
+    }
+
+    @Override
+    public void onGetTopPosts(boolean isSuccess, ArrayList<Post> listPost) {
+
+    }
+
+    @Override
+    public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
 
     }
 }

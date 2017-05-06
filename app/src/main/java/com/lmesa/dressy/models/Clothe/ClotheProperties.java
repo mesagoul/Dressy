@@ -12,6 +12,7 @@ public class ClotheProperties {
     private ArrayList<Brand> listBrands;
     private ArrayList<Category> listCategories;
     private ArrayList<Material> listMaterials;
+    private ArrayList<Color> listColors;
 
 
     public ArrayList<Brand> getListBrands() {
@@ -24,5 +25,9 @@ public class ClotheProperties {
 
     public ArrayList<Material> getListMaterials() {
         return listMaterials;
+    }
+
+    public ArrayList<Color> getListColors() {
+        return listColors;
     }
 }

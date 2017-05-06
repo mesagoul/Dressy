@@ -3,6 +3,7 @@ package com.lmesa.dressy.interfaces;
 import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
+import com.lmesa.dressy.models.Post;
 
 import java.util.ArrayList;
 
@@ -29,4 +30,7 @@ public interface ServiceListener {
     void onCreatePost(boolean isSucces);
 
     void onGetClotheProperties(boolean isSuccess, ClotheProperties clotheProperties);
+
+    void onGetTopPosts(boolean isSuccess, ArrayList<Post> listPost);
+    void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost);
 }

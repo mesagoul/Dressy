@@ -26,6 +26,7 @@ import com.lmesa.dressy.interfaces.WardRobeListener;
 import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
+import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
 import java.io.ByteArrayOutputStream;
@@ -242,6 +243,16 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
 
     @Override
     public void onGetClotheProperties(boolean isSuccess, ClotheProperties clotheProperties) {
+
+    }
+
+    @Override
+    public void onGetTopPosts(boolean isSuccess, ArrayList<Post> listPost) {
+
+    }
+
+    @Override
+    public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
 
     }
 

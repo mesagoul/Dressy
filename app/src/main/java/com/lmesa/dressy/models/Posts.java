@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class Posts {
     private int size;
-    private ArrayList<Post> listPost;
+    private ArrayList<Post> posts;
 
-    public Posts(int size, ArrayList<Post> listPost) {
+    public Posts(int size, ArrayList<Post> posts) {
         this.size = size;
-        this.listPost = listPost;
+        this.posts = posts;
     }
 
     public int getSize() {
@@ -23,11 +23,11 @@ public class Posts {
         this.size = size;
     }
 
-    public ArrayList<Post> getListPost() {
-        return listPost;
+    public ArrayList<Post> getPosts() {
+        return posts;
     }
 
-    public void setListPost(ArrayList<Post> listPost) {
-        this.listPost = listPost;
+    public void setPosts(ArrayList<Post> posts) {
+        this.posts = posts;
     }
 }

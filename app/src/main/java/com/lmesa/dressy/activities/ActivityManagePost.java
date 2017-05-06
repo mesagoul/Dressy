@@ -155,6 +155,16 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
     }
 
     @Override
+    public void onGetTopPosts(boolean isSuccess, ArrayList<Post> listPost) {
+
+    }
+
+    @Override
+    public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
             finish();

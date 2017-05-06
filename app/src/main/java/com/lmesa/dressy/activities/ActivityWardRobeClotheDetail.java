@@ -46,7 +46,7 @@ public class ActivityWardRobeClotheDetail  extends AppCompatActivity{
 
         final Clothe clothe = gson.fromJson(getIntent().getStringExtra("clothe"), Clothe.class);
         name.setText(clothe.getCloth_name());
-        color.setText(clothe.getCloth_color());
+        color.setText(clothe.getCloth_color().getLibelle());
         reference.setText(clothe.getCloth_reference());
         category.setText(clothe.getCloth_category().getLibelle());
         brand.setText(clothe.getCloth_brand().getLibelle());

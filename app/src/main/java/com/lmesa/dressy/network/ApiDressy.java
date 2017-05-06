@@ -10,6 +10,7 @@ import com.lmesa.dressy.models.Clothe.ClotheProperties;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
+import com.lmesa.dressy.models.Posts;
 import com.lmesa.dressy.models.User;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class ApiDressy{
     public ApiDressy(Activity activity){
         this.activity = activity;
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://dressyapi.herokuapp.com/")
+                .baseUrl("http://51.254.101.16/dressyApi/v1/index.php/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(new NullOnEmptyConverterFactory())
                 .build();
@@ -128,12 +129,15 @@ public class ApiDressy{
                 }
             }
 
+
             @Override
             public void onFailure(Call<Clothes> call, Throwable t) {
                 listener.onGetClothe(false, new ArrayList<Clothe>());
             }
         });
     }
+
+
     /**
      * Add clothe for user
      * @param clothe
@@ -350,6 +354,52 @@ public class ApiDressy{
     }
 
 
+
+    /**
+     * Get list of Top Posts
+     * @param @clothe
+     */
+    public void getTopPosts(){
+        Call<Posts> request = service.getTopPost(getAccesToken());
+        request.enqueue(new Callback<Posts>() {
+            @Override
+            public void onResponse(Call<Posts> call, Response<Posts> response) {
+                if(response.isSuccessful()){
+                    listener.onGetTopPosts(true, response.body().getPosts());
+                }else{
+                    listener.onGetTopPosts(false,  new ArrayList<Post>());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Posts> call, Throwable t) {
+                listener.onGetTopPosts(false,  new  ArrayList<Post>());
+            }
+        });
+    }
+
+    /**
+     * Get list of Top Posts
+     * @param @clothe
+     */
+    public void getLastPosts(){
+        Call<Posts> request = service.getLastPost(getAccesToken());
+        request.enqueue(new Callback<Posts>() {
+            @Override
+            public void onResponse(Call<Posts> call, Response<Posts> response) {
+                if(response.isSuccessful()){
+                    listener.onGetLastPosts(true, response.body().getPosts());
+                }else{
+                    listener.onGetLastPosts(false,  new ArrayList<Post>());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Posts> call, Throwable t) {
+                listener.onGetLastPosts(false,  new  ArrayList<Post>());
+            }
+        });
+    }
 
     /**
      * Get list of Properties of a Clothe

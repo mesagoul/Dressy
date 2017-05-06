@@ -22,12 +22,12 @@ public interface Service {
 
 
     // USERS
-    @POST("v1/register")
+    @POST("register")
     Call<User> createUserAccount(
             @Body User user
     );
 
-    @POST("v1/login")
+    @POST("login")
     Call<User> connectUserAccount(
             @Body User user
     );
@@ -36,27 +36,27 @@ public interface Service {
     // ---- CLOTHE ----
 
     // GET CLOTHE
-    @GET("v1/getClothe")
+    @GET("getClothe")
     Call<Clothes> getClothe(
             @Header("x-access-token") String token
     );
 
     // Add CLOTHE
-    @POST("v1/addClothe")
+    @POST("addClothe")
     Call<Clothe> addClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe
     );
 
     // delete CLOTHE
-    @POST("v1/deleteClothe")
+    @POST("deleteClothe")
     Call<Void> deleteClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe
     );
 
     // manage CLOTHE
-    @POST("v1/updateClothe")
+    @POST("updateClothe")
     Call<Clothe> manageClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe
@@ -66,27 +66,27 @@ public interface Service {
     // ---- CLOTHES ----
 
     // GET CLOTHES
-    @GET("v1/getClothes")
+    @GET("getClothes")
     Call<ListClothes> getClothes(
             @Header("x-access-token") String token
     );
 
     // Add CLOTHES
-    @POST("v1/addClothes")
+    @POST("addClothes")
     Call<Clothes> addClothes(
             @Header("x-access-token") String token,
             @Body Clothes clothes
     );
 
     // delete CLOTHES
-    @POST("v1/deleteClothes")
+    @POST("deleteClothes")
     Call<Void> deleteClothes(
             @Header("x-access-token") String token,
             @Body Clothes clothes
     );
 
     // manage CLOTHES
-    @POST("v1/updateClothes")
+    @POST("updateClothes")
     Call<Clothes> manageClothes(
             @Header("x-access-token") String token,
             @Body Clothes clothes
@@ -97,23 +97,35 @@ public interface Service {
     // SIMILARITY
 
     // GET SIMILIRARITY
-    @POST("v1/getSimilarity")
+    @POST("getSimilarity")
     Call<Clothe> getSimilarityClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe);
 
+
+    // GET getClotheProperties
+    @GET("getClotheProperties")
+    Call<ClotheProperties> getClotheProperties(
+            @Header("x-access-token") String token
+    );
+
     // POST
     // ADD POST
-    @POST("v1/addPost")
+    @POST("addPost")
     Call<Post> createPost(
             @Header("x-access-token") String token,
             @Body Post post);
 
-    // GET getClotheProperties
-    @GET("v1/getClotheProperties")
-    Call<ClotheProperties> getClotheProperties(
-            @Header("x-access-token") String token
-    );
+    // // POST
+    // GET TOP POST
+    @GET("getTopPost")
+    Call<Posts> getTopPost(
+            @Header("x-access-token") String token);
+
+    // GET LAST POST
+    @GET("getLastPost")
+    Call<Posts> getLastPost(
+            @Header("x-access-token") String token);
 }
 
 

@@ -87,4 +87,6 @@
     <string name="errorGetClotheProperties">Impossible de récupérer les propriétés des habits</string>
     <string name="no_clothe">Vous n\'avez pas d\'habits</string>
     <string name="no_clothes">Vous n\'avez pas de tenues</string>
+    <string name="errorGetPost">Erreur lors de la récuperation des posts</string>
+    <string name="no_posts">Pas de posts</string>
 </resources>

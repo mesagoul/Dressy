@@ -7,6 +7,7 @@ package com.lmesa.dressy.models.Clothe;
 public class Category {
     private  int id;
     private String libelle;
+    private String id_fann;
 
     public Category(int id, String libelle) {
         this.id = id;

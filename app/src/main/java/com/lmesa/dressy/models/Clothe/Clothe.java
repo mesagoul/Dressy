@@ -7,18 +7,18 @@ package com.lmesa.dressy.models.Clothe;
 public class Clothe{
     private int cloth_id;
     private String cloth_name;
-    private String cloth_color;
+    private Color cloth_color;
     private String cloth_reference;
     private String cloth_urlImage;
+    private Category cloth_category;
+    private Brand cloth_brand;
+    private Material cloth_material;
+
     private String cloth_partner;
     private String cloth_bitmap;
 
-    private Brand cloth_brand;
-    private Material cloth_material;
-    private Category cloth_category;
 
-
-    public Clothe(String cloth_name, String cloth_color, String cloth_reference, String cloth_urlImage, Brand cloth_brand, Material cloth_material, Category cloth_category) {
+    public Clothe(String cloth_name, Color cloth_color, String cloth_reference, String cloth_urlImage, Brand cloth_brand, Material cloth_material, Category cloth_category) {
         this.cloth_name = cloth_name;
         this.cloth_color = cloth_color;
         this.cloth_reference = cloth_reference;
@@ -44,11 +44,11 @@ public class Clothe{
         this.cloth_name = cloth_name;
     }
 
-    public String getCloth_color() {
+    public Color getCloth_color() {
         return cloth_color;
     }
 
-    public void setCloth_color(String cloth_color) {
+    public void setCloth_color(Color cloth_color) {
         this.cloth_color = cloth_color;
     }
 

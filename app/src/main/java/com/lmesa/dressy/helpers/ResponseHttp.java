@@ -54,4 +54,9 @@ public class ResponseHttp{private Context context;
     public void onErrorGetPropertiesClothe() {
         Toast.makeText(context,context.getResources().getString(R.string.errorGetClotheProperties),Toast.LENGTH_SHORT).show();
     }
+
+    public void onErrorGetPost() {
+        Toast.makeText(context,context.getResources().getString(R.string.errorGetPost),Toast.LENGTH_SHORT).show();
+
+    }
 }
