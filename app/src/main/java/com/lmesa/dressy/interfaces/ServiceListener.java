@@ -33,4 +33,6 @@ public interface ServiceListener {
 
     void onGetTopPosts(boolean isSuccess, ArrayList<Post> listPost);
     void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost);
+
+    void onAddImage(boolean b);
 }

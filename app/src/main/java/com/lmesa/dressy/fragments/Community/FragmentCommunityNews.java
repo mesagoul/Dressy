@@ -177,4 +177,9 @@ public class FragmentCommunityNews extends Fragment implements CommunityListener
             new ResponseHttp(getContext()).onErrorGetPost();
         }
     }
+
+    @Override
+    public void onAddImage(boolean b) {
+
+    }
 }

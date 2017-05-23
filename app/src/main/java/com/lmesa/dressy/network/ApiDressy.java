@@ -13,8 +13,12 @@ import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.models.Posts;
 import com.lmesa.dressy.models.User;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -141,8 +145,11 @@ public class ApiDressy{
     /**
      * Add clothe for user
      * @param clothe
+     * @param imageFile
+     * @param name
      */
     public void addClothe(Clothe clothe){
+
         Call<Clothe> request = service.addClothe(getAccesToken(),clothe);
         request.enqueue(new Callback<Clothe>() {
             @Override
@@ -160,6 +167,34 @@ public class ApiDressy{
             }
         });
     }
+
+    public void addImageClothe(File imageFile, String name){
+        // Parsing any Media type file
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), imageFile);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", imageFile.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), imageFile.getName());
+
+        Call<Clothe> request = service.addImageClothe(getAccesToken(),fileToUpload, filename );
+        request.enqueue(new Callback<Clothe>() {
+            @Override
+            public void onResponse(Call<Clothe> call, Response<Clothe> response) {
+                if(response.isSuccessful()){
+                    listener.onAddImage(true);
+                }else{
+                    listener.onAddImage(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Clothe> call, Throwable t) {
+                listener.onAddImage(false);
+            }
+        });
+    }
+
+
+
+
     /**
      * Add clothe for user
      * @param clothe
@@ -348,6 +383,7 @@ public class ApiDressy{
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
+
                 listener.onCreatePost(false);
             }
         });

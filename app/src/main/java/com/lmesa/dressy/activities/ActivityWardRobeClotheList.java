@@ -178,4 +178,9 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
 
     }
+
+    @Override
+    public void onAddImage(boolean b) {
+
+    }
 }

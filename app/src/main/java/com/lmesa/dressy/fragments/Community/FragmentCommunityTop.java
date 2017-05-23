@@ -174,4 +174,9 @@ public class FragmentCommunityTop extends Fragment implements CommunityListener,
     public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
 
     }
+
+    @Override
+    public void onAddImage(boolean b) {
+
+    }
 }

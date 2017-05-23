@@ -18,6 +18,7 @@ import com.lmesa.dressy.interfaces.CommunityListener;
 import com.lmesa.dressy.models.Clothe.Brand;
 import com.lmesa.dressy.models.Clothe.Category;
 import com.lmesa.dressy.models.Clothe.Clothe;
+import com.lmesa.dressy.models.Clothe.Color;
 import com.lmesa.dressy.models.Clothe.Material;
 import com.lmesa.dressy.models.Post;
 
@@ -84,6 +85,8 @@ public class AdapterClotheProperties extends BaseAdapter  {
             textview.setText(((Material) property).getLibelle());
         }else if(property instanceof Category){
             textview.setText(((Category) property).getLibelle());
+        }else if(property instanceof Color){
+            textview.setText(((Color) property).getLibelle());
         }
         return textview;
     }

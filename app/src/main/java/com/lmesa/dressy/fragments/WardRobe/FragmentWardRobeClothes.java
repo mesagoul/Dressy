@@ -263,4 +263,9 @@ public class FragmentWardRobeClothes extends Fragment implements WardRobeListene
     public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
 
     }
+
+    @Override
+    public void onAddImage(boolean b) {
+
+    }
 }

@@ -141,8 +141,7 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
         progressBar.setVisibility(View.VISIBLE);
         content.setVisibility(View.GONE);
         if (isSucces){
-            Toast.makeText(getApplicationContext(), "TEST ADD POST",Toast.LENGTH_SHORT).show();
-            finish();
+         finish();
         }else{
             new ResponseHttp(getApplicationContext()).onErrorCreatePost();
             finish();
@@ -161,6 +160,11 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
 
     @Override
     public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
+
+    }
+
+    @Override
+    public void onAddImage(boolean b) {
 
     }
 

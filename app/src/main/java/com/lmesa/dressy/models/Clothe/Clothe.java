@@ -1,5 +1,7 @@
 package com.lmesa.dressy.models.Clothe;
 
+import java.io.File;
+
 /**
  * Created by Lucas on 08/04/2017.
  */
@@ -16,6 +18,7 @@ public class Clothe{
 
     private String cloth_partner;
     private String cloth_bitmap;
+    private File cloth_urlImage_file;
 
 
     public Clothe(String cloth_name, Color cloth_color, String cloth_reference, String cloth_urlImage, Brand cloth_brand, Material cloth_material, Category cloth_category) {
@@ -27,6 +30,17 @@ public class Clothe{
         this.cloth_material = cloth_material;
         this.cloth_category = cloth_category;
     }
+
+    public Clothe(String cloth_name, Color cloth_color, String cloth_reference, File cloth_urlImage_file, Brand cloth_brand, Material cloth_material, Category cloth_category) {
+        this.cloth_name = cloth_name;
+        this.cloth_color = cloth_color;
+        this.cloth_reference = cloth_reference;
+        this.cloth_urlImage_file = cloth_urlImage_file;
+        this.cloth_brand = cloth_brand;
+        this.cloth_material = cloth_material;
+        this.cloth_category = cloth_category;
+    }
+
 
     public int getCloth_id() {
         return cloth_id;

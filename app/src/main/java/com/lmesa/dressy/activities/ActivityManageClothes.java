@@ -257,6 +257,11 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     }
 
     @Override
+    public void onAddImage(boolean b) {
+
+    }
+
+    @Override
     public void loadDetail(int position) {
     }
 

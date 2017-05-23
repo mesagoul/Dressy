@@ -201,4 +201,9 @@ public class FragmentSignIn extends Fragment implements ServiceListener{
     public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
 
     }
+
+    @Override
+    public void onAddImage(boolean b) {
+
+    }
 }

@@ -1,10 +1,16 @@
 package com.lmesa.dressy.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -36,7 +42,11 @@ import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Lucas on 15/04/2017.
@@ -65,6 +75,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     private Material currentMaterial;
     private Brand currentBrand;
     private Color currentColor;
+    private File  imageFile;
 
     private Clothe currentClothe;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
@@ -90,6 +101,8 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         reference = (EditText) findViewById(R.id.clothe_create_reference);
         btn_save = (Button) findViewById(R.id.btn_save);
 
+        imageFile = null;
+
         apiDressy.getClotheProperties();
 
 
@@ -107,7 +120,20 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
                     .into(image);
         }else{
             Intent toCameraActivity = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(toCameraActivity,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            if (toCameraActivity.resolveActivity(getPackageManager()) != null) {
+                try {
+                    imageFile = createImageFile();
+                } catch (IOException ex) {
+                    Log.d("File","Error creating file ActivityManage l.125");
+                }
+                if (imageFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            "com.example.android.fileprovider",
+                            imageFile);
+                    toCameraActivity.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(toCameraActivity, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                }
+            }
         }
 
         if(isMatch()){
@@ -123,7 +149,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
                 scrollView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                currentClothe = new Clothe(nom.getText().toString(),currentColor, reference.getText().toString(), "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAiqAAAAJDNjNjliM2FmLTlkNmQtNDc1MS05Y2MyLWMxZWRhYTFhYWVmOA.jpg"/*imageToString(image)*/,currentBrand,currentMaterial,currentCategory);
+                currentClothe = new Clothe(nom.getText().toString(),currentColor, reference.getText().toString(), imageFile.getName(),currentBrand,currentMaterial,currentCategory);
                 if(isMatch()){
                     apiDressy.getSimilarity(currentClothe);
                 }else if(isManage()){
@@ -131,10 +157,15 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
                     apiDressy.manageClothe(currentClothe);
                 }else{
                     apiDressy.addClothe(currentClothe);
+                    if(imageFile != null){
+                        apiDressy.addImageClothe(imageFile, imageFile.getName());
+                    }
                 }
             }
         });
     }
+
+
 
 
     public void loadSpinners(){
@@ -212,23 +243,32 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         });
     }
 
-    public String imageToString(ImageView image){
-        image.buildDrawingCache();
-        Bitmap bmap = image.getDrawingCache();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        return  Base64.encodeToString(imageBytes, Base64.DEFAULT);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Bundle extras = data.getExtras();
-                this.imageBitmap = (Bitmap) extras.get("data");
-                image.setImageBitmap(imageBitmap);}
+
+                Bitmap bitmap = BitmapFactory.decodeFile(this.imageFile.getPath());
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()/2,bitmap.getHeight()/2,false);
+                image.setImageBitmap(resizedBitmap);
+            }
         }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        imageFile = image;
+        return image;
     }
 
     public boolean isMatch(){
@@ -360,6 +400,11 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
     @Override
     public void onGetLastPosts(boolean isSuccess, ArrayList<Post> listPost) {
+
+    }
+
+    @Override
+    public void onAddImage(boolean b) {
 
     }
 }

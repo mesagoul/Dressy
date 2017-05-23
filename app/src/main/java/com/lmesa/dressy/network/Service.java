@@ -8,11 +8,15 @@ import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.models.Posts;
 import com.lmesa.dressy.models.User;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * Created by mac13 on 10/04/2017.
@@ -46,6 +50,15 @@ public interface Service {
     Call<Clothe> addClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe
+    );
+
+    // Add IMAGE CLOTHE
+    @Multipart
+    @POST("addImageClothe")
+    Call<Clothe> addImageClothe(
+            @Header("x-access-token") String token,
+            @Part MultipartBody.Part file,
+            @Part("file") RequestBody name
     );
 
     // delete CLOTHE
