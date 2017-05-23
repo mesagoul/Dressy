@@ -203,7 +203,7 @@ public class FragmentSignIn extends Fragment implements ServiceListener{
     }
 
     @Override
-    public void onAddImage(boolean b) {
+    public void onAddImage(boolean isSuccess, String urlImage) {
 
     }
 }

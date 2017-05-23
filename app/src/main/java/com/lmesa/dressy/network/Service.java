@@ -6,6 +6,7 @@ import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.models.Posts;
+import com.lmesa.dressy.models.ServerResponse;
 import com.lmesa.dressy.models.User;
 
 import okhttp3.MultipartBody;
@@ -54,8 +55,8 @@ public interface Service {
 
     // Add IMAGE CLOTHE
     @Multipart
-    @POST("addImageClothe")
-    Call<Clothe> addImageClothe(
+    @POST("uploads.php")
+    Call<ServerResponse> addImageClothe(
             @Header("x-access-token") String token,
             @Part MultipartBody.Part file,
             @Part("file") RequestBody name

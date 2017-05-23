@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -164,7 +163,7 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
     }
 
     @Override
-    public void onAddImage(boolean b) {
+    public void onAddImage(boolean isSuccess, String urlImage) {
 
     }
 

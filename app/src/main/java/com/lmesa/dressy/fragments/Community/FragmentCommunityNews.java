@@ -20,12 +20,8 @@ import com.lmesa.dressy.adapters.AdapterCommunityList;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.CommunityListener;
 import com.lmesa.dressy.interfaces.ServiceListener;
-import com.lmesa.dressy.models.Clothe.Brand;
-import com.lmesa.dressy.models.Clothe.Category;
 import com.lmesa.dressy.models.Clothe.Clothe;
 import com.lmesa.dressy.models.Clothe.ClotheProperties;
-import com.lmesa.dressy.models.Clothe.Color;
-import com.lmesa.dressy.models.Clothe.Material;
 import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
@@ -179,7 +175,7 @@ public class FragmentCommunityNews extends Fragment implements CommunityListener
     }
 
     @Override
-    public void onAddImage(boolean b) {
+    public void onAddImage(boolean isSuccess, String urlImage) {
 
     }
 }

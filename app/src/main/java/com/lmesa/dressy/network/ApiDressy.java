@@ -2,6 +2,7 @@ package com.lmesa.dressy.network;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.lmesa.dressy.helpers.NullOnEmptyConverterFactory;
 import com.lmesa.dressy.interfaces.ServiceListener;
@@ -11,6 +12,7 @@ import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.ListClothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.models.Posts;
+import com.lmesa.dressy.models.ServerResponse;
 import com.lmesa.dressy.models.User;
 
 import java.io.File;
@@ -32,7 +34,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiDressy{
     private Activity activity;
     private Retrofit retrofit;
+    private Retrofit retrofitImage;
     private Service service;
+    private Service serviceImage;
     private ServiceListener listener;
 
     public ApiDressy(Activity activity){
@@ -42,7 +46,13 @@ public class ApiDressy{
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(new NullOnEmptyConverterFactory())
                 .build();
+        retrofitImage = new Retrofit.Builder()
+                .baseUrl("http://51.254.101.16/uploads/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(new NullOnEmptyConverterFactory())
+                .build();
         service = retrofit.create(Service.class);
+        serviceImage = retrofitImage.create(Service.class);
     }
 
     public String getAccesToken(){
@@ -145,8 +155,6 @@ public class ApiDressy{
     /**
      * Add clothe for user
      * @param clothe
-     * @param imageFile
-     * @param name
      */
     public void addClothe(Clothe clothe){
 
@@ -174,20 +182,21 @@ public class ApiDressy{
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", imageFile.getName(), requestBody);
         RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), imageFile.getName());
 
-        Call<Clothe> request = service.addImageClothe(getAccesToken(),fileToUpload, filename );
-        request.enqueue(new Callback<Clothe>() {
+        Call<ServerResponse> request = serviceImage.addImageClothe(getAccesToken(),fileToUpload, filename );
+        request.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Call<Clothe> call, Response<Clothe> response) {
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 if(response.isSuccessful()){
-                    listener.onAddImage(true);
+                    ServerResponse serverResponse = response.body();
+                    listener.onAddImage(true, "http://51.254.101.16/uploads/"+serverResponse.getUrlImage());
                 }else{
-                    listener.onAddImage(false);
+                    listener.onAddImage(false, "" );
                 }
             }
 
             @Override
-            public void onFailure(Call<Clothe> call, Throwable t) {
-                listener.onAddImage(false);
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                listener.onAddImage(false, "");
             }
         });
     }

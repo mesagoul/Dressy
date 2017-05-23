@@ -180,7 +180,7 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     }
 
     @Override
-    public void onAddImage(boolean b) {
+    public void onAddImage(boolean isSuccess, String urlImage) {
 
     }
 }

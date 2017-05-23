@@ -27,7 +27,6 @@ import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by Lucas on 08/04/2017.
@@ -176,7 +175,7 @@ public class FragmentCommunityTop extends Fragment implements CommunityListener,
     }
 
     @Override
-    public void onAddImage(boolean b) {
+    public void onAddImage(boolean isSuccess, String urlImage) {
 
     }
 }

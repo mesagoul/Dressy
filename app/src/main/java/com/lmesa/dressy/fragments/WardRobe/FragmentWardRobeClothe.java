@@ -258,7 +258,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     }
 
     @Override
-    public void onAddImage(boolean b) {
+    public void onAddImage(boolean isSuccess, String urlImage) {
 
     }
 }

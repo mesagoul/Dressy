@@ -1,8 +1,6 @@
 package com.lmesa.dressy.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -12,7 +10,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +38,6 @@ import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -149,14 +145,13 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
 
                 scrollView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                currentClothe = new Clothe(nom.getText().toString(),currentColor, reference.getText().toString(), imageFile.getName(),currentBrand,currentMaterial,currentCategory);
+                currentClothe = new Clothe(nom.getText().toString(),currentColor, reference.getText().toString(), "",currentBrand,currentMaterial,currentCategory);
                 if(isMatch()){
                     apiDressy.getSimilarity(currentClothe);
                 }else if(isManage()){
                     currentClothe.setCloth_id(editClothe.getCloth_id());
                     apiDressy.manageClothe(currentClothe);
                 }else{
-                    apiDressy.addClothe(currentClothe);
                     if(imageFile != null){
                         apiDressy.addImageClothe(imageFile, imageFile.getName());
                     }
@@ -313,7 +308,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         }else{
             new ResponseHttp(getApplicationContext()).onErrorCreateClothe();
             finish();
-
         }
     }
 
@@ -355,7 +349,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
             new ResponseHttp(getApplicationContext()).onErrorManageClothe();
             finish();
         }
-
     }
 
     @Override
@@ -404,7 +397,13 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     }
 
     @Override
-    public void onAddImage(boolean b) {
+    public void onAddImage(boolean isSuccess, String urlImage) {
+        if(isSuccess){
+            currentClothe.setCloth_urlImage(urlImage);
+            apiDressy.addClothe(currentClothe);
+        }else{
+            new ResponseHttp(getApplicationContext()).onErrorManageClothe();
+        }
 
     }
 }
