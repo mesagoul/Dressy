@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F5874F</color>
+   <color name="colorPrimary">#F5874F</color>
     <color name="colorPrimaryDark">#C46E41</color>
     <color name="colorLight">#FFFFFF</color>
     <color name="colorDark">#353535</color>
     <color name="colorAccent">#3891A6</color>
+
+ <!--  <color name="colorPrimary">#30415D</color>
+  <color name="colorPrimaryDark">#031424</color>
+  <color name="colorLight">#FFFFFF</color>
+  <color name="colorDark">#353535</color>
+  <color name="colorAccent">#CF6766</color> -->
 
     <!-- Material DEFAULT drawer colors -->
     <color name="material_drawer_selected">@color/colorLight</color>
