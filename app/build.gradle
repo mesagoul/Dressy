@@ -33,6 +33,7 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.9.0@aar') {
         transitive = true
     }
+    compile 'com.nobrain.android.permissions:library:1.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     testCompile 'junit:junit:4.12'
 }

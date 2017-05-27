@@ -1,6 +1,7 @@
 package com.lmesa.dressy.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
+import com.lmesa.dressy.helpers.InternalStorage;
 import com.lmesa.dressy.helpers.PhotoHelper;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
@@ -68,6 +70,8 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
 
     private File imageFile;
     private PhotoHelper photoHelper;
+
+    private InternalStorage permission_storage;
 
 
     @Override
@@ -119,21 +123,8 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
         });
         if(isCreate()){
             listClothe = new ArrayList<Clothe>();
-            Intent toCameraActivity = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (toCameraActivity.resolveActivity(getPackageManager()) != null) {
-                try {
-                    imageFile = createImageFile();
-                } catch (IOException ex) {
-                    Log.d("File","Error creating file ActivityManage l.125");
-                }
-                if (imageFile != null) {
-                    Uri photoURI = FileProvider.getUriForFile(this,
-                            "com.example.android.fileprovider",
-                            imageFile);
-                    toCameraActivity.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                    startActivityForResult(toCameraActivity, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-                }
-            }
+            permission_storage = new InternalStorage(this);
+            permission_storage.askForPermission();
         }else if(isManage()){
             editClothes = gson.fromJson(getIntent().getStringExtra("clothes"), Clothes.class);
             listClothe = editClothes.getListClothe();
@@ -193,6 +184,26 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
             imageFile = photoHelper.resizeImage(imageFile,600);
             image.setImageBitmap(BitmapFactory.decodeFile(this.imageFile.getPath()));
 
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 2: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Instantiate a ViewPager and a PagerAdapter.
+                    launchCamera();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    //permission_storage.askForPermission();
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
     }
 
@@ -321,6 +332,24 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
 
     public boolean isManage() {
         return getIntent().getStringExtra("manage") != null;
+    }
+
+    public void launchCamera() {
+        Intent toCameraActivity = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (toCameraActivity.resolveActivity(getPackageManager()) != null) {
+            try {
+                imageFile = createImageFile();
+            } catch (IOException ex) {
+                Log.d("File","Error creating file ActivityManage l.125");
+            }
+            if (imageFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        imageFile);
+                toCameraActivity.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(toCameraActivity, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            }
+        }
     }
 }
 
