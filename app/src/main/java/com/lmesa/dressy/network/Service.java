@@ -112,7 +112,7 @@ public interface Service {
 
     // GET SIMILIRARITY
     @POST("getSimilarity")
-    Call<Clothe> getSimilarityClothe(
+    Call<Clothes> getSimilarityClothe(
             @Header("x-access-token") String token,
             @Body Clothe clothe);
 

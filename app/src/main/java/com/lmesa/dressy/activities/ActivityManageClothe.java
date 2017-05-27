@@ -1,15 +1,12 @@
 package com.lmesa.dressy.activities;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -143,7 +140,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
                 progressBar.setVisibility(View.VISIBLE);
                 if(isMatch()){
                     currentClothe = new Clothe(nom.getText().toString(),currentColor, reference.getText().toString(), "",currentBrand,currentMaterial,currentCategory);
-                    apiDressy.getSimilarity(currentClothe);
+                    apiDressy.addImageClothe(imageFile, imageFile.getName());
                 }else if(isManage()){
                     currentClothe = new Clothe(nom.getText().toString(),currentColor, reference.getText().toString(), editClothe.getCloth_urlImage(),currentBrand,currentMaterial,currentCategory);
                     currentClothe.setCloth_id(editClothe.getCloth_id());
@@ -385,11 +382,16 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     }
 
     @Override
-    public void onGetSimilarity(boolean isSucces) {
+    public void onGetSimilarity(boolean isSucces, Clothes listClothe) {
         scrollView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         if(isSucces){
-            Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
+            Clothes clothesSimilarity = listClothe;
+            Intent resultSimilarity = new Intent();
+            resultSimilarity.putExtra("similarity", gson.toJson(clothesSimilarity));
+            resultSimilarity.putExtra("currentClotheUrl", gson.toJson(this.currentClothe.getCloth_urlImage()));
+            Toast.makeText(getApplicationContext(),"Test Similarity Clothe toupitou",Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK,resultSimilarity);
             finish();
         }else{
             new ResponseHttp(getApplicationContext()).onErrorGetSimilarity();
@@ -435,7 +437,11 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     public void onAddImage(boolean isSuccess, String urlImage) {
         if(isSuccess){
             currentClothe.setCloth_urlImage(urlImage);
-            apiDressy.addClothe(currentClothe);
+            if(isMatch()){
+                apiDressy.getSimilarity(currentClothe);
+            }else{
+                apiDressy.addClothe(currentClothe);
+            }
         }else{
             progressBar.setVisibility(View.GONE);
             scrollView.setVisibility(View.VISIBLE);

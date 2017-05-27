@@ -89,4 +89,7 @@
     <string name="no_clothes">Vous n\'avez pas de tenues</string>
     <string name="errorGetPost">Erreur lors de la récuperation des posts</string>
     <string name="no_posts">Pas de posts</string>
+    <string name="maPhoto">Ma photo</string>
+    <string name="habitsCompatibles">Vos habits compatibles</string>
+    <string name="habitsCompatiblesSurLeWeb">Recommandations sur le web</string>
 </resources>

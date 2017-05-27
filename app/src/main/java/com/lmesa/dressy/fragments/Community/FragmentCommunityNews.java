@@ -133,7 +133,7 @@ public class FragmentCommunityNews extends Fragment implements CommunityListener
     }
 
     @Override
-    public void onGetSimilarity(boolean isSucces) {
+    public void onGetSimilarity(boolean isSucces, Clothes listClothe) {
 
     }
 

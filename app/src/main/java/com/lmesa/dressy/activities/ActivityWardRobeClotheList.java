@@ -35,6 +35,7 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     private ProgressBar progressBar;
     private Gson gson;
     private ApiDressy apiDressy;
+    private Clothe currentClothe;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,9 +80,10 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
             setResult(Activity.RESULT_OK,resultIntent);
             finish();
         }else {
+            this.currentClothe = listClothe.get(position);
             gridView.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
-            apiDressy.getSimilarity(listClothe.get(position));
+            apiDressy.getSimilarity(currentClothe);
         }
     }
 
@@ -147,11 +149,15 @@ public class ActivityWardRobeClotheList extends AppCompatActivity implements War
     }
 
     @Override
-    public void onGetSimilarity(boolean isSucces) {
+    public void onGetSimilarity(boolean isSucces, Clothes listClothe) {
         gridView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         if(isSucces){
-            Toast.makeText(getApplicationContext(),"Test Similarity Clothe",Toast.LENGTH_SHORT).show();
+            Clothes clothesSimilarity = listClothe;
+            Intent resultSimilarity = new Intent();
+            resultSimilarity.putExtra("similarity", gson.toJson(clothesSimilarity));
+            resultSimilarity.putExtra("currentClotheUrl", gson.toJson(this.currentClothe.getCloth_urlImage()));
+            setResult(RESULT_OK,resultSimilarity);
             finish();
         }else{
             new ResponseHttp(getApplicationContext()).onErrorGetSimilarity();

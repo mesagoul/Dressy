@@ -178,7 +178,7 @@ public class FragmentSignIn extends Fragment implements ServiceListener{
     }
 
     @Override
-    public void onGetSimilarity(boolean isSucces) {
+    public void onGetSimilarity(boolean isSucces, Clothes listClothe) {
 
     }
 

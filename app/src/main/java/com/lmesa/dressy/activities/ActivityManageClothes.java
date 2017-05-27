@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +35,6 @@ import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -279,7 +277,7 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     }
 
     @Override
-    public void onGetSimilarity(boolean isSucces) {
+    public void onGetSimilarity(boolean isSucces, Clothes listClothe) {
 
     }
 

@@ -131,7 +131,7 @@ public class ActivityManagePost extends AppCompatActivity implements ServiceList
     }
 
     @Override
-    public void onGetSimilarity(boolean isSucces) {
+    public void onGetSimilarity(boolean isSucces, Clothes listClothe) {
 
     }
 

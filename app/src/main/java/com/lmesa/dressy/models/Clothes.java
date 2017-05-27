@@ -21,6 +21,7 @@ public class Clothes{
         this.listClothe = listClothe;
         this.score = score;
     }
+
     public Clothes(String urlImage, ArrayList<Clothe> listClothe) {
         this.urlImage = urlImage;
         this.listClothe = listClothe;

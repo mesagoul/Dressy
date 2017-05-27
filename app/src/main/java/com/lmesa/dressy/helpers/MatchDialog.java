@@ -63,11 +63,11 @@ public class MatchDialog {
                     public void onClick(DialogInterface dialog, int which) {
                         if(which == 0){
                             Intent toClotheListActivity = new Intent(activity, ActivityWardRobeClotheList.class);
-                            activity.startActivity(toClotheListActivity);
+                            activity.startActivityForResult(toClotheListActivity, 3);
                         }else if (which == 1){
                             Intent toCreateActivity = new Intent(activity, ActivityManageClothe.class);
                             toCreateActivity.putExtra("match","true");
-                            activity.startActivity(toCreateActivity);
+                            activity.startActivityForResult(toCreateActivity, 3);
                         }
                     }
                 });

@@ -233,7 +233,7 @@ public class FragmentWardRobeClothe extends Fragment implements WardRobeListener
     }
 
     @Override
-    public void onGetSimilarity(boolean isSuccess) {
+    public void onGetSimilarity(boolean isSuccess, Clothes listClothe) {
 
     }
 

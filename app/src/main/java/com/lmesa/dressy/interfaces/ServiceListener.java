@@ -25,7 +25,7 @@ public interface ServiceListener {
     void onDeleteClothes(boolean isSucces);
     void onManageClothe(boolean isSucces);
 
-    void onGetSimilarity(boolean isSucces);
+    void onGetSimilarity(boolean isSucces, Clothes listClothe);
 
     void onCreatePost(boolean isSucces);
 

@@ -2,7 +2,6 @@ package com.lmesa.dressy.network;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.lmesa.dressy.helpers.NullOnEmptyConverterFactory;
 import com.lmesa.dressy.interfaces.ServiceListener;
@@ -356,20 +355,21 @@ public class ApiDressy{
      * @param @clothe
      */
     public void getSimilarity(Clothe clothe){
-        Call<Clothe> request = service.getSimilarityClothe(getAccesToken(),clothe);
-        request.enqueue(new Callback<Clothe>() {
+        Call<Clothes> request = service.getSimilarityClothe(getAccesToken(),clothe);
+        request.enqueue(new Callback<Clothes>() {
             @Override
-            public void onResponse(Call<Clothe> call, Response<Clothe> response) {
+            public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                 if(response.isSuccessful()){
-                    listener.onGetSimilarity(true);
+                    response.body().getListClothe();
+                    listener.onGetSimilarity(true, response.body());
                 }else{
-                    listener.onGetSimilarity(false);
+                    listener.onGetSimilarity(false, new Clothes("",new ArrayList<Clothe>()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Clothe> call, Throwable t) {
-                listener.onGetSimilarity(false);
+            public void onFailure(Call<Clothes> call, Throwable t) {
+                listener.onGetSimilarity(false, new Clothes("",new ArrayList<Clothe>()));
             }
         });
     }

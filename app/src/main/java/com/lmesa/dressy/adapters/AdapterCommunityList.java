@@ -69,7 +69,11 @@ public class AdapterCommunityList extends RecyclerView.Adapter<AdapterCommunityL
 
     @Override
     public int getItemCount() {
-        return listPosts.size();
+        if(this.listPosts != null){
+            return this.listPosts.size();
+        }else{
+            return 0;
+        }
     }
 
     public void setListener(CommunityListener listener) {
