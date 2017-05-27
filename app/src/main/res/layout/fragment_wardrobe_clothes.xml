@@ -9,15 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <GridView
-            android:padding="10dp"
-            android:layout_weight="10"
+            android:padding="1dp"
+            android:clipToPadding="false"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="463dp"
             android:id="@+id/wardrobe_clothes_list"
             android:columnWidth="100dp"
             android:numColumns="auto_fit"
-            android:verticalSpacing="5dp"
-            android:horizontalSpacing="5dp"
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"
             android:stretchMode="columnWidth"
             android:scrollbarStyle="outsideOverlay"
             android:gravity="center">
