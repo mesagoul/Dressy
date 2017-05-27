@@ -2,11 +2,16 @@ package com.lmesa.dressy.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.adapters.AdapterWardRobeClothes;
+import com.lmesa.dressy.helpers.PhotoHelper;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.interfaces.WardRobeListener;
@@ -29,7 +35,11 @@ import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Lucas on 17/04/2017.
@@ -56,6 +66,10 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
     private LinearLayout content;
 
 
+    private File imageFile;
+    private PhotoHelper photoHelper;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +82,8 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
         gson = new Gson();
         apiDressy = new ApiDressy(this);
         apiDressy.setListener(this);
+
+        photoHelper = new PhotoHelper();
 
         image = (ImageView) findViewById(R.id.manage_image);
         image.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -93,8 +109,8 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
                 progressBar.setVisibility(View.VISIBLE);
                 content.setVisibility(View.GONE);
                 if(isCreate()){
-                    currentClothes = new Clothes("http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg",listClothe);
-                    apiDressy.addClothes(currentClothes);
+                    currentClothes = new Clothes("",listClothe);
+                    apiDressy.addImageClothe(imageFile, imageFile.getName());
                 }else if(isManage()){
                     editClothes.setListClothe(listClothe);
                     apiDressy.manageClothes(editClothes);
@@ -104,7 +120,20 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
         if(isCreate()){
             listClothe = new ArrayList<Clothe>();
             Intent toCameraActivity = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(toCameraActivity,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            if (toCameraActivity.resolveActivity(getPackageManager()) != null) {
+                try {
+                    imageFile = createImageFile();
+                } catch (IOException ex) {
+                    Log.d("File","Error creating file ActivityManage l.125");
+                }
+                if (imageFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            "com.example.android.fileprovider",
+                            imageFile);
+                    toCameraActivity.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(toCameraActivity, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                }
+            }
         }else if(isManage()){
             editClothes = gson.fromJson(getIntent().getStringExtra("clothes"), Clothes.class);
             listClothe = editClothes.getListClothe();
@@ -121,13 +150,20 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
         }
     }
 
-    public String imageToString(ImageView image){
-        image.buildDrawingCache();
-        Bitmap bmap = image.getDrawingCache();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        return  Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        imageFile = image;
+        return image;
     }
 
     public void loadGridView(){
@@ -152,9 +188,10 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
             this.listClothe.add(aClothe);
             loadGridView();
         }else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
-            Bundle extras = data.getExtras();
-            this.imageBitmap = (Bitmap) extras.get("data");
-            image.setImageBitmap(imageBitmap);
+
+
+            imageFile = photoHelper.resizeImage(imageFile,600);
+            image.setImageBitmap(BitmapFactory.decodeFile(this.imageFile.getPath()));
 
         }
     }
@@ -257,6 +294,15 @@ public class ActivityManageClothes extends AppCompatActivity implements ServiceL
 
     @Override
     public void onAddImage(boolean isSuccess, String urlImage) {
+
+        if(isSuccess){
+            currentClothes.setUrlImage(urlImage);
+            apiDressy.addClothes(currentClothes);
+        }else{
+            progressBar.setVisibility(View.GONE);
+            content.setVisibility(View.VISIBLE);
+            new ResponseHttp(getApplicationContext()).onErrorManageClothes();
+        }
 
     }
 

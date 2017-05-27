@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lmesa.dressy.R;
 import com.lmesa.dressy.adapters.AdapterClotheProperties;
+import com.lmesa.dressy.helpers.PhotoHelper;
 import com.lmesa.dressy.helpers.ResponseHttp;
 import com.lmesa.dressy.interfaces.ServiceListener;
 import com.lmesa.dressy.models.Clothe.Brand;
@@ -38,7 +39,9 @@ import com.lmesa.dressy.models.Clothes;
 import com.lmesa.dressy.models.Post;
 import com.lmesa.dressy.network.ApiDressy;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,7 +59,6 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     private ApiDressy apiDressy;
     private ScrollView scrollView;
     private ProgressBar progressBar;
-    private Bitmap imageBitmap;
     private Clothe editClothe;
     private Gson gson;
     private Spinner spinnerCategories;
@@ -72,6 +74,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
     private Brand currentBrand;
     private Color currentColor;
     private File  imageFile;
+    private PhotoHelper photoHelper;
 
     private Clothe currentClothe;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
@@ -98,6 +101,7 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         btn_save = (Button) findViewById(R.id.btn_save);
 
         imageFile = null;
+        photoHelper = new PhotoHelper();
 
         apiDressy.getClotheProperties();
 
@@ -123,10 +127,10 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
                     Log.d("File","Error creating file ActivityManage l.125");
                 }
                 if (imageFile != null) {
-                    Uri photoURI = FileProvider.getUriForFile(this,
+                     Uri photoUri = FileProvider.getUriForFile(this,
                             "com.example.android.fileprovider",
                             imageFile);
-                    toCameraActivity.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    toCameraActivity.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                     startActivityForResult(toCameraActivity, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 }
             }
@@ -243,9 +247,8 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
-                Bitmap bitmap = BitmapFactory.decodeFile(this.imageFile.getPath());
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()/2,bitmap.getHeight()/2,false);
-                image.setImageBitmap(resizedBitmap);
+                imageFile = photoHelper.resizeImage(imageFile,600);
+                image.setImageBitmap(BitmapFactory.decodeFile(this.imageFile.getPath()));
             }
         }
     }
@@ -364,6 +367,8 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
         }
     }
 
+
+
     @Override
     public void onCreatePost(boolean isSucces) {
 
@@ -402,6 +407,8 @@ public class ActivityManageClothe extends AppCompatActivity implements ServiceLi
             currentClothe.setCloth_urlImage(urlImage);
             apiDressy.addClothe(currentClothe);
         }else{
+            progressBar.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
             new ResponseHttp(getApplicationContext()).onErrorManageClothe();
         }
 
